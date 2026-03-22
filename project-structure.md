@@ -1,21 +1,21 @@
-# プロジェクト構成
+# Project Structure
 
-## ディレクトリ構成
+## Directory Layout
 
 ```
 docs/
-├── index.md               # 必須・機能エリア・サブ項目の一覧
-├── project_overview.md    # 必須・プロジェクト全体の概要
-└── {機能エリア}/          # 機能単位でディレクトリを作成
+├── index.md               # Required — list of feature areas and sub-items
+├── project_overview.md    # Required — overall project overview
+└── {feature-area}/        # One directory per feature area
     ├── overview.md
     ├── spec.md
     ├── design.md
     ├── tasks.md
     ├── dev-notes.md
-    └── {サブ項目}/        # 分割ルールに従い必要に応じて作成
+    └── {sub-item}/        # Created as needed per split rules
         └── ...
 
-templates/                 # 各ドキュメントのテンプレート（機能エリア用）
+templates/                 # Document templates for feature areas
 ├── overview.md
 ├── spec.md
 ├── design.md
@@ -25,43 +25,43 @@ templates/                 # 各ドキュメントのテンプレート（機能
 
 ---
 
-## ドキュメントテンプレート
+## Document Templates
 
 ### project_overview.md
-- **目的・背景**: このプロジェクトが解決する問題・存在理由
-- **スコープ**: 作るもの・作らないものの境界
-- **技術スタック概要**: 使用技術と選定理由
-- **全体アーキテクチャ**: システム全体の構成
-- **制約**: 技術・環境・リソースの制限
+- **Purpose & Background**: The problem this project solves and why it exists
+- **Scope**: What will and will not be built
+- **Tech Stack Overview**: Technologies used and rationale
+- **Overall Architecture**: High-level system structure
+- **Constraints**: Technical, environmental, and resource limitations
 
-### overview.md（機能エリアごと）
-- **目的・背景**: なぜこの機能が必要か
-- **スコープ**: 何を作るか・作らないか
-- **制約**: 技術・リソースなどの制限
-- **完了条件**: 何をもって完成とするか
+### overview.md (per feature area)
+- **Purpose & Background**: Why this feature is needed
+- **Scope**: What will and will not be built
+- **Constraints**: Technical and resource limitations
+- **Definition of Done**: What constitutes completion
 
 ### spec.md
-- **機能一覧**: 提供する機能の列挙
-- **画面・操作フロー**: ユーザの操作手順
-- **各画面/状態の詳細**: 表示内容・操作・遷移先
-- **エラーケース**: 異常系の仕様
-- **未対応ケース**: 意図的に対応しないこと
+- **Feature List**: Enumeration of provided features
+- **Screens & User Flow**: Step-by-step user interactions
+- **Screen / State Details**: Display content, actions, and transitions
+- **Error Cases**: Behavior for abnormal conditions
+- **Out of Scope**: Things intentionally not handled
 
 ### design.md
-- **技術選定**: 使用技術と選定理由
-- **アーキテクチャ**: コンポーネント構成
-- **データ構造**: 主要なデータモデル・スキーマ
-- **インターフェース**: API・関数インターフェース
-- **依存関係**: 外部ライブラリ・サービス
+- **Tech Selection**: Technologies used and rationale
+- **Architecture**: Component structure
+- **Data Structures**: Key data models and schemas
+- **Interfaces**: API and function interfaces
+- **Dependencies**: External libraries and services
 
 ### tasks.md
-- **実装タスク一覧**: チェックボックス形式
-- **依存関係**: タスク間の順序制約
-- **ステータス**: 未着手 / 進行中 / 完了
+- **Task List**: Checkbox format
+- **Dependencies**: Ordering constraints between tasks
+- **Status**: Todo / In progress / Done
 
 ### dev-notes.md
-- **実装上の判断**: なぜその実装にしたか
-- **発生した問題と対処**: 詰まった点・解決方法
-- **設計からの変更点**: 設計書との差分と理由
-- **今後の課題**: 現状の制限・将来対応すべき事項
-- **ユーザへの要望**: スキル・権限・情報が不足した場合に記録
+- **Implementation Decisions**: Why a particular approach was chosen
+- **Issues & Resolutions**: Problems encountered and how they were solved
+- **Deviations from Design**: Differences from the design document and reasons
+- **Future Work**: Current limitations and items to address later
+- **Requests to User**: Recorded when skills, permissions, or information are lacking

@@ -1,48 +1,48 @@
-# エージェントルール
+# Agent Rules
 
-このファイルはプロジェクト共通の開発プロセス・ドキュメント標準を定義する。
-実装の指示を受けたら、まずこのルールに従ってドキュメントを整備してから着手すること。
-
----
-
-## ワークフロー
-
-### 新機能開始時
-1. `docs/project_overview.md` が未作成の場合は作成する
-2. `/add-feature <機能エリア>` を実行する（ディレクトリ・テンプレート・index.md を一括セットアップ）
-3. overview.md → spec.md → design.md の順に内容を記述する
-4. spec.md 記述後、分割ルールに従い細分化の要否を判断
-5. 細分化が必要な場合、`/add-feature <サブ項目パス>` を実行する
-6. tasks.md に内容を記述して実装着手
-
-### 実装中
-7. 判断・問題・変更はその都度 dev-notes.md に記録
-8. スキル・権限・情報が不足した場合は dev-notes.md に要望として記録
-
-### 実装完了後
-9. tasks.md のステータスを更新
-10. 設計との乖離があれば design.md を更新し差分を dev-notes.md に記録
+This file defines the common development process and documentation standards for the project.
+When given an implementation task, follow these rules to prepare documentation before starting.
 
 ---
 
-## 分割ルール
+## Workflow
 
-**「独立して実装できる単位が2つ以上含まれている」場合にサブ項目へ細分化する。**
+### Starting a new feature
+1. Create `docs/project_overview.md` if it does not exist
+2. Run `/add-feature <feature-area>` to set up the directory, templates, and index.md at once
+3. Write content in order: overview.md → spec.md → design.md
+4. After writing spec.md, evaluate whether subdivision is needed per the split rules
+5. If subdivision is needed, run `/add-feature <sub-item-path>`
+6. Write content in tasks.md and begin implementation
 
-独立して実装できる単位の目安：
-- 別々に並行して実装できる
-- 一方を実装しなくても他方が動作する
-- それぞれに固有の画面・データ・状態を持つ
+### During implementation
+7. Record decisions, issues, and changes in dev-notes.md as they occur
+8. If skills, permissions, or information are lacking, record the request in dev-notes.md
 
-細分化の手順：
-1. spec.md 作成後に評価する
-2. 細分化が必要と判断した場合、`/add-feature <サブ項目パス>` を実行する
+### After implementation
+9. Update the status in tasks.md
+10. If the implementation deviates from the design, update design.md and record the diff in dev-notes.md
 
 ---
 
-## 注意事項
+## Split Rules
 
-- ドキュメントは実装前に作成する（後付け禁止）
-- 実装中に仕様が変わった場合は必ず該当ドキュメントを更新する
-- dev-notes.md は作業ログではなく意思決定の記録として書く
-- 作業の区切りごとにGitHubにコミット・プッシュする
+**Subdivide into sub-items when a feature area contains two or more independently implementable units.**
+
+Signs of an independently implementable unit:
+- Can be implemented in parallel with others
+- The other units work without it
+- Has its own distinct screens, data, or state
+
+How to subdivide:
+1. Evaluate after writing spec.md
+2. If subdivision is needed, run `/add-feature <sub-item-path>`
+
+---
+
+## Guidelines
+
+- Create documentation before implementation — no retrofitting
+- If requirements change during implementation, update the relevant documents immediately
+- Write dev-notes.md as a record of decisions, not a work log
+- Commit and push to GitHub at natural stopping points
