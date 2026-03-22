@@ -46,3 +46,4 @@ How to subdivide:
 - If requirements change during implementation, update the relevant documents immediately
 - Write dev-notes.md as a record of decisions, not a work log
 - Commit and push to GitHub at natural stopping points
+- Do not load or reference any files under `_jp/` — that directory is for human reference only
