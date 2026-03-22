@@ -8,7 +8,7 @@ allowed-tools: Bash
 以下のコマンドを実行してください:
 
 ```bash
-bash add-feature.sh $ARGUMENTS
+bash "${CLAUDE_SKILL_DIR}/add-feature.sh" $ARGUMENTS
 ```
 
 実行結果を簡潔に報告してください。

@@ -6,9 +6,9 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-DOCS_DIR="$SCRIPT_DIR/docs"
-TEMPLATES_DIR="$SCRIPT_DIR/templates"
+PROJECT_DIR="$PWD"
+DOCS_DIR="$PROJECT_DIR/docs"
+TEMPLATES_DIR="$PROJECT_DIR/templates"
 INDEX_FILE="$DOCS_DIR/index.md"
 
 # 引数チェック
