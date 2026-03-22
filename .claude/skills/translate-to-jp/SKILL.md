@@ -13,7 +13,7 @@ Translate all files matching the following patterns:
 
 | Pattern | Example |
 |---------|---------|
-| `*.md` in project root (excluding `Sample.md`) | `agent-rules.md` → `_jp/agent-rules.md` |
+| `*.md` in project root (excluding `CLAUDE.md`) | `agent-rules.md` → `_jp/agent-rules.md` |
 | `.claude/skills/*/SKILL.md` | `.claude/skills/add-feature/SKILL.md` → `_jp/skills/add-feature/SKILL.md` |
 
 When new agent files are added in the future, they will be picked up automatically as long as they match these patterns.

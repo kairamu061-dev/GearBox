@@ -13,7 +13,7 @@ allowed-tools: Read, Write, Glob
 
 | パターン | 例 |
 |---------|---------|
-| プロジェクトルートの `*.md`（`Sample.md` を除く） | `agent-rules.md` → `_jp/agent-rules.md` |
+| プロジェクトルートの `*.md`（`CLAUDE.md` を除く） | `agent-rules.md` → `_jp/agent-rules.md` |
 | `.claude/skills/*/SKILL.md` | `.claude/skills/add-feature/SKILL.md` → `_jp/skills/add-feature/SKILL.md` |
 
 今後新しいエージェントファイルが追加された場合も、これらのパターンに一致する限り自動的に対象となる。
