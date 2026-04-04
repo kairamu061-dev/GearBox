@@ -6,11 +6,14 @@
 docs/
 ├── index.md               # 必須・機能エリア・サブ項目の一覧
 ├── project_overview.md    # 必須・プロジェクト全体の概要
+├── glossary.md            # 必須・ドメイン固有の用語定義
+├── tags.md                # 必須・インラインタグの定義とスキーマ
 └── {機能エリア}/          # 機能単位でディレクトリを作成
     ├── overview.md
     ├── spec.md
     ├── design.md
     ├── tasks.md
+    ├── test-cases.md
     ├── dev-notes.md
     └── {サブ項目}/        # 分割ルールに従い必要に応じて作成
         └── ...

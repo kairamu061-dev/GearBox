@@ -15,6 +15,7 @@ Translate all files matching the following patterns:
 |---------|---------|
 | `*.md` in project root (excluding `CLAUDE.md`) | `agent-rules.md` → `_jp/agent-rules.md` |
 | `.claude/skills/*/SKILL.md` | `.claude/skills/add-feature/SKILL.md` → `_jp/skills/add-feature/SKILL.md` |
+| `.claude/agents/*.md` | `.claude/agents/game-director.md` → `_jp/agents/game-director.md` |
 
 When new agent files are added in the future, they will be picked up automatically as long as they match these patterns.
 

@@ -15,6 +15,7 @@ allowed-tools: Read, Write, Glob
 |---------|---------|
 | プロジェクトルートの `*.md`（`CLAUDE.md` を除く） | `agent-rules.md` → `_jp/agent-rules.md` |
 | `.claude/skills/*/SKILL.md` | `.claude/skills/add-feature/SKILL.md` → `_jp/skills/add-feature/SKILL.md` |
+| `.claude/agents/*.md` | `.claude/agents/game-director.md` → `_jp/agents/game-director.md` |
 
 今後新しいエージェントファイルが追加された場合も、これらのパターンに一致する限り自動的に対象となる。
 
