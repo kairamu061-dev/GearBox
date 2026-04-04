@@ -3,6 +3,7 @@
 ## プロジェクト概要
 - [project_overview](./project_overview.md)
 - [glossary](./glossary.md)
+- [tags](./tags.md)
 
 ## 機能エリア
 

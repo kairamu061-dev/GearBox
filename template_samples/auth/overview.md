@@ -32,6 +32,8 @@
 
 ## 画面イメージ
 
+<!-- [求：画像] prompt="A clean minimal web login form with email and password fields, modern flat UI, light background" ratio="16:9" output="docs/assets/auth-login.png" -->
+
 ### ログイン画面 (`/login`)
 
 ```
