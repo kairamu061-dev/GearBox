@@ -42,7 +42,7 @@ How to subdivide:
 
 ## Guidelines
 
-- Create documentation before implementation — no retrofitting
+- Create documentation before implementation
 - If requirements change during implementation, update the relevant documents immediately
 - Write dev-notes.md as a record of decisions, not a work log
 - Commit and push to GitHub at natural stopping points
