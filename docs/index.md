@@ -2,6 +2,7 @@
 
 ## プロジェクト概要
 - [project_overview](./project_overview.md)
+- [glossary](./glossary.md)
 
 ## 機能エリア
 

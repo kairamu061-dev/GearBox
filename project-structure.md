@@ -6,6 +6,7 @@
 docs/
 ├── index.md               # Required — list of feature areas and sub-items
 ├── project_overview.md    # Required — overall project overview
+├── glossary.md            # Required — domain-specific terminology
 └── {feature-area}/        # One directory per feature area
     ├── overview.md
     ├── spec.md

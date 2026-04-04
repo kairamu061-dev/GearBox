@@ -8,7 +8,7 @@ When given an implementation task, follow these rules to prepare documentation b
 ## Workflow
 
 ### Starting a new feature
-1. Create `docs/project_overview.md` if it does not exist
+1. Create `docs/project_overview.md` and `docs/glossary.md` if they do not exist
 2. Run `/add-feature <feature-area>` to set up the directory, templates, and index.md at once
 3. Write content in order: overview.md → spec.md → design.md
 4. After writing spec.md, evaluate whether subdivision is needed per the split rules
