@@ -12,6 +12,7 @@ docs/
     ├── spec.md
     ├── design.md
     ├── tasks.md
+    ├── test-cases.md
     ├── dev-notes.md
     └── {sub-item}/        # Created as needed per split rules
         └── ...
