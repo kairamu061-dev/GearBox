@@ -14,6 +14,9 @@
 | タグ名 | 用途 | 必須フィールド | 任意フィールド |
 |--------|------|--------------|--------------|
 | `求：画像` | 画像が必要な箇所に配置。画像生成エージェントへの依頼 | `prompt` | `ratio`, `output` |
+| `求：コンセプトアート` | キャラクター・背景・世界観のコンセプトアートが必要な箇所 | `prompt` | `ratio`, `output` |
+| `求：UI素材` | ボタン・アイコン・HUDなどのUI素材が必要な箇所 | `prompt` | `ratio`, `output` |
+| `求：サウンド` | BGM・SEが必要な箇所 | `description` | `duration`, `mood` |
 
 ---
 
@@ -35,4 +38,64 @@
 
 ```
 <!-- [求：画像] prompt="A clean minimal web login form with email and password fields, modern flat UI design" ratio="16:9" output="docs/assets/auth-login.png" -->
+```
+
+---
+
+### `求：コンセプトアート`
+
+キャラクター・背景・世界観のコンセプトアートが必要な箇所に配置する。
+
+**フィールド:**
+
+| フィールド | 必須 | デフォルト | 説明 |
+|-----------|------|-----------|------|
+| `prompt` | Yes | — | 生成プロンプト（英語推奨） |
+| `ratio` | No | `16:9` | アスペクト比 |
+| `output` | No | `docs/assets/{自動命名}.png` | 保存先パス |
+
+**使用例:**
+
+```
+<!-- [求：コンセプトアート] prompt="A cute 2D pixel art character, small hero with a sword, bright colors, white background" ratio="1:1" output="docs/assets/character-hero.png" -->
+```
+
+---
+
+### `求：UI素材`
+
+ボタン・アイコン・HUDなどのUI素材が必要な箇所に配置する。
+
+**フィールド:**
+
+| フィールド | 必須 | デフォルト | 説明 |
+|-----------|------|-----------|------|
+| `prompt` | Yes | — | 生成プロンプト（英語推奨） |
+| `ratio` | No | `1:1` | アスペクト比 |
+| `output` | No | `docs/assets/{自動命名}.png` | 保存先パス |
+
+**使用例:**
+
+```
+<!-- [求：UI素材] prompt="A simple flat icon for a pause button, minimal style, transparent background" ratio="1:1" output="docs/assets/ui-pause.png" -->
+```
+
+---
+
+### `求：サウンド`
+
+BGM・SEが必要な箇所に配置する。
+
+**フィールド:**
+
+| フィールド | 必須 | デフォルト | 説明 |
+|-----------|------|-----------|------|
+| `description` | Yes | — | サウンドの説明（日本語可） |
+| `duration` | No | — | 目安の長さ（例: `30s`, `loop`） |
+| `mood` | No | — | 雰囲気・テイスト（例: `upbeat`, `tense`, `calm`） |
+
+**使用例:**
+
+```
+<!-- [求：サウンド] description="ステージクリア時のファンファーレ" duration="3s" mood="cheerful, triumphant" -->
 ```
