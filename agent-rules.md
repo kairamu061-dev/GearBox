@@ -23,6 +23,10 @@ When given an implementation task, follow these rules to prepare documentation b
 9. Update the status in tasks.md
 10. If the implementation deviates from the design, update design.md and record the diff in dev-notes.md
 
+### Committing
+- Commit after each logical unit of work (e.g. per sub-item completed, per doc section written)
+- Do not batch multiple unrelated changes into a single commit
+
 ---
 
 ## Split Rules
