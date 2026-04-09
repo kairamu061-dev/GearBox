@@ -27,16 +27,28 @@ When given an implementation task, follow these rules to prepare documentation b
 
 ## Split Rules
 
-**Subdivide into sub-items when a feature area contains two or more independently implementable units.**
+**Default is to split. Extract any independently implementable unit into a sub-item immediately.**
 
-Signs of an independently implementable unit:
-- Can be implemented in parallel with others
-- The other units work without it
-- Has its own distinct screens, data, or state
+### Criteria for splitting
 
-How to subdivide:
-1. Evaluate after writing spec.md
-2. If subdivision is needed, run `/add-feature <sub-item-path>`
+Split if any of the following apply:
+
+- Has its own scene, screen, or UI panel
+- Has its own ScriptableObject or data definition
+- Can be implemented and tested without the other units existing
+- A separate developer could work on it in parallel
+
+### Exception — integration is only allowed when BOTH conditions are met
+
+- Neither half can be verified in isolation after splitting
+- AND the code and responsibility are extremely small (equivalent to 1 class / 1 file)
+
+### Procedure
+
+1. Evaluate splitting immediately after writing spec.md
+2. When a split target is identified, run `/add-feature <sub-item-path>` without hesitation
+3. Parent-level design.md / tasks.md should contain only links to sub-items and cross-cutting concerns
+4. After splitting, keep the parent's overview.md and spec.md as-is (do not delete them)
 
 ---
 
