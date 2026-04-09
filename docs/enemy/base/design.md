@@ -60,6 +60,7 @@ public class EnemyData : ScriptableObject
     public float      attackRange;
     public int        scrapDropMin;
     public int        scrapDropMax;
+    public float      projectileSpeed;  // TurretAI / FortressAI / Boss 用
     public GameObject projectilePrefab; // TurretAI / FortressAI / Boss 用
 }
 ```

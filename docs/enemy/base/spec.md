@@ -26,6 +26,7 @@
 | `aiType` | AIType enum | AI 種別 |
 | `scrapDropMin` | int | スクラップドロップ最小値 |
 | `scrapDropMax` | int | スクラップドロップ最大値 |
+| `projectileSpeed` | float | 弾丸の移動速度（TurretAI / FortressAI / Boss 用） |
 | `projectilePrefab` | GameObject | 弾丸 Prefab（砲台系のみ使用） |
 
 ## EnemyController 動作仕様

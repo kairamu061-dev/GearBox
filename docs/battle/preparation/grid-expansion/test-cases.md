@@ -8,7 +8,7 @@
 | U2 | 列上限でボタン無効 | GridSize.x = 5・Scrap = 200 | `RefreshUI()` を呼ぶ | AddColumn ボタンが interactable = false |
 | U3 | 行上限でボタン無効 | GridSize.y = 5・Scrap = 200 | `RefreshUI()` を呼ぶ | AddRow ボタンが interactable = false |
 | U4 | 列追加ボタン押下で ExpandGrid 呼ばれる | Scrap = 200・GridSize = (3, 3) | `OnAddColumnClicked()` を呼ぶ | `RunManager.SpendScrap(80)` → `ExpandGrid(true)` が呼ばれる |
-| U5 | OnScrapChanged で即時ボタン更新 | GridExpansionUI 初期化済み・Scrap = 200 | `RunManager.AddScrap(-190)` で Scrap を 10 に減らす | ボタンが即座に無効化される |
+| U5 | OnScrapChanged で即時ボタン更新 | GridExpansionUI 初期化済み・Scrap = 200 | `RunManager.SpendScrap(190)` で Scrap を 10 に減らす | ボタンが即座に無効化される |
 
 ## 統合テスト
 

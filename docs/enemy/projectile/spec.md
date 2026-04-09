@@ -22,7 +22,7 @@
 
 | パラメータ | 値 | 説明 |
 |-----------|---|------|
-| 移動速度 | EnemyData.attackDamage で指定（呼び出し側から渡す） | |
+| 移動速度 | EnemyData.projectileSpeed（Launch() 引数で渡す） | |
 | 命中レイヤー | Player（戦車のみ） | |
 | 無効レイヤー | Obstacle / Wall | ダメージなし消滅 |
 

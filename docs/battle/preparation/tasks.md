@@ -49,7 +49,7 @@
 
 ## 依存関係
 
-- `RunManager`（battle/combat で実装）→ すべての前提
+- `RunManager`（core/）→ すべての前提
 - `TowerData` / `TowerInstance`（tower/base）→ GridUI・CardUI の前提
 - `GridManager` → `GridUI` / `TowerDragHandler` の前提
 - `SynthesisUI` / `SynthesisManager`（tower/synthesis）→ 合成タブの前提
