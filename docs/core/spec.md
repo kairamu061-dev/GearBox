@@ -79,6 +79,18 @@
 | 列（横） | 3 | 5 |
 | 行（縦） | 3 | 5 |
 
+## ExpandGrid の動作詳細
+
+`ExpandGrid(bool addColumn)` を呼ぶと以下の順で処理する:
+
+1. 上限チェック（`addColumn` なら `GridSize.x < 5`、行なら `GridSize.y < 5`）。超えていたら即 return。
+2. 新しいサイズ（newW × newH）の `TowerInstance[,]` を新規確保し、全要素を null で初期化する。
+3. 既存の `GridLayout` の内容を新配列へコピーする（既存タワーの配置はそのまま保持）。
+4. `GridLayout` を新配列で差し替え、`GridSize` を更新する。
+5. `OnGridChanged` を発火する。
+
+> 新規追加された列・行のセルは常に null（空き）で初期化される。
+
 ## エラー / 異常ケース
 
 | 条件 | 挙動 |

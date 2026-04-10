@@ -7,7 +7,7 @@
 | 1 | 占有判定 | タワーを指定 origin に配置できるか判定する |
 | 2 | 配置実行 | RunManager.GridLayout の対象マスに TowerInstance を書き込む |
 | 3 | 除去実行 | 指定マスのタワーが占有するすべてのマスを null に戻す |
-| 4 | 占有マス取得 | TowerInstance の占有するマス一覧を返す |
+| 4 | 占有マス取得 | TowerData の shape から占有マス一覧を計算して返す |
 
 ## API 仕様
 
@@ -16,12 +16,12 @@
 | `CanPlace(tower, origin, grid)` | TowerData, Vector2Int, TowerInstance[,] | bool | グリッド範囲内かつすべてのマスが空なら true |
 | `Place(tower, origin)` | TowerInstance, Vector2Int | void | GridLayout の占有マスに tower を書き込む |
 | `Remove(anyOccupiedCell)` | Vector2Int | void | そのマスを占有する TowerInstance の全占有マスを null に戻す |
-| `GetOccupiedCells(tower, origin)` | TowerInstance, Vector2Int | List\<Vector2Int\> | タワーのサイズをもとに占有マス一覧を計算して返す |
+| `GetOccupiedCells(data, origin)` | TowerData, Vector2Int | List\<Vector2Int\> | data.shape をもとに占有マス一覧を計算して返す |
 
 ## 動作仕様
 
 ### CanPlace
-1. `GetOccupiedCells(tower, origin)` で占有マス一覧を取得
+1. `GetOccupiedCells(tower, origin)` で占有マス一覧を取得（tower は TowerData）
 2. 各マスがグリッド範囲内（0 ≤ x < GridSize.x、0 ≤ y < GridSize.y）であることを確認
 3. 各マスの `GridLayout[x, y]` が null であることを確認
 4. すべて満たせば true、1つでも外れれば false
@@ -33,7 +33,8 @@
 
 ### Remove
 1. `GridLayout[anyOccupiedCell]` から TowerInstance を取得
-2. その TowerInstance の origin を探索して `GetOccupiedCells` を取得
+2. GridLayout 全体を走査してその TowerInstance の最左上マスを origin として確定する
+3. `GetOccupiedCells(instance.data, origin)` で占有マス一覧を取得
 3. 各マスを null に戻す
 4. `RunManager.OnGridChanged` を発火する
 

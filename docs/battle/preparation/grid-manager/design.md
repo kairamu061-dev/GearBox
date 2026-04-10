@@ -20,8 +20,8 @@ public static class GridManager
     // 任意の占有マスを起点に、そのタワーの全占有マスを null に戻す
     public static void Remove(Vector2Int anyOccupiedCell);
 
-    // タワーのサイズから占有マス一覧を計算
-    public static List<Vector2Int> GetOccupiedCells(TowerInstance tower, Vector2Int origin);
+    // TowerData.shape から占有マス一覧を計算（CanPlace・Place・Remove 全てが内部で呼ぶ）
+    public static List<Vector2Int> GetOccupiedCells(TowerData data, Vector2Int origin);
 }
 ```
 

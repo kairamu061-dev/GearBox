@@ -54,9 +54,9 @@ public static class SynthesisManager
     // レシピが既知かつ所持タワーで合成可能か
     public static bool CanSynthesize(TowerData a, TowerData b, out SynthesisRecipe recipe);
 
-    // 合成実行: RunManager の所持リストから a・b を消費し result を追加
+    // 合成実行: RunManager の所持リストから a・b を消費し result（upgradeLevel=0）を追加
     // グリッドに a または b が配置済みの場合は配置を解除してから消費
-    public static TowerData Execute(SynthesisRecipe recipe);
+    public static void Execute(SynthesisRecipe recipe);
 }
 
 // レシピ解放（設計図取得・ハテナイベント時）
