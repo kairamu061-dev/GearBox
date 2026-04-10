@@ -1,6 +1,8 @@
 # 準備フェーズ 設計
 
-> `GridExpansionUI` は準備フェーズが所有する共用 Prefab として独立。詳細は [grid-expansion/design.md](./grid-expansion/design.md) を参照。
+> サブ項目として独立した設計詳細:
+> - `GridManager`（占有判定・配置ロジック）→ [grid-manager/design.md](./grid-manager/design.md)
+> - `GridExpansionUI`（グリッド拡張UI）→ [grid-expansion/design.md](./grid-expansion/design.md)
 
 ## Unityパッケージ / アセット
 

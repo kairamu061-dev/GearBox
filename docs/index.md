@@ -15,6 +15,7 @@
 - [battle](./battle/overview.md)
   - [preparation](./battle/preparation/overview.md)
     - [grid-expansion](./battle/preparation/grid-expansion/overview.md)
+    - [grid-manager](./battle/preparation/grid-manager/overview.md)
   - [combat](./battle/combat/overview.md)
 - [tower](./tower/overview.md)
   - [base](./tower/base/overview.md)

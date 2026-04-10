@@ -8,11 +8,7 @@
 - [ ] PreparationScene の作成（シーン構造・Canvas 設定）
 
 ### グリッド管理
-- [ ] `GridManager` の実装
-  - [ ] `CanPlace(tower, origin, grid)` — 占有判定
-  - [ ] `Place(tower, origin)` — RunManager.GridLayout を更新
-  - [ ] `Remove(cell)` — 占有マスをすべてクリア
-  - [ ] `GetOccupiedCells(tower, origin)` — 占有マス一覧取得
+- [ ] `GridManager` の実装 → 詳細は [grid-manager/tasks.md](./grid-manager/tasks.md) を参照
 
 ### グリッド UI
 - [ ] `GridUI` の実装（`RunManager.GridLayout` をもとにセルを動的生成・再描画）
