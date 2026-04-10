@@ -8,9 +8,10 @@
 | 2 | IEnemyAI インターフェース | AI の共通契約を定義する |
 | 3 | HP 管理 | ダメージを受けて HP を減少させ、0 で死亡処理を呼ぶ |
 | 4 | 死亡処理 | ScrapDropper を起動してスクラップを散乱させ、自身を消滅させる |
-| 5 | 敵弾 | 直進してプレイヤーに当たると TakeDamage を呼ぶ |
-| 6 | スクラップドロップ | 死亡時にスクラップオブジェクトをランダム散乱する |
-| 7 | ScrapObject | フィールドに落ちるスクラップ。60秒で自動消滅する |
+
+> **敵弾・スクラップドロップはサブ項目を参照:**
+> - 敵弾 → [enemy/projectile/spec.md](../projectile/spec.md)
+> - スクラップドロップ / ScrapObject → [enemy/scrap/spec.md](../scrap/spec.md)
 
 ## EnemyData フィールド
 
@@ -36,23 +37,9 @@
 3. `TakeDamage(float)` で HP を減算し、0 以下で `Die()` を呼ぶ
 4. `Die()` で `ScrapDropper.Drop()` → `Destroy(gameObject)` の順で実行する
 
-## スクラップドロップ仕様
-
-- 死亡時に `scrapDropMin〜scrapDropMax` のランダム値個の `ScrapObject` を生成する
-- `ScrapObject` は死亡位置の周囲（半径 1.5 ユニット）にランダム散乱する
-- `ScrapObject` は 60 秒後に自動消滅する
-
-## ScrapObject 回収時の RunManager 連携
-
-- 戦車の `ScrapCollector`（`CircleCollider2D` trigger）が `ScrapObject` に接触すると `OnTriggerEnter2D` が発火する
-- **`ScrapObject` 側が `RunManager.AddScrap(1)` を呼び出して加算する**（ScrapCollector 側では呼ばない）
-- 加算後、`ScrapObject` は即座に自身を非活性化してプールへ返却する（詳細は enemy/scrap/ を参照）
-
-## EnemyProjectile 動作仕様
-
-- 生成時に方向を設定し、一定速度（velocity）で直進する
-- `IDamageable` を持つ GameObject に当たると `TakeDamage` を呼ぶ
-- 壁または障害物に当たると消滅する
+> **スクラップドロップ・敵弾の詳細はサブ項目を参照:**
+> - スクラップドロップ / ScrapObject → [enemy/scrap/spec.md](../scrap/spec.md)
+> - 敵弾（EnemyProjectile）→ [enemy/projectile/spec.md](../projectile/spec.md)
 
 ## エラー / 異常ケース
 

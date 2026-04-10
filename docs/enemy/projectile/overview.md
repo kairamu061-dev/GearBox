@@ -18,7 +18,8 @@
 ## 制約
 
 - `IDamageable`（tower/base/）に準拠してダメージを与える
-- ObjectPool は使用しない（敵弾は頻度が低く Instantiate/Destroy で十分）
+- ObjectPool は使用しない（通常敵・ボスフェーズ1〜2は頻度が低く Instantiate/Destroy で十分）
+  - ボスフェーズ3の8方向同時射撃など高頻度が必要になった場合は enemy/projectile/dev-notes.md に記録して再検討する
 - 壁・障害物レイヤーに当たった場合はダメージなしで即消滅する
 
 ## 完了条件

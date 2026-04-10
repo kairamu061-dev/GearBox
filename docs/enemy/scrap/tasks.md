@@ -7,6 +7,7 @@
 ### ScrapDropper
 - [ ] `ScrapDropper` MonoBehaviour の作成
   - [ ] `Drop(deathPosition, data)` — scrapDropMin〜Max の個数分 ScrapObject をプールから取得・散乱
+- [ ] `EnemyUnit` Prefab と `BossUnit` Prefab に `ScrapDropper` をアタッチする（enemy/base/design.md 参照）
 
 ### ScrapObject
 - [ ] `ScrapObject` MonoBehaviour の作成

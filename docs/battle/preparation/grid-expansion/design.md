@@ -27,7 +27,7 @@ GridExpansionUI (MonoBehaviour)
 ```csharp
 public class GridExpansionUI : MonoBehaviour
 {
-    private void Start();    // RunManager.OnScrapChanged を購読して RefreshUI() を登録
+    private void Start();    // RunManager.OnScrapChanged / OnGridChanged を購読して RefreshUI() を登録
     private void OnDestroy();// 購読解除
 
     public void OnAddColumnClicked();  // AddColumnButton の onClick
@@ -41,4 +41,4 @@ public class GridExpansionUI : MonoBehaviour
 
 | 参照先 | 用途 |
 |--------|------|
-| `RunManager`（core/） | GridSize 読み取り・SpendScrap・ExpandGrid 呼び出し・OnScrapChanged 購読 |
+| `RunManager`（core/） | GridSize 読み取り・SpendScrap・ExpandGrid 呼び出し・OnScrapChanged / OnGridChanged 購読 |

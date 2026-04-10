@@ -11,7 +11,7 @@
 | 5 | タワー在庫管理 | 手持ちタワー一覧を保持し、追加・削除 API を提供する |
 | 6 | 合成レシピ管理 | 既知の合成レシピ一覧を保持し、解放 API を提供する |
 | 7 | マップ進行管理 | 現在エリアの MapGraph・現在ノード ID を保持する |
-| 8 | 状態変更イベント | HP・スクラップが変化した際にイベントを発火して購読者に通知する |
+| 8 | 状態変更イベント | HP・スクラップ・グリッドが変化した際にイベントを発火して購読者に通知する |
 
 ## 状態フィールド
 
@@ -48,6 +48,7 @@
 |-----------|-----------|--------------|
 | `OnHpChanged` | `Action<int, int>` (current, max) | TakeDamage / Heal 後 |
 | `OnScrapChanged` | `Action<int>` (total) | AddScrap / SpendScrap 後 |
+| `OnGridChanged` | `Action` | ExpandGrid 後（GridUI の再描画トリガー） |
 
 ## TowerInventory と GridLayout の関係
 
