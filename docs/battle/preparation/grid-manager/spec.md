@@ -7,7 +7,7 @@
 | 1 | 占有判定 | タワーを指定 origin に配置できるか判定する |
 | 2 | 配置実行 | RunManager.GridLayout の対象マスに TowerInstance を書き込む |
 | 3 | 除去実行 | 指定マスのタワーが占有するすべてのマスを null に戻す |
-| 4 | 占有マス取得 | TowerData の shape から占有マス一覧を計算して返す |
+| 4 | 占有マス取得 | TowerData の shape（行優先、index = y × size.x + x）から占有マス一覧を計算して返す |
 
 ## API 仕様
 

@@ -29,7 +29,7 @@
 | cooldown | float | 攻撃CT（秒） |
 | range | float | 攻撃射程（ユニット）|
 | size | Vector2Int | グリッド占有サイズ（例: 1,1 / 2,1） |
-| shape | bool[] | サイズ×サイズのマス占有マップ（L字形など対応） |
+| shape | bool[] | 占有マップ。長さ = size.x × size.y、インデックス = y × size.x + x（行優先・左上原点） |
 | projectilePrefab | GameObject | 弾丸Prefab（照準・追尾型のみ）|
 | poolSize | int | 弾丸プールの初期サイズ |
 

@@ -61,7 +61,7 @@ public class TowerData : ScriptableObject
     public float      cooldown;          // CT（秒）
     public float      range;             // 射程（ユニット）
     public Vector2Int size;              // グリッド占有 (x=列, y=行)
-    public bool[]     shape;             // size.x * size.y、左上原点の占有マップ
+    public bool[]     shape;             // 長さ = size.x * size.y、行優先（index = y * size.x + x）、左上原点
     public GameObject projectilePrefab;  // Aimed / AutoAim のみ
     public int        poolSize = 20;
     public int        basePrice;
