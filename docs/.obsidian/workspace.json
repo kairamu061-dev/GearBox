@@ -184,6 +184,13 @@
   "active": "a3931aa8a1d8548d",
   "lastOpenFiles": [
     "Images/tower_card.png",
+    "Images/synthesis_ui.png",
+    "Images/preparation_screen.png",
+    "Images/map_screen.png",
+    "Images/enemy_lineup.png",
+    "Images/concept_title.png",
+    "Images/battle_field.png",
+    "Images/combat_scene.png",
     "Images/ui_style_guide.png",
     "map/scene/tasks.md",
     "map/scene/test-cases.md",
@@ -212,13 +219,6 @@
     "map/design.md",
     "core/design.md",
     "gearbox/ようこそ.md",
-    "Images/combat_scene.png",
-    "Images/concept_title.png",
-    "Images/enemy_lineup.png",
-    "Images/preparation_screen.png",
-    "Images/synthesis_ui.png",
-    "Images/map_screen.png",
-    "Images/battle_field.png",
     "Images"
   ]
 }
