@@ -66,3 +66,4 @@
 ```
 
 <!-- [求：コンセプトアート] prompt="Steampunk top-down 2D battle field, player steam tank with multiple turrets fighting enemy armored vehicles, industrial wasteland, dark gritty style" ratio="16:9" output="docs/assets/battle-field.png" -->
+![[Images/battle_field.png]]

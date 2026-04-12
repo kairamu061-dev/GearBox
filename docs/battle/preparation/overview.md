@@ -68,3 +68,4 @@
 ```
 
 <!-- [求：UI素材] prompt="Steampunk game preparation screen UI, tank grid with draggable turret slots, iron panel style, dark brown and amber color palette" ratio="16:9" output="docs/assets/preparation-screen.png" -->
+![[Images/preparation_screen.png]]

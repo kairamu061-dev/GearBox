@@ -51,3 +51,4 @@
 ```
 
 <!-- [求：UI素材] prompt="Steampunk crafting/synthesis UI screen, two ingredient slots with plus sign and arrow, result slot, dark iron panel aesthetic, amber glow effects" ratio="16:9" output="docs/assets/synthesis-ui.png" -->
+![[Images/synthesis_ui.png]]

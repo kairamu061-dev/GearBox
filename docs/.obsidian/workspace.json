@@ -1,0 +1,224 @@
+{
+  "main": {
+    "id": "2278cbd65e2c91ac",
+    "type": "split",
+    "children": [
+      {
+        "id": "628e19b784243db7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a3931aa8a1d8548d",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Images/ui_style_guide.png"
+              },
+              "icon": "lucide-image",
+              "title": "ui_style_guide"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "54d845c9dfbb2b32",
+    "type": "split",
+    "children": [
+      {
+        "id": "6c8c003b43042d40",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d8c692b33ed7415f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "ファイルエクスプローラ"
+            }
+          },
+          {
+            "id": "a20da3bd40b7c5ec",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "検索"
+            }
+          },
+          {
+            "id": "dcd6a4f4f81f588a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "ブックマーク"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "45de708ed33dc8d2",
+    "type": "split",
+    "children": [
+      {
+        "id": "be6a7932118bff03",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e4c8d742e1aa54e6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Images/ui_style_guide.png",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "ui_style_guideへのバックリンク"
+            }
+          },
+          {
+            "id": "d421af3bb37dce32",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Images/ui_style_guide.png",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "ui_style_guideからのアウトゴーイングリンク"
+            }
+          },
+          {
+            "id": "9b2567c4877c342e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "タグ"
+            }
+          },
+          {
+            "id": "21823b2788960c15",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "すべてのプロパティ"
+            }
+          },
+          {
+            "id": "c2fe7be8c3669291",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Images/ui_style_guide.png",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "ui_style_guideのアウトライン"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:クイックスイッチャーを開く": false,
+      "graph:グラフビューを開く": false,
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false,
+      "bases:新規ベースを作成": false
+    }
+  },
+  "active": "a3931aa8a1d8548d",
+  "lastOpenFiles": [
+    "Images/tower_card.png",
+    "Images/ui_style_guide.png",
+    "map/scene/tasks.md",
+    "map/scene/test-cases.md",
+    "map/scene/design.md",
+    "map/scene/dev-notes.md",
+    "map/scene/spec.md",
+    "map/scene/overview.md",
+    "無題のファイル.canvas",
+    "無題のファイル.base",
+    "core/spec.md",
+    "core/overview.md",
+    "tower/overview.md",
+    "map/overview.md",
+    "map/generation/spec.md",
+    "map/generation/dev-notes.md",
+    "map/generation/overview.md",
+    "economy/tasks.md",
+    "economy/overview.md",
+    "economy/dev-notes.md",
+    "battle/preparation/spec.md",
+    "battle/preparation/overview.md",
+    "battle/combat/overview.md",
+    "battle/overview.md",
+    "map/tasks.md",
+    "map/spec.md",
+    "map/design.md",
+    "core/design.md",
+    "gearbox/ようこそ.md",
+    "Images/combat_scene.png",
+    "Images/concept_title.png",
+    "Images/enemy_lineup.png",
+    "Images/preparation_screen.png",
+    "Images/synthesis_ui.png",
+    "Images/map_screen.png",
+    "Images/battle_field.png",
+    "Images"
+  ]
+}

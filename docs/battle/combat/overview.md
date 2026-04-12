@@ -59,3 +59,4 @@
 ```
 
 <!-- [求：コンセプトアート] prompt="Top-down 2D steampunk battle scene, player steam tank shooting at enemy armored vehicles, industrial wasteland tilemap, dark gritty atmosphere, action game style" ratio="16:9" output="docs/assets/combat-scene.png" -->
+![[Images/combat_scene.png]]

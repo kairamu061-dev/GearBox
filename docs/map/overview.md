@@ -51,3 +51,4 @@
 ```
 
 <!-- [求：コンセプトアート] prompt="Steampunk roguelike map screen, node-based path selection UI, dark industrial aesthetic, connected circular nodes with icons, parchment and iron frame style" ratio="16:9" output="docs/assets/map-screen.png" -->
+![[Images/map_screen.png]]

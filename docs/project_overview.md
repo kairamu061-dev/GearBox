@@ -5,6 +5,7 @@
 スチームパンクな世界観で、廃材から組み上げた戦車に砲台を積み込み、敵の陣営を突破していくローグライクアクションゲーム。スレイザスパイヤ式のマップを進みながら戦車を強化し、ボスを倒してエリアをクリアする。
 
 <!-- [求：コンセプトアート] prompt="Steampunk roguelike game title screen, heavily armored steam-powered tank with multiple turrets, industrial wasteland battlefield, dark oil painting style, dramatic lighting" ratio="16:9" output="docs/assets/concept-title.png" -->
+![[Images/concept_title.png]]
 
 ## コアループ
 
@@ -85,6 +86,7 @@
 スチームパンク世界観に合わせた「錆・鉄・蒸気」を感じるダークブラウン・アンバー系のビジュアル。HUD は最小限にとどめ、戦闘の視認性を優先する。
 
 <!-- [求：コンセプトアート] prompt="Steampunk game UI style guide, dark brown iron panels, amber gauges, rivets, steam pipes, HUD elements, flat vector style" ratio="16:9" output="docs/assets/ui-style-guide.png" -->
+![[Images/ui_style_guide.png]]
 
 ### カラーパレット
 

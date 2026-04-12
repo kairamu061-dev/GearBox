@@ -46,3 +46,4 @@
 ```
 
 <!-- [求：コンセプトアート] prompt="Steampunk enemy vehicles: small scrap walker tank, fixed steam cannon turret, armored locomotive, heavy fortress tank, all in dark industrial style, top-down 2D sprites" ratio="16:9" output="docs/assets/enemy-lineup.png" -->
+![[Images/enemy_lineup.png]]

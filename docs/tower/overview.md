@@ -63,6 +63,7 @@
 ```
 
 <!-- [求：UI素材] prompt="Steampunk tower card UI, dark iron panel with amber text, showing weapon stats like damage and cooldown, riveted frame style" ratio="1:1" output="docs/assets/tower-card.png" -->
+![[Images/tower_card.png]]
 
 ---
 
