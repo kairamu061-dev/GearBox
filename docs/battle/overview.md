@@ -65,5 +65,5 @@
 +---------------------+-------------+--------+
 ```
 
-<!-- [求：コンセプトアート] prompt="Steampunk top-down 2D battle field, player steam tank with multiple turrets fighting enemy armored vehicles, industrial wasteland, dark gritty style" ratio="16:9" output="docs/assets/battle-field.png" -->
+<!-- [求：コンセプトアート] prompt="Steampunk 2D game screenshot, strict bird's-eye top-down view (directly overhead, zero perspective tilt), player steam-powered tank seen from above with visible turrets on top, enemy vehicles also seen from above, industrial wasteland tilemap, dark gritty pixel-art style, NOT isometric, NOT 3D perspective" ratio="16:9" output="docs/Images/battle_field.png" -->
 ![[Images/battle_field.png]]
