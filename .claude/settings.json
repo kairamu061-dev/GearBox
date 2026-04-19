@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Agent|Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash 'C:/workspace2/GearBox/.claude/log-tool-usage.sh'",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
