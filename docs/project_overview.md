@@ -59,16 +59,19 @@
 
 ```
 シーン構成:
-  TitleScene          ← タイトル・ランク選択
+  LogoScene           ← 起動直後のロゴ表示（フェードイン→表示→フェードアウト）
+  TitleScene          ← タイトル・ゲーム開始
   MapScene            ← ローグライクマップ画面
   PreparationScene    ← バトル前の積み込み準備画面
   BattleScene         ← 戦闘フィールド
   ShopScene           ← ショップ
-  ResultScene         ← バトル結果 / ゲームオーバー
+  RefitScene          ← 改修（強化・合成・修理・拡張・売却）
+  GameOverScene       ← ゲームオーバー・リスタート選択
 
 主要 Manager（DontDestroyOnLoad）:
   GameManager         ← ゲーム全体の状態管理・シーン遷移
   RunManager          ← 1ランン分の進行状態（マップ進捗・所持スクラップ・タワー）
+  SceneTransitionManager ← シーン間フェード演出の制御
   AudioManager        ← BGM / SE 再生
   SaveManager         ← セーブデータ管理（ランン中の中断復帰）
 ```

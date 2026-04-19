@@ -91,6 +91,44 @@
 
 > 新規追加された列・行のセルは常に null（空き）で初期化される。
 
+## シーン遷移（SceneTransitionManager）仕様
+
+### 概要
+
+画面全体を覆う黒いオーバーレイ（UI Canvas の最前面）をフェードさせることでシーン切り替えの演出を行う。DontDestroyOnLoad で全シーンに跨って動作する。
+
+### 基本動作
+
+```
+TransitionTo(sceneName) の流れ:
+  1. フェードアウト（透明 → 黒、fadeDuration 秒）
+  2. SceneManager.LoadScene(sceneName) を呼ぶ
+  3. フェードイン（黒 → 透明、fadeDuration 秒）
+```
+
+### パラメータ
+
+| パラメータ | 値 | 説明 |
+|-----------|---|------|
+| fadeDuration | 0.4s | フェードアウト・フェードインの各所要時間（デフォルト） |
+| fadeColor | 黒（#000000） | オーバーレイの色 |
+
+### フェードなし遷移
+
+一部のシーン切り替えはフェードを行わず即時切り替えとする。該当シーンの仕様で `TransitionImmediate(sceneName)` を使用すると明記する。
+
+> フェードなしの対象シーンは各シーン仕様で個別に定義する。
+
+### API
+
+| メソッド | 説明 |
+|---------|------|
+| `TransitionTo(string sceneName)` | フェードアウト→ロード→フェードインで遷移 |
+| `TransitionTo(string sceneName, float duration)` | fadeDuration を上書きして遷移 |
+| `TransitionImmediate(string sceneName)` | フェードなしで即時遷移 |
+| `FadeOut(float duration)` | フェードアウトのみ実行（ロードは呼び出し元が行う） |
+| `FadeIn(float duration)` | フェードインのみ実行 |
+
 ## エラー / 異常ケース
 
 | 条件 | 挙動 |
