@@ -11,12 +11,14 @@
             "id": "a3931aa8a1d8548d",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Images/ui_style_guide.png"
+                "file": "battle/overview.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "ui_style_guide"
+              "icon": "lucide-file",
+              "title": "overview"
             }
           }
         ]
@@ -92,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Images/ui_style_guide.png",
+                "file": "battle/overview.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "ui_style_guideへのバックリンク"
+              "title": "overviewへのバックリンク"
             }
           },
           {
@@ -111,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Images/ui_style_guide.png",
+                "file": "battle/overview.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "ui_style_guideからのアウトゴーイングリンク"
+              "title": "overviewからのアウトゴーイングリンク"
             }
           },
           {
@@ -154,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Images/ui_style_guide.png",
+                "file": "battle/overview.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ui_style_guideのアウトライン"
+              "title": "overviewのアウトライン"
             }
           }
         ]
@@ -183,6 +185,13 @@
   },
   "active": "a3931aa8a1d8548d",
   "lastOpenFiles": [
+    "core/spec.md",
+    "core/overview.md",
+    "core/design.md",
+    "core/dev-notes.md",
+    "core/tasks.md",
+    "battle/combat/design.md",
+    "Images/ui_style_guide.png",
     "Images/tower_card.png",
     "Images/synthesis_ui.png",
     "Images/preparation_screen.png",
@@ -191,7 +200,6 @@
     "Images/concept_title.png",
     "Images/battle_field.png",
     "Images/combat_scene.png",
-    "Images/ui_style_guide.png",
     "map/scene/tasks.md",
     "map/scene/test-cases.md",
     "map/scene/design.md",
@@ -200,8 +208,6 @@
     "map/scene/overview.md",
     "無題のファイル.canvas",
     "無題のファイル.base",
-    "core/spec.md",
-    "core/overview.md",
     "tower/overview.md",
     "map/overview.md",
     "map/generation/spec.md",
@@ -216,9 +222,6 @@
     "battle/overview.md",
     "map/tasks.md",
     "map/spec.md",
-    "map/design.md",
-    "core/design.md",
-    "gearbox/ようこそ.md",
     "Images"
   ]
 }
