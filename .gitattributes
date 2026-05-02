@@ -1,0 +1,22 @@
+# Normalize line endings to LF on commit
+* text=auto eol=lf
+
+# Explicitly declare text files
+*.md text eol=lf
+*.json text eol=lf
+*.sh text eol=lf
+*.cs text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Binary files — do not touch line endings
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.unity binary
+*.asset binary
+*.prefab binary
+*.meta binary

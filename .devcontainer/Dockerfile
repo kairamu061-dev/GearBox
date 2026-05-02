@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     jq \
     unzip \
+    procps \
     && rm -rf /var/lib/apt/lists/*
 
 # ========== .NET 8 SDK ==========

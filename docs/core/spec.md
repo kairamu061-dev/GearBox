@@ -22,7 +22,7 @@
 | `Scrap` | int | 0 | 所持スクラップ数 |
 | `GridSize` | Vector2Int | (3, 3) | グリッドの列数・行数 |
 | `GridLayout` | TowerInstance[,] | all null | グリッドの配置状態 |
-| `TowerInventory` | List\<TowerInstance\> | 空 | 手持ちタワー（グリッド外） |
+| `TowerInventory` | List\<TowerInstance\> | 蒸気砲×1 | 手持ちタワー（グリッド外）。初期タワーは今後変更予定 |
 | `KnownRecipes` | List\<SynthesisRecipe\> | 空 | 解放済み合成レシピ |
 | `CurrentMapGraph` | MapGraph | null | 現在エリアのマップグラフ |
 | `CurrentNodeId` | int | -1 | 現在選択中のノード ID |

@@ -39,3 +39,4 @@
   - [buff](./tower/buff/overview.md)
 - [logo](./logo/overview.md)
 - [title](./title/overview.md)
+- [settings](./settings/overview.md)
