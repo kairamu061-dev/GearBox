@@ -43,3 +43,5 @@
 - [logo](./logo/overview.md)
 - [title](./title/overview.md)
 - [settings](./settings/overview.md)
+- [game-over](./game-over/overview.md)
+- [run-history](./run-history/overview.md)
