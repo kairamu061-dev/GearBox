@@ -85,6 +85,9 @@
 
 スチームパンク世界観に合わせた「錆・鉄・蒸気」を感じるダークブラウン・アンバー系のビジュアル。HUD は最小限にとどめ、戦闘の視認性を優先する。
 
+<!-- [求：コンセプトアート] prompt="Steampunk game UI style guide, dark brown iron panels, amber gauges, rivets, steam pipes, HUD elements, flat vector style" ratio="16:9" output="docs/assets/ui-style-guide.png" -->
+![[Images/ui_style_guide.png]]
+
 ### カラーパレット
 
 | 用途 | カラーコード | 説明 |
