@@ -19,7 +19,7 @@
 |-----------|---|--------|------|
 | `MaxHp` | int | 100 | 戦車の最大HP |
 | `CurrentHp` | int | 100 | 戦車の現在HP |
-| `Scrap` | int | 0 | 所持スクラップ数 |
+| `Scrap` | int | 100 | 所持スクラップ数 |
 | `GridSize` | Vector2Int | (3, 3) | グリッドの列数・行数 |
 | `GridLayout` | TowerInstance[,] | all null | グリッドの配置状態 |
 | `TowerInventory` | List\<TowerInstance\> | 蒸気砲×1 | 手持ちタワー（グリッド外）。初期タワーは今後変更予定 |

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "battle/overview.md",
+                "file": "title/spec.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "overview"
+              "title": "spec"
             }
           }
         ]
@@ -185,6 +185,28 @@
   },
   "active": "a3931aa8a1d8548d",
   "lastOpenFiles": [
+    "core/spec.md.tmp.13666.1777892905753",
+    "battle/preparation/spec.md.tmp.13666.1777892902225",
+    "battle/preparation/spec.md.tmp.13666.1777892886909",
+    "battle/preparation/spec.md.tmp.13666.1777892876956",
+    "map/scene/spec.md.tmp.13666.1777892859835",
+    "map/scene/spec.md.tmp.13666.1777892854115",
+    "map/scene/spec.md.tmp.13666.1777892844235",
+    "map/scene/spec.md.tmp.13666.1777892832737",
+    "map/scene/spec.md.tmp.13666.1777892827903",
+    "economy/hatena/spec.md.tmp.13666.1777887556605",
+    "economy/hatena/spec.md.tmp.13666.1777887551418",
+    "title/overview.md",
+    "title/dev-notes.md",
+    "economy/overview.md",
+    "project_overview.md",
+    "title/spec.md",
+    "economy/spec.md",
+    "title/tasks.md",
+    "Images/title_screen_mockup.png",
+    "title/design.md",
+    "title/test-cases.md",
+    "battle/overview.md",
     "core/spec.md",
     "core/overview.md",
     "core/design.md",
@@ -207,21 +229,8 @@
     "map/scene/spec.md",
     "map/scene/overview.md",
     "無題のファイル.canvas",
-    "無題のファイル.base",
     "tower/overview.md",
     "map/overview.md",
-    "map/generation/spec.md",
-    "map/generation/dev-notes.md",
-    "map/generation/overview.md",
-    "economy/tasks.md",
-    "economy/overview.md",
-    "economy/dev-notes.md",
-    "battle/preparation/spec.md",
-    "battle/preparation/overview.md",
-    "battle/combat/overview.md",
-    "battle/overview.md",
-    "map/tasks.md",
-    "map/spec.md",
-    "Images"
+    "map/generation/spec.md"
   ]
 }
