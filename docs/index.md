@@ -45,3 +45,4 @@
 - [settings](./settings/overview.md)
 - [game-over](./game-over/overview.md)
 - [run-history](./run-history/overview.md)
+  - [beam](./tower/beam/overview.md)
