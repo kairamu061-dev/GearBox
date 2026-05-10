@@ -6,8 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /workspace/.claude/log-tool-usage.sh",
-            "async": true
+            "command": "bash /workspace/.claude/log-tool-usage.sh"
           }
         ]
       }
