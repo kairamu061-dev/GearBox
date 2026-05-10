@@ -1,12 +1,11 @@
 {
   "hooks": {
-    "PreToolUse": [
+    "SubagentStart": [
       {
-        "matcher": "Agent|Skill",
         "hooks": [
           {
             "type": "command",
-            "command": "bash /workspace/.claude/log-tool-usage.sh"
+            "command": "echo \"$(date '+%Y-%m-%dT%H:%M:%S') | SubagentStart | $CLAUDE_AGENT_ID\" >> /workspace/.claude/usage.log"
           }
         ]
       }
