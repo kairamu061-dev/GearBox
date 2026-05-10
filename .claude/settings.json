@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash 'C:/workspace2/GearBox/.claude/log-tool-usage.sh'",
+            "command": "bash .claude/log-tool-usage.sh",
             "async": true
           }
         ]
