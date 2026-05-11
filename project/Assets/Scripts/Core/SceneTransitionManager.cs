@@ -7,16 +7,40 @@ public class SceneTransitionManager : MonoBehaviour
 {
     public static SceneTransitionManager Instance { get; private set; }
 
-    [SerializeField] Canvas overlayCanvas;
-    [SerializeField] Image fadeImage;
     [SerializeField] float defaultFadeDuration = 0.4f;
+
+    Image fadeImage;
 
     void Awake()
     {
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        BuildFadeOverlay();
         SetAlpha(0f);
+    }
+
+    // DontDestroyOnLoad で持ち歩くため、Canvas・Image を自前で生成する
+    void BuildFadeOverlay()
+    {
+        var canvasGo = new GameObject("FadeCanvas");
+        canvasGo.transform.SetParent(transform);
+        var canvas = canvasGo.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 999;
+        canvasGo.AddComponent<UnityEngine.UI.CanvasScaler>();
+        canvasGo.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+        DontDestroyOnLoad(canvasGo);
+
+        var imgGo = new GameObject("FadeImage");
+        imgGo.transform.SetParent(canvasGo.transform, false);
+        fadeImage = imgGo.AddComponent<Image>();
+        fadeImage.color = Color.black;
+        fadeImage.raycastTarget = false;
+        var rt = imgGo.GetComponent<RectTransform>();
+        rt.anchorMin = Vector2.zero;
+        rt.anchorMax = Vector2.one;
+        rt.offsetMin = rt.offsetMax = Vector2.zero;
     }
 
     public void TransitionTo(string sceneName) =>
