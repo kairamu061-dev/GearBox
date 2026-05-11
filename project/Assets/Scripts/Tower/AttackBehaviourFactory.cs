@@ -1,11 +1,11 @@
 public static class AttackBehaviourFactory
 {
-    public static IAttackBehaviour Create(AttackType type)
+    public static IAttackBehaviour Create(AttackType type) => type switch
     {
-        // 各攻撃タイプの実装は順次追加
-        return type switch
-        {
-            _ => null,
-        };
-    }
+        AttackType.Aimed    => new AimedAttack(),
+        AttackType.AutoAim  => new AutoAimAttack(),
+        AttackType.Area     => new AreaAttack(),
+        AttackType.Beam     => new BeamAttack(),
+        _                   => null,
+    };
 }
