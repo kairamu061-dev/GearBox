@@ -1,0 +1,30 @@
+# Unity 生成ファイル
+project/Library/
+project/Temp/
+project/Logs/
+project/UserSettings/
+project/obj/
+project/Build/
+project/Builds/
+project/*.sln
+project/*.csproj
+
+# Unity キャッシュ・自動生成
+project/Assets/AssetStoreTools*
+project/[Ll]ocal[Ss]ettings.json
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS 生成ファイル
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Claude Code ログ（必要なら管理対象に戻す）
+.claude/logs/
