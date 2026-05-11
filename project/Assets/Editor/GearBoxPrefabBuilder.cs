@@ -15,12 +15,31 @@ public static class GearBoxPrefabBuilder
     public static void BuildAll()
     {
         EnsureDirs();
+        RegisterTags("Player", "Enemy", "EnemyProjectile", "Obstacle");
         BuildRuntimePrefabs();
         BuildUIPrefabs();
         BuildScriptableObjects();
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         Debug.Log("[GearBox] プレハブ・ScriptableObject の生成が完了しました。");
+    }
+
+    static void RegisterTags(params string[] tags)
+    {
+        var tagManager = new SerializedObject(
+            AssetDatabase.LoadMainAssetAtPath("ProjectSettings/TagManager.asset"));
+        var tagsProp = tagManager.FindProperty("tags");
+        foreach (var tag in tags)
+        {
+            bool exists = false;
+            for (int i = 0; i < tagsProp.arraySize; i++)
+                if (tagsProp.GetArrayElementAtIndex(i).stringValue == tag)
+                { exists = true; break; }
+            if (exists) continue;
+            tagsProp.arraySize++;
+            tagsProp.GetArrayElementAtIndex(tagsProp.arraySize - 1).stringValue = tag;
+        }
+        tagManager.ApplyModifiedProperties();
     }
 
     static void EnsureDirs()
