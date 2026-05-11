@@ -11,7 +11,7 @@ public class BeamAttack : IAttackBehaviour
         var origin = (Vector2)owner.transform.position;
         var dir = AimProvider.Instance != null
             ? (AimProvider.Instance.AimPosition - origin).normalized
-            : owner.transform.up;
+            : (Vector2)owner.transform.up;
 
         var hits = Physics2D.RaycastAll(origin, dir, owner.Data.range);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
