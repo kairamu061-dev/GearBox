@@ -237,9 +237,10 @@ public class GearBoxSetupWindow : EditorWindow
     static void SetupPreparationScene()
     {
         CreateEventSystem();
-        CreateCanvas("PreparationCanvas");
-        var label = new GameObject("Label").AddComponent<TMP_Text>();
-        label.text = "PreparationScene - 実装中";
+        var canvas = CreateCanvas("PreparationCanvas");
+        var label = new GameObject("Label");
+        label.transform.SetParent(canvas.transform, false);
+        label.AddComponent<TextMeshProUGUI>().text = "PreparationScene - 実装中";
     }
 
     static void SetupBattleScene()
@@ -282,7 +283,7 @@ public class GearBoxSetupWindow : EditorWindow
     static void PlaceholderLabel(string text)
     {
         var go = new GameObject("PlaceholderLabel");
-        var t = go.AddComponent<TMP_Text>();
+        var t = go.AddComponent<TextMeshProUGUI>();
         t.text = text;
         t.alignment = TextAlignmentOptions.Center;
         t.fontSize = 36;
@@ -357,7 +358,7 @@ public class GearBoxSetupWindow : EditorWindow
     {
         var go = new GameObject(name);
         go.transform.SetParent(parent, false);
-        var t = go.AddComponent<TMP_Text>();
+        var t = go.AddComponent<TextMeshProUGUI>();
         t.text = text;
         t.alignment = TextAlignmentOptions.Center;
         t.fontSize = 24;
@@ -381,7 +382,7 @@ public class GearBoxSetupWindow : EditorWindow
 
         var textGo = new GameObject("Text");
         textGo.transform.SetParent(go.transform, false);
-        var t = textGo.AddComponent<TMP_Text>();
+        var t = textGo.AddComponent<TextMeshProUGUI>();
         t.text = label;
         t.alignment = TextAlignmentOptions.Center;
         t.fontSize = 20;
