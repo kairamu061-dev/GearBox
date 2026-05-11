@@ -7,6 +7,10 @@ public class BattleSceneController : MonoBehaviour
 {
     public static BattleSceneController Instance { get; private set; }
 
+    [Header("タンク")]
+    [SerializeField] GameObject tankPrefab;
+    [SerializeField] Transform tankSpawnPoint;
+
     [Header("HUD")]
     [SerializeField] Slider hpBar;
     [SerializeField] TMP_Text scrapText;
@@ -23,16 +27,25 @@ public class BattleSceneController : MonoBehaviour
     void Start()
     {
         SceneTransitionManager.Instance?.FadeIn(0.4f);
+
+        // タンクをスポーン
+        if (tankPrefab != null)
+        {
+            var spawnPos = tankSpawnPoint != null ? tankSpawnPoint.position : Vector3.zero;
+            var tank = Instantiate(tankPrefab, spawnPos, Quaternion.identity);
+            cameraFollow?.SetTarget(tank.transform);
+        }
+
         RunManager.Instance.OnHpChanged    += UpdateHpBar;
         RunManager.Instance.OnScrapChanged += UpdateScrap;
         UpdateHpBar(RunManager.Instance.CurrentHp, RunManager.Instance.MaxHp);
-        UpdateScrap(RunManager.Instance.Scrap);
         clearText?.SetActive(false);
         gameOverText?.SetActive(false);
     }
 
     void OnDestroy()
     {
+        if (RunManager.Instance == null) return;
         RunManager.Instance.OnHpChanged    -= UpdateHpBar;
         RunManager.Instance.OnScrapChanged -= UpdateScrap;
     }

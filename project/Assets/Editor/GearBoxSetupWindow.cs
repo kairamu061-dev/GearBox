@@ -30,10 +30,18 @@ public class GearBoxSetupWindow : EditorWindow
     void OnGUI()
     {
         GUILayout.Label("GearBox シーンセットアップ", EditorStyles.boldLabel);
-        EditorGUILayout.HelpBox("各ボタンでシーンを自動生成します。既存シーンは上書きされます。", MessageType.Info);
+        EditorGUILayout.HelpBox("初回は「① プレハブ生成」を先に実行してください。", MessageType.Info);
         EditorGUILayout.Space(8);
 
-        if (GUILayout.Button("★ 全シーンをセットアップ + ビルド設定更新", GUILayout.Height(36)))
+        if (GUILayout.Button("① プレハブ・ScriptableObject を生成", GUILayout.Height(32)))
+        {
+            GearBoxPrefabBuilder.BuildAll();
+            EditorUtility.DisplayDialog("完了", "プレハブ・ScriptableObject の生成が完了しました。", "OK");
+        }
+
+        EditorGUILayout.Space(4);
+
+        if (GUILayout.Button("② 全シーンをセットアップ + ビルド設定更新", GUILayout.Height(32)))
             SetupAll();
 
         EditorGUILayout.Space(8);
@@ -138,6 +146,9 @@ public class GearBoxSetupWindow : EditorWindow
         pastRunsPanel.SetActive(false);
         CreateLabel(pastRunsPanel.transform, "Label", "過去のラン（今後追加）", Vector2.zero);
 
+        // 初期タワー設定
+        var steamCannon = GearBoxPrefabBuilder.LoadSO<TowerData>("Towers/TowerData_SteamCannon.asset");
+
         // TitleSceneController に参照をバインド
         var so = new SerializedObject(ctrl);
         so.FindProperty("btnStart").objectReferenceValue       = btnStart.GetComponent<Button>();
@@ -151,6 +162,8 @@ public class GearBoxSetupWindow : EditorWindow
         so.FindProperty("btnConfirmNo").objectReferenceValue   = btnNo.GetComponent<Button>();
         so.FindProperty("settingsPanel").objectReferenceValue  = settingsPanel;
         so.FindProperty("pastRunsPanel").objectReferenceValue  = pastRunsPanel;
+        if (steamCannon != null)
+            so.FindProperty("startTowerData").objectReferenceValue = steamCannon;
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
@@ -173,7 +186,11 @@ public class GearBoxSetupWindow : EditorWindow
         graphViewGo.transform.SetParent(mapContainer.transform, false);
         var graphView = graphViewGo.AddComponent<MapGraphView>();
         var mapContainerRT = mapContainer.GetComponent<RectTransform>();
+        var nodeButtonPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/NodeButtonUI.prefab");
+        var nodeButtonPrefab = nodeButtonPrefabGO?.GetComponent<NodeButtonUI>();
+
         var graphViewSO = new SerializedObject(graphView);
+        graphViewSO.FindProperty("nodeButtonPrefab").objectReferenceValue = nodeButtonPrefab;
         graphViewSO.FindProperty("mapContainer").objectReferenceValue = mapContainerRT;
         graphViewSO.ApplyModifiedPropertiesWithoutUndo();
 
@@ -238,18 +255,185 @@ public class GearBoxSetupWindow : EditorWindow
     {
         CreateEventSystem();
         var canvas = CreateCanvas("PreparationCanvas");
-        var label = new GameObject("Label");
-        label.transform.SetParent(canvas.transform, false);
-        label.AddComponent<TextMeshProUGUI>().text = "PreparationScene - 実装中";
+        var ctrl = new GameObject("PreparationSceneController")
+            .AddComponent<PreparationSceneController>();
+
+        var bg = CreateUIImage(canvas.transform, "Background", new Color(0.07f, 0.05f, 0.03f));
+        SetStretch(bg.GetComponent<RectTransform>());
+
+        // タワー一覧（左）
+        var listPanel = CreatePanel(canvas.transform, "TowerListPanel", new Vector2(-580, 0), new Vector2(240, 700));
+        CreateLabel(listPanel.transform, "ListTitle", "所持タワー", new Vector2(0, 320));
+        var scrollView = new GameObject("ScrollView");
+        scrollView.transform.SetParent(listPanel.transform, false);
+        var svRT = scrollView.AddComponent<RectTransform>();
+        svRT.anchoredPosition = new Vector2(0, -20);
+        svRT.sizeDelta = new Vector2(220, 620);
+        var scroll = scrollView.AddComponent<ScrollRect>();
+        scroll.horizontal = false;
+        var viewport = new GameObject("Viewport");
+        viewport.transform.SetParent(scrollView.transform, false);
+        var vpRT = viewport.AddComponent<RectTransform>();
+        vpRT.anchorMin = Vector2.zero; vpRT.anchorMax = Vector2.one;
+        vpRT.offsetMin = vpRT.offsetMax = Vector2.zero;
+        viewport.AddComponent<Mask>().showMaskGraphic = false;
+        viewport.AddComponent<Image>().color = new Color(0, 0, 0, 0.01f);
+        var content = new GameObject("Content");
+        content.transform.SetParent(viewport.transform, false);
+        var contentRT = content.AddComponent<RectTransform>();
+        contentRT.anchorMin = new Vector2(0, 1); contentRT.anchorMax = new Vector2(1, 1);
+        contentRT.pivot = new Vector2(0.5f, 1); contentRT.offsetMin = contentRT.offsetMax = Vector2.zero;
+        var vlg = content.AddComponent<VerticalLayoutGroup>();
+        vlg.spacing = 6; vlg.padding = new RectOffset(8, 8, 8, 8);
+        vlg.childAlignment = TextAnchor.UpperCenter;
+        vlg.childControlWidth = true; vlg.childForceExpandWidth = true;
+        content.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        scroll.viewport = vpRT;
+        scroll.content = contentRT;
+
+        // グリッドUI（中央）
+        var gridPanel = CreatePanel(canvas.transform, "GridPanel", new Vector2(100, 0), new Vector2(500, 500));
+        CreateLabel(gridPanel.transform, "GridTitle", "グリッド配置", new Vector2(0, 220));
+        var gridRoot = new GameObject("GridRoot");
+        gridRoot.transform.SetParent(gridPanel.transform, false);
+        gridRoot.AddComponent<RectTransform>().sizeDelta = new Vector2(450, 450);
+        var gridUI = gridPanel.AddComponent<GridUI>();
+
+        // ゴーストイメージ
+        var ghostGo = new GameObject("GhostImage");
+        ghostGo.transform.SetParent(canvas.transform, false);
+        var ghost = ghostGo.AddComponent<Image>();
+        ghost.color = new Color(1, 1, 1, 0.6f);
+        ghost.raycastTarget = false;
+        ghostGo.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+        ghostGo.SetActive(false);
+
+        // 出撃ボタン（右下）
+        var sortieBtn = CreateButton(canvas.transform, "SortieButton", "出 撃", new Vector2(400, -400));
+        sortieBtn.GetComponent<RectTransform>().sizeDelta = new Vector2(220, 70);
+
+        // HUD（右上）
+        var scrapLabel = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+
+        // GridCellUI プレハブ取得
+        var cellPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/GridCellUI.prefab");
+        var cellPrefab = cellPrefabGO?.GetComponent<GridCellUI>();
+
+        // TowerCardUI プレハブ取得
+        var cardPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/TowerCardUI.prefab");
+        var cardPrefab = cardPrefabGO?.GetComponent<TowerCardUI>();
+
+        // GridUI 参照
+        var gridSO = new SerializedObject(gridUI);
+        gridSO.FindProperty("cellPrefab").objectReferenceValue = cellPrefab;
+        gridSO.FindProperty("gridRoot").objectReferenceValue = gridRoot.GetComponent<RectTransform>();
+        gridSO.ApplyModifiedPropertiesWithoutUndo();
+
+        // PreparationSceneController 参照
+        var so = new SerializedObject(ctrl);
+        so.FindProperty("gridUI").objectReferenceValue        = gridUI;
+        so.FindProperty("towerListRoot").objectReferenceValue = content.transform;
+        so.FindProperty("towerCardPrefab").objectReferenceValue = cardPrefab;
+        so.FindProperty("ghostImage").objectReferenceValue    = ghost;
+        so.FindProperty("btnSortie").objectReferenceValue     = sortieBtn.GetComponent<Button>();
+        so.FindProperty("scrapText").objectReferenceValue     = scrapLabel.GetComponent<TMP_Text>();
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        // 初期タワー（TitleSceneController にも設定）
+        var steamCannon = GearBoxPrefabBuilder.LoadSO<TowerData>("Towers/TowerData_SteamCannon.asset");
+        if (steamCannon != null)
+        {
+            var titleCtrl = Object.FindObjectOfType<TitleSceneController>();
+            if (titleCtrl != null)
+            {
+                var tso = new SerializedObject(titleCtrl);
+                tso.FindProperty("startTowerData").objectReferenceValue = steamCannon;
+                tso.ApplyModifiedPropertiesWithoutUndo();
+            }
+        }
     }
 
     static void SetupBattleScene()
     {
-        var cam = new GameObject("Main Camera").AddComponent<Camera>();
-        cam.backgroundColor = new Color(0.1f, 0.1f, 0.1f);
+        // カメラ
+        var camGo = new GameObject("Main Camera");
+        var cam = camGo.AddComponent<Camera>();
+        cam.backgroundColor = new Color(0.07f, 0.07f, 0.07f);
         cam.tag = "MainCamera";
+        cam.orthographic = true;
+        cam.orthographicSize = 12f;
+        var cameraFollow = camGo.AddComponent<CameraFollow>();
+
+        // AimProvider
+        new GameObject("AimProvider").AddComponent<AimProvider>();
+
+        // スポーンポイント
+        var spawnPoint = new GameObject("TankSpawnPoint");
+
+        // FieldGenerator
+        var fieldGen = new GameObject("FieldGenerator").AddComponent<FieldGenerator>();
+        var tankPrefab      = GearBoxPrefabBuilder.LoadPrefabGO("Battle/Tank.prefab");
+        var solidWall       = GearBoxPrefabBuilder.LoadPrefabGO("Battle/SolidWall.prefab");
+        var destWall        = GearBoxPrefabBuilder.LoadPrefabGO("Battle/DestructibleWall.prefab");
+        var goal            = GearBoxPrefabBuilder.LoadPrefabGO("Battle/GoalTrigger.prefab");
+        var enemyChaser     = GearBoxPrefabBuilder.LoadPrefabGO("Enemy/EnemyChaser.prefab");
+        var enemyRusher     = GearBoxPrefabBuilder.LoadPrefabGO("Enemy/EnemyRusher.prefab");
+        var scrapObj        = GearBoxPrefabBuilder.LoadPrefabGO("Battle/ScrapObject.prefab");
+        var enemyDataChaser = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Chaser.asset");
+        var enemyDataRusher = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Rusher.asset");
+
+        // EnemyController に ScrapObject 参照を注入するため、prefab 側に設定済みの想定
+        // FieldGenerator 参照
+        var fgSO = new SerializedObject(fieldGen);
+        fgSO.FindProperty("solidWallPrefab").objectReferenceValue        = solidWall;
+        fgSO.FindProperty("destructibleWallPrefab").objectReferenceValue = destWall;
+        fgSO.FindProperty("goalPrefab").objectReferenceValue             = goal;
+        var enemyList = fgSO.FindProperty("enemyDataList");
+        enemyList.arraySize = 2;
+        if (enemyDataChaser) enemyList.GetArrayElementAtIndex(0).objectReferenceValue = enemyDataChaser;
+        if (enemyDataRusher) enemyList.GetArrayElementAtIndex(1).objectReferenceValue = enemyDataRusher;
+        fgSO.ApplyModifiedPropertiesWithoutUndo();
+
         CreateEventSystem();
-        CreateCanvas("BattleCanvas");
+
+        // Canvas / HUD
+        var canvas = CreateCanvas("BattleCanvas");
+        var ctrl = new GameObject("BattleSceneController").AddComponent<BattleSceneController>();
+
+        // HP バー
+        var hpPanel = CreatePanel(canvas.transform, "HpPanel", new Vector2(-600, 490), new Vector2(300, 40));
+        hpPanel.GetComponent<Image>().color = new Color(0, 0, 0, 0);
+        var hpBg = CreatePanel(hpPanel.transform, "HpBg", Vector2.zero, new Vector2(300, 30));
+        hpBg.GetComponent<Image>().color = new Color(0.2f, 0.1f, 0.1f);
+        var hpBarGo = new GameObject("HpBar");
+        hpBarGo.transform.SetParent(hpPanel.transform, false);
+        var hpSlider = hpBarGo.AddComponent<Slider>();
+        var hpRT = hpBarGo.GetComponent<RectTransform>();
+        hpRT.sizeDelta = new Vector2(300, 30);
+        hpSlider.minValue = 0; hpSlider.maxValue = 100; hpSlider.value = 100;
+
+        // スクラップテキスト
+        var scrapTxt = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+
+        // クリア・ゲームオーバーテキスト
+        var clearGo    = CreateLabel(canvas.transform, "ClearText",    "BATTLE CLEAR!", Vector2.zero);
+        var gameOverGo = CreateLabel(canvas.transform, "GameOverText", "GAME OVER",     Vector2.zero);
+        clearGo.fontSize = 48;
+        gameOverGo.fontSize = 48;
+        gameOverGo.color = new Color(0.9f, 0.2f, 0.2f);
+        clearGo.gameObject.SetActive(false);
+        gameOverGo.gameObject.SetActive(false);
+
+        // BattleSceneController 参照
+        var so = new SerializedObject(ctrl);
+        so.FindProperty("tankPrefab").objectReferenceValue      = tankPrefab;
+        so.FindProperty("tankSpawnPoint").objectReferenceValue  = spawnPoint.transform;
+        so.FindProperty("hpBar").objectReferenceValue           = hpSlider;
+        so.FindProperty("scrapText").objectReferenceValue       = scrapTxt.GetComponent<TMP_Text>();
+        so.FindProperty("clearText").objectReferenceValue       = clearGo.gameObject;
+        so.FindProperty("gameOverText").objectReferenceValue    = gameOverGo.gameObject;
+        so.FindProperty("cameraFollow").objectReferenceValue    = cameraFollow;
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     static void SetupShopScene()
