@@ -25,7 +25,7 @@ public class TankController : MonoBehaviour, IDamageable
     void Update()
     {
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-        rb.linearVelocity = input * moveSpeed;
+        rb.velocity = input * moveSpeed;
     }
 
     void SpawnTowers()
