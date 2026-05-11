@@ -269,15 +269,42 @@ public class GearBoxSetupWindow : EditorWindow
     static void SetupResultScene()
     {
         CreateEventSystem();
-        CreateCanvas("ResultCanvas");
-        PlaceholderLabel("ResultScene - 実装中");
+        var canvas = CreateCanvas("ResultCanvas");
+        var ctrl = new GameObject("ResultSceneController").AddComponent<ResultSceneController>();
+
+        var bg = CreateUIImage(canvas.transform, "Background", new Color(0.07f, 0.05f, 0.03f));
+        SetStretch(bg.GetComponent<RectTransform>());
+
+        var panel = CreatePanel(canvas.transform, "ResultPanel", Vector2.zero, new Vector2(600, 400));
+        CreateLabel(panel.transform, "Title", "RESULT", new Vector2(0, 150));
+        var baseScrapText   = CreateLabel(panel.transform, "BaseScrapText",    "基本報酬: -- ⚙",      new Vector2(0, 70));
+        var pendingScrapText = CreateLabel(panel.transform, "PendingScrapText", "回収スクラップ: -- ⚙", new Vector2(0, 10));
+        var btnReceive = CreateButton(panel.transform, "BtnReceive", "受け取る", new Vector2(0, -80));
+
+        var so = new SerializedObject(ctrl);
+        so.FindProperty("baseScrapText").objectReferenceValue    = baseScrapText.GetComponent<TMP_Text>();
+        so.FindProperty("pendingScrapText").objectReferenceValue = pendingScrapText.GetComponent<TMP_Text>();
+        so.FindProperty("btnReceive").objectReferenceValue       = btnReceive.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     static void SetupGameOverScene()
     {
         CreateEventSystem();
-        CreateCanvas("GameOverCanvas");
-        PlaceholderLabel("GameOverScene - 実装中");
+        var canvas = CreateCanvas("GameOverCanvas");
+        var ctrl = new GameObject("GameOverSceneController").AddComponent<GameOverSceneController>();
+
+        var bg = CreateUIImage(canvas.transform, "Background", new Color(0.05f, 0.03f, 0.03f));
+        SetStretch(bg.GetComponent<RectTransform>());
+
+        var panel = CreatePanel(canvas.transform, "GameOverPanel", Vector2.zero, new Vector2(500, 300));
+        CreateLabel(panel.transform, "Title", "GAME OVER", new Vector2(0, 80));
+        CreateLabel(panel.transform, "Message", "画面をクリックでタイトルへ", new Vector2(0, 20));
+        var btnTitle = CreateButton(panel.transform, "BtnTitle", "タイトルへ", new Vector2(0, -60));
+
+        var so = new SerializedObject(ctrl);
+        so.FindProperty("btnTitle").objectReferenceValue = btnTitle.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     static void PlaceholderLabel(string text)
