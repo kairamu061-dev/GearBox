@@ -439,15 +439,116 @@ public class GearBoxSetupWindow : EditorWindow
     static void SetupShopScene()
     {
         CreateEventSystem();
-        CreateCanvas("ShopCanvas");
-        PlaceholderLabel("ShopScene - 実装中");
+        var canvas = CreateCanvas("ShopCanvas");
+        var ctrl = new GameObject("ShopSceneController").AddComponent<ShopSceneController>();
+
+        var bg = CreateUIImage(canvas.transform, "Background", new Color(0.07f, 0.05f, 0.03f));
+        SetStretch(bg.GetComponent<RectTransform>());
+
+        // HUD
+        var scrapText = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+
+        // タブボタン
+        var btnBuy  = CreateButton(canvas.transform, "BtnTabBuy",  "購入", new Vector2(-100, 430));
+        var btnSell = CreateButton(canvas.transform, "BtnTabSell", "売却", new Vector2(100,  430));
+        btnBuy.GetComponent<RectTransform>().sizeDelta  = new Vector2(160, 44);
+        btnSell.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 44);
+
+        // 購入リスト
+        var buyPanel = CreatePanel(canvas.transform, "BuyPanel", new Vector2(0, -30), new Vector2(800, 700));
+        var buyContent = CreateScrollContent(buyPanel.transform, "BuyContent");
+
+        // 売却パネル
+        var sellPanel = CreatePanel(canvas.transform, "SellPanel", new Vector2(0, -30), new Vector2(800, 700));
+        sellPanel.SetActive(false);
+        var sellContent = CreateScrollContent(sellPanel.transform, "SellContent");
+
+        // 閉じるボタン
+        var btnClose = CreateButton(canvas.transform, "BtnClose", "出発", new Vector2(0, -480));
+
+        // ShopItemUI プレハブ
+        var itemPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/ShopItemUI.prefab");
+        var itemPrefab   = itemPrefabGO?.GetComponent<ShopItemUI>();
+
+        var so = new SerializedObject(ctrl);
+        so.FindProperty("itemListRoot").objectReferenceValue   = buyContent;
+        so.FindProperty("sellListRoot").objectReferenceValue   = sellContent;
+        so.FindProperty("sellPanel").objectReferenceValue      = sellPanel;
+        so.FindProperty("scrapText").objectReferenceValue      = scrapText.GetComponent<TMP_Text>();
+        so.FindProperty("btnClose").objectReferenceValue       = btnClose.GetComponent<Button>();
+        so.FindProperty("btnTabBuy").objectReferenceValue      = btnBuy.GetComponent<Button>();
+        so.FindProperty("btnTabSell").objectReferenceValue     = btnSell.GetComponent<Button>();
+        if (itemPrefab)
+        {
+            so.FindProperty("itemPrefab").objectReferenceValue     = itemPrefab;
+            so.FindProperty("sellCardPrefab").objectReferenceValue = itemPrefab;
+        }
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     static void SetupRefitScene()
     {
         CreateEventSystem();
-        CreateCanvas("RefitCanvas");
-        PlaceholderLabel("RefitScene - 実装中");
+        var canvas = CreateCanvas("RefitCanvas");
+        var ctrl = new GameObject("RefitSceneController").AddComponent<RefitSceneController>();
+
+        var bg = CreateUIImage(canvas.transform, "Background", new Color(0.07f, 0.05f, 0.03f));
+        SetStretch(bg.GetComponent<RectTransform>());
+
+        // HUD
+        var scrapText = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+
+        // タブボタン
+        var btnUpgrade = CreateButton(canvas.transform, "BtnTabUpgrade", "強化", new Vector2(-200, 430));
+        var btnRepair  = CreateButton(canvas.transform, "BtnTabRepair",  "修理", new Vector2(0,    430));
+        var btnExpand  = CreateButton(canvas.transform, "BtnTabExpand",  "拡張", new Vector2(200,  430));
+        foreach (var b in new[]{btnUpgrade, btnRepair, btnExpand})
+            b.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 44);
+
+        // 強化パネル
+        var upgradePanel = CreatePanel(canvas.transform, "UpgradePanel", new Vector2(0, -30), new Vector2(700, 700));
+        var upgradeContent = CreateScrollContent(upgradePanel.transform, "UpgradeContent");
+
+        // 修理パネル
+        var repairPanel = CreatePanel(canvas.transform, "RepairPanel", new Vector2(0, -30), new Vector2(500, 400));
+        repairPanel.SetActive(false);
+        CreateLabel(repairPanel.transform, "Title", "HP 修理", new Vector2(0, 150));
+        var btnR30   = CreateButton(repairPanel.transform, "BtnRepair30",   "30% 回復  30⚙",    new Vector2(0, 60));
+        var btnR70   = CreateButton(repairPanel.transform, "BtnRepair70",   "70% 回復  60⚙",    new Vector2(0, 0));
+        var btnRFull = CreateButton(repairPanel.transform, "BtnRepairFull", "全回復    100⚙",   new Vector2(0, -60));
+
+        // 拡張パネル
+        var expandPanel = CreatePanel(canvas.transform, "ExpandPanel", new Vector2(0, -30), new Vector2(500, 400));
+        expandPanel.SetActive(false);
+        var gridSizeText = CreateLabel(expandPanel.transform, "GridSizeText", "現在: 3×3", new Vector2(0, 120));
+        var btnCol = CreateButton(expandPanel.transform, "BtnExpandCol", "列を追加  80⚙", new Vector2(0, 30));
+        var btnRow = CreateButton(expandPanel.transform, "BtnExpandRow", "行を追加  80⚙", new Vector2(0, -50));
+
+        // 閉じるボタン
+        var btnClose = CreateButton(canvas.transform, "BtnClose", "出発", new Vector2(0, -480));
+
+        // ShopItemUI プレハブ（強化リスト流用）
+        var itemPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/ShopItemUI.prefab");
+        var itemPrefab   = itemPrefabGO?.GetComponent<ShopItemUI>();
+
+        var so = new SerializedObject(ctrl);
+        so.FindProperty("btnTabUpgrade").objectReferenceValue  = btnUpgrade.GetComponent<Button>();
+        so.FindProperty("btnTabRepair").objectReferenceValue   = btnRepair.GetComponent<Button>();
+        so.FindProperty("btnTabExpand").objectReferenceValue   = btnExpand.GetComponent<Button>();
+        so.FindProperty("upgradePanel").objectReferenceValue   = upgradePanel;
+        so.FindProperty("repairPanel").objectReferenceValue    = repairPanel;
+        so.FindProperty("expandPanel").objectReferenceValue    = expandPanel;
+        so.FindProperty("upgradeListRoot").objectReferenceValue = upgradeContent;
+        if (itemPrefab) so.FindProperty("upgradeItemPrefab").objectReferenceValue = itemPrefab;
+        so.FindProperty("btnRepair30").objectReferenceValue    = btnR30.GetComponent<Button>();
+        so.FindProperty("btnRepair70").objectReferenceValue    = btnR70.GetComponent<Button>();
+        so.FindProperty("btnRepairFull").objectReferenceValue  = btnRFull.GetComponent<Button>();
+        so.FindProperty("btnExpandCol").objectReferenceValue   = btnCol.GetComponent<Button>();
+        so.FindProperty("btnExpandRow").objectReferenceValue   = btnRow.GetComponent<Button>();
+        so.FindProperty("gridSizeText").objectReferenceValue   = gridSizeText.GetComponent<TMP_Text>();
+        so.FindProperty("scrapText").objectReferenceValue      = scrapText.GetComponent<TMP_Text>();
+        so.FindProperty("btnClose").objectReferenceValue       = btnClose.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
     }
 
     static void SetupResultScene()
@@ -603,6 +704,41 @@ public class GearBoxSetupWindow : EditorWindow
         trt.offsetMin = trt.offsetMax = Vector2.zero;
 
         return go;
+    }
+
+    static Transform CreateScrollContent(Transform parent, string name)
+    {
+        var sv = new GameObject("ScrollView");
+        sv.transform.SetParent(parent, false);
+        var svRT = sv.AddComponent<RectTransform>();
+        svRT.anchorMin = Vector2.zero; svRT.anchorMax = Vector2.one;
+        svRT.offsetMin = svRT.offsetMax = Vector2.zero;
+        var scroll = sv.AddComponent<ScrollRect>();
+        scroll.horizontal = false;
+
+        var vp = new GameObject("Viewport");
+        vp.transform.SetParent(sv.transform, false);
+        var vpRT = vp.AddComponent<RectTransform>();
+        vpRT.anchorMin = Vector2.zero; vpRT.anchorMax = Vector2.one;
+        vpRT.offsetMin = vpRT.offsetMax = Vector2.zero;
+        vp.AddComponent<Mask>().showMaskGraphic = false;
+        vp.AddComponent<Image>().color = new Color(0, 0, 0, 0.01f);
+
+        var content = new GameObject(name);
+        content.transform.SetParent(vp.transform, false);
+        var cRT = content.AddComponent<RectTransform>();
+        cRT.anchorMin = new Vector2(0, 1); cRT.anchorMax = new Vector2(1, 1);
+        cRT.pivot = new Vector2(0.5f, 1);
+        cRT.offsetMin = cRT.offsetMax = Vector2.zero;
+        var vlg = content.AddComponent<VerticalLayoutGroup>();
+        vlg.spacing = 6; vlg.padding = new RectOffset(8, 8, 8, 8);
+        vlg.childAlignment = TextAnchor.UpperCenter;
+        vlg.childControlWidth = true; vlg.childForceExpandWidth = true;
+        content.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        scroll.viewport = vpRT;
+        scroll.content  = cRT;
+
+        return content.transform;
     }
 
     static void SetStretch(RectTransform rt)

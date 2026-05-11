@@ -205,6 +205,7 @@ public static class GearBoxPrefabBuilder
         BuildGridCellUIPrefab();
         BuildTowerCardUIPrefab();
         BuildNodeButtonUIPrefab();
+        BuildShopItemUIPrefab();
     }
 
     static void BuildGridCellUIPrefab()
@@ -335,6 +336,60 @@ public static class GearBoxPrefabBuilder
         so.FindProperty("tankImage").objectReferenceValue  = tankImg;
         so.FindProperty("labelText").objectReferenceValue  = label;
         so.FindProperty("button").objectReferenceValue     = root.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        SavePrefab(root, path);
+    }
+
+    static void BuildShopItemUIPrefab()
+    {
+        const string path = PrefabPath + "/UI/ShopItemUI.prefab";
+        var root = new GameObject("ShopItemUI");
+        root.AddComponent<RectTransform>().sizeDelta = new Vector2(700, 64);
+        root.AddComponent<Image>().color = new Color(0.15f, 0.12f, 0.08f);
+        root.AddComponent<LayoutElement>().preferredHeight = 64;
+        var item = root.AddComponent<ShopItemUI>();
+
+        var nameGo = new GameObject("NameText");
+        nameGo.transform.SetParent(root.transform, false);
+        var nameRT = nameGo.AddComponent<RectTransform>();
+        nameRT.anchoredPosition = new Vector2(-180, 0);
+        nameRT.sizeDelta = new Vector2(280, 50);
+        var nameText = nameGo.AddComponent<TextMeshProUGUI>();
+        nameText.fontSize = 18; nameText.alignment = TextAlignmentOptions.MidlineLeft;
+        nameText.color = new Color(0.91f, 0.84f, 0.64f);
+
+        var priceGo = new GameObject("PriceText");
+        priceGo.transform.SetParent(root.transform, false);
+        var priceRT = priceGo.AddComponent<RectTransform>();
+        priceRT.anchoredPosition = new Vector2(80, 0);
+        priceRT.sizeDelta = new Vector2(140, 50);
+        var priceText = priceGo.AddComponent<TextMeshProUGUI>();
+        priceText.fontSize = 18; priceText.alignment = TextAlignmentOptions.Center;
+        priceText.color = new Color(0.66f, 0.73f, 0.13f);
+
+        var btnGo = new GameObject("BuyButton");
+        btnGo.transform.SetParent(root.transform, false);
+        var btnRT = btnGo.AddComponent<RectTransform>();
+        btnRT.anchoredPosition = new Vector2(290, 0);
+        btnRT.sizeDelta = new Vector2(110, 46);
+        btnGo.AddComponent<Image>().color = new Color(0.78f, 0.48f, 0.26f);
+        btnGo.AddComponent<Button>();
+        var btnLabelGo = new GameObject("Label");
+        btnLabelGo.transform.SetParent(btnGo.transform, false);
+        var btnLabelRT = btnLabelGo.AddComponent<RectTransform>();
+        btnLabelRT.anchorMin = Vector2.zero; btnLabelRT.anchorMax = Vector2.one;
+        btnLabelRT.offsetMin = btnLabelRT.offsetMax = Vector2.zero;
+        var btnLabel = btnLabelGo.AddComponent<TextMeshProUGUI>();
+        btnLabel.text = "購入"; btnLabel.fontSize = 16;
+        btnLabel.alignment = TextAlignmentOptions.Center;
+        btnLabel.color = new Color(0.91f, 0.84f, 0.64f);
+
+        var so = new SerializedObject(item);
+        so.FindProperty("nameText").objectReferenceValue  = nameText;
+        so.FindProperty("priceText").objectReferenceValue = priceText;
+        so.FindProperty("buyButton").objectReferenceValue = btnGo.GetComponent<Button>();
+        so.FindProperty("btnLabel").objectReferenceValue  = btnLabel;
         so.ApplyModifiedPropertiesWithoutUndo();
 
         SavePrefab(root, path);

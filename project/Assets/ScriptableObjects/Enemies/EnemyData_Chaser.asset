@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f1b5ed40abc3942a0aeb47cb6f2175, type: 3}
+  m_Name: EnemyData_Chaser
+  m_EditorClassIdentifier: 
+  enemyName: "\u30B9\u30AF\u30E9\u30C3\u30D7\u30A6\u30A9\u30FC\u30AB\u30FC"
+  prefab: {fileID: 0}
+  maxHp: 40
+  moveSpeed: 3
+  attackDamage: 10
+  attackCooldown: 1
+  attackRange: 0.6
+  aiType: 0
+  scrapDropMin: 5
+  scrapDropMax: 10
+  projectileSpeed: 8
+  projectilePrefab: {fileID: 0}
