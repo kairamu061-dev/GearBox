@@ -24,13 +24,12 @@ public class SceneTransitionManager : MonoBehaviour
     void BuildFadeOverlay()
     {
         var canvasGo = new GameObject("FadeCanvas");
-        canvasGo.transform.SetParent(transform);
+        canvasGo.transform.SetParent(transform);  // 親が DontDestroyOnLoad なので子は自動で永続
         var canvas = canvasGo.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 999;
         canvasGo.AddComponent<UnityEngine.UI.CanvasScaler>();
         canvasGo.AddComponent<UnityEngine.UI.GraphicRaycaster>();
-        DontDestroyOnLoad(canvasGo);
 
         var imgGo = new GameObject("FadeImage");
         imgGo.transform.SetParent(canvasGo.transform, false);

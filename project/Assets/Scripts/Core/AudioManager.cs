@@ -16,6 +16,20 @@ public class AudioManager : MonoBehaviour
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // インスペクタ未設定の場合は自動生成
+        if (bgmSource == null)
+        {
+            bgmSource = gameObject.AddComponent<AudioSource>();
+            bgmSource.loop = true;
+            bgmSource.playOnAwake = false;
+        }
+        if (seSource == null)
+        {
+            seSource = gameObject.AddComponent<AudioSource>();
+            seSource.playOnAwake = false;
+        }
+
         LoadVolumeSettings();
     }
 
