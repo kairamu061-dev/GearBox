@@ -58,11 +58,11 @@ public static class GearBoxPrefabBuilder
     public static void BuildRuntimePrefabs()
     {
         BuildTankPrefab();
+        BuildProjectilePrefab("EnemyProjectile");
+        BuildScrapObjectPrefab();                   // 敵より先に生成
         BuildEnemyPrefab("EnemyChaser",     Color.red,    AIType.Chaser);
         BuildEnemyPrefab("EnemyTurret",     Color.yellow, AIType.Turret);
         BuildEnemyPrefab("EnemyRusher",     Color.magenta,AIType.Rusher);
-        BuildProjectilePrefab("EnemyProjectile");
-        BuildScrapObjectPrefab();
         BuildGoalTriggerPrefab();
         BuildSolidWallPrefab();
         BuildDestructibleWallPrefab();
@@ -103,12 +103,23 @@ public static class GearBoxPrefabBuilder
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
         root.AddComponent<CircleCollider2D>().radius = 0.4f;
-        root.AddComponent<EnemyController>();
+        var ctrl = root.AddComponent<EnemyController>();
         root.tag = "Enemy";
 
         var sr = root.AddComponent<SpriteRenderer>();
         sr.sprite = GetDefaultSprite();
         sr.color  = color;
+
+        // ScrapObject プレハブ参照をセット
+        var scrapPrefabGO = AssetDatabase.LoadAssetAtPath<GameObject>(
+            $"{PrefabPath}/Battle/ScrapObject.prefab");
+        if (scrapPrefabGO != null)
+        {
+            var so = new SerializedObject(ctrl);
+            so.FindProperty("scrapPrefab").objectReferenceValue =
+                scrapPrefabGO.GetComponent<ScrapObject>();
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
 
         SavePrefab(root, path);
     }

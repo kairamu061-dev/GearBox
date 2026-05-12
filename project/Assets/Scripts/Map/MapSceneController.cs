@@ -27,6 +27,9 @@ public class MapSceneController : MonoBehaviour
     [Header("設定")]
     [SerializeField] GameObject settingsPanel;
 
+    [Header("ハテナイベント")]
+    [SerializeField] MysteryEventUI mysteryEventUI;
+
     [Header("マップ導入アニメーション")]
     [SerializeField] float introScrollDuration = 2f;
 
@@ -109,8 +112,14 @@ public class MapSceneController : MonoBehaviour
                 SceneTransitionManager.Instance.TransitionTo("RefitScene");
                 break;
             case NodeType.Mystery:
-                // TODO: ハテナオーバーレイ
-                interactable = true;
+                if (mysteryEventUI != null)
+                    mysteryEventUI.Show(() =>
+                    {
+                        graphView.Refresh(RunManager.Instance.CurrentMapGraph);
+                        interactable = true;
+                    });
+                else
+                    interactable = true;
                 break;
         }
     }

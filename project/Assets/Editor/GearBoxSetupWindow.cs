@@ -235,6 +235,30 @@ public class GearBoxSetupWindow : EditorWindow
         settingsPanel.SetActive(false);
         CreateLabel(settingsPanel.transform, "Label", "設定（今後追加）", Vector2.zero);
 
+        // ハテナイベント UI
+        var mysteryOverlay = CreatePanel(canvas.transform, "MysteryOverlay", Vector2.zero, new Vector2(600, 500));
+        mysteryOverlay.SetActive(false);
+        var mysteryUI = mysteryOverlay.AddComponent<MysteryEventUI>();
+        var mTitle   = CreateLabel(mysteryOverlay.transform, "TitleText",   "タイトル",   new Vector2(0, 180));
+        var mDesc    = CreateLabel(mysteryOverlay.transform, "DescText",    "説明",        new Vector2(0, 100));
+        mDesc.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 80);
+        var choiceRoot = new GameObject("ChoiceRoot");
+        choiceRoot.transform.SetParent(mysteryOverlay.transform, false);
+        choiceRoot.AddComponent<RectTransform>().sizeDelta = new Vector2(500, 200);
+        choiceRoot.AddComponent<VerticalLayoutGroup>().spacing = 8;
+        var closeBtnGo = CreateButton(mysteryOverlay.transform, "BtnClose", "閉じる", new Vector2(0, -180));
+        var choiceBtn  = CreateButton(mysteryOverlay.transform, "ChoicePrefab", "選択肢", Vector2.zero);
+        choiceBtn.SetActive(false);
+
+        var muSO = new SerializedObject(mysteryUI);
+        muSO.FindProperty("overlay").objectReferenceValue     = mysteryOverlay;
+        muSO.FindProperty("titleText").objectReferenceValue   = mTitle.GetComponent<TMP_Text>();
+        muSO.FindProperty("descText").objectReferenceValue    = mDesc.GetComponent<TMP_Text>();
+        muSO.FindProperty("choiceRoot").objectReferenceValue  = choiceRoot.transform;
+        muSO.FindProperty("choicePrefab").objectReferenceValue = choiceBtn.GetComponent<Button>();
+        muSO.FindProperty("btnClose").objectReferenceValue    = closeBtnGo.GetComponent<Button>();
+        muSO.ApplyModifiedPropertiesWithoutUndo();
+
         // MapSceneController に参照バインド
         var so = new SerializedObject(ctrl);
         so.FindProperty("graphView").objectReferenceValue         = graphView;
@@ -250,6 +274,7 @@ public class GearBoxSetupWindow : EditorWindow
         so.FindProperty("btnGiveUpYes").objectReferenceValue      = btnGiveUpYes.GetComponent<Button>();
         so.FindProperty("btnGiveUpNo").objectReferenceValue       = btnGiveUpNo.GetComponent<Button>();
         so.FindProperty("settingsPanel").objectReferenceValue     = settingsPanel;
+        so.FindProperty("mysteryEventUI").objectReferenceValue    = mysteryUI;
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
@@ -428,6 +453,23 @@ public class GearBoxSetupWindow : EditorWindow
         gameOverGo.color = new Color(0.9f, 0.2f, 0.2f);
         clearGo.gameObject.SetActive(false);
         gameOverGo.gameObject.SetActive(false);
+
+        // ミニマップ（右下）
+        var minimapPanel = CreatePanel(canvas.transform, "Minimap", new Vector2(820, -430), new Vector2(180, 180));
+        minimapPanel.GetComponent<Image>().color = new Color(0.05f, 0.05f, 0.05f, 0.8f);
+        var minimapUI = minimapPanel.AddComponent<MinimapUI>();
+        var playerDot = CreateUIImage(minimapPanel.transform, "PlayerDot", new Color(0.3f, 0.8f, 0.3f));
+        playerDot.GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
+        var goalDot = CreateUIImage(minimapPanel.transform, "GoalDot", new Color(0.3f, 0.3f, 0.9f));
+        goalDot.GetComponent<RectTransform>().sizeDelta = new Vector2(8, 8);
+        var arrowGo = CreateUIImage(minimapPanel.transform, "GoalArrow", new Color(1f, 0.8f, 0f));
+        arrowGo.GetComponent<RectTransform>().sizeDelta = new Vector2(12, 20);
+        var minimapSO = new SerializedObject(minimapUI);
+        minimapSO.FindProperty("minimapRoot").objectReferenceValue = minimapPanel.GetComponent<RectTransform>();
+        minimapSO.FindProperty("playerDot").objectReferenceValue   = playerDot;
+        minimapSO.FindProperty("goalDot").objectReferenceValue     = goalDot;
+        minimapSO.FindProperty("goalArrow").objectReferenceValue   = arrowGo;
+        minimapSO.ApplyModifiedPropertiesWithoutUndo();
 
         // BattleSceneController 参照
         var so = new SerializedObject(ctrl);
