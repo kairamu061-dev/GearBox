@@ -34,20 +34,25 @@ public class GearBoxSetupWindow : EditorWindow
         EditorGUILayout.Space(8);
 
         if (GUILayout.Button("① プレハブ・ScriptableObject を生成", GUILayout.Height(32)))
-        {
-            GearBoxPrefabBuilder.BuildAll();
-            EditorUtility.DisplayDialog("完了", "プレハブ・ScriptableObject の生成が完了しました。", "OK");
-        }
+            EditorApplication.delayCall += () =>
+            {
+                GearBoxPrefabBuilder.BuildAll();
+                EditorUtility.DisplayDialog("完了", "プレハブ・ScriptableObject の生成が完了しました。", "OK");
+            };
 
         EditorGUILayout.Space(4);
 
         if (GUILayout.Button("② 全シーンをセットアップ + ビルド設定更新", GUILayout.Height(32)))
-            SetupAll();
+            EditorApplication.delayCall += SetupAll;
 
         EditorGUILayout.Space(8);
         GUILayout.Label("個別セットアップ", EditorStyles.boldLabel);
         foreach (var (name, setup) in Scenes)
-            if (GUILayout.Button(name)) RunSetup(name, setup);
+        {
+            var captured = (name, setup);
+            if (GUILayout.Button(captured.name))
+                EditorApplication.delayCall += () => RunSetup(captured.name, captured.setup);
+        }
     }
 
     static void SetupAll()
