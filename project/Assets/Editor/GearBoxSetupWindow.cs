@@ -58,11 +58,21 @@ public class GearBoxSetupWindow : EditorWindow
 
         using (new EditorGUI.DisabledScope(startScene == null))
         {
-            if (GUILayout.Button(isStartSet ? "▶ LogoSceneから再生中（クリックで解除）"
-                                            : "▶ LogoSceneから再生する", GUILayout.Height(32)))
+            if (GUILayout.Button("▶ LogoScene からゲームを起動", GUILayout.Height(36)))
+                EditorApplication.delayCall += () =>
+                {
+                    EditorSceneManager.playModeStartScene = startScene;
+                    EditorApplication.isPlaying = true;
+                };
+
+            using (new EditorGUI.DisabledScope(!EditorApplication.isPlaying))
             {
-                EditorSceneManager.playModeStartScene = isStartSet ? null : startScene;
-                Repaint();
+                if (GUILayout.Button("■ 停止", GUILayout.Height(28)))
+                    EditorApplication.delayCall += () =>
+                    {
+                        EditorApplication.isPlaying = false;
+                        EditorSceneManager.playModeStartScene = null;
+                    };
             }
         }
         if (startScene == null)
