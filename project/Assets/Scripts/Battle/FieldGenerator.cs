@@ -93,11 +93,33 @@ public class FieldGenerator : MonoBehaviour
             var pos = RandomFieldPos();
             if (TooClose(pos, startPos, MarginFromStart)) continue;
             var data = enemyDataList[Random.Range(0, enemyDataList.Length)];
-            if (data?.prefab == null) continue;
-            var go = Instantiate(data.prefab, pos, Quaternion.identity);
-            go.GetComponent<EnemyController>()?.Initialize(data);
+            if (data == null) continue;
+            SpawnEnemy(data, pos);
             placed++;
         }
+    }
+
+    void SpawnEnemy(EnemyData data, Vector2 pos)
+    {
+        GameObject go = data.prefab != null
+            ? Instantiate(data.prefab, pos, Quaternion.identity)
+            : CreateDefaultEnemyGO(data.enemyName, pos);
+        go.GetComponent<EnemyController>()?.Initialize(data);
+    }
+
+    static GameObject CreateDefaultEnemyGO(string name, Vector2 pos)
+    {
+        var go = new GameObject(name);
+        go.transform.position = pos;
+        go.tag = "Enemy";
+        var rb = go.AddComponent<Rigidbody2D>();
+        rb.gravityScale = 0f; rb.freezeRotation = true;
+        go.AddComponent<CircleCollider2D>().radius = 0.4f;
+        go.AddComponent<EnemyController>();
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd");
+        sr.color = Color.red;
+        return go;
     }
 
     void PlaceFortresses()

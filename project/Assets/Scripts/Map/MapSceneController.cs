@@ -84,9 +84,8 @@ public class MapSceneController : MonoBehaviour
             yield return null;
         }
         mapScrollContainer.anchoredPosition = new Vector2(0f, endY);
-
         interactable = true;
-        SceneTransitionManager.Instance.FadeIn(0.4f);
+        // IntroAnimation 中は既にフェードイン済みなので暗転させない
     }
 
     void OnNodeSelected(MapNode node)

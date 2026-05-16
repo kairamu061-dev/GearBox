@@ -39,9 +39,17 @@ public class TankController : MonoBehaviour, IDamageable
             for (int y = 0; y < rm.GridSize.y; y++)
             {
                 var inst = rm.GridLayout[x, y];
-                if (inst?.data?.prefab == null) continue;
-                var go = Instantiate(inst.data.prefab, towerMount);
-                go.GetComponent<TowerBehaviour>()?.Initialize(inst);
+                if (inst?.data == null) continue;
+
+                GameObject go = inst.data.prefab != null
+                    ? Instantiate(inst.data.prefab, towerMount)
+                    : new GameObject($"Tower_{inst.data.displayName}");
+
+                go.transform.SetParent(towerMount, false);
+
+                var tb = go.GetComponent<TowerBehaviour>()
+                      ?? go.AddComponent<TowerBehaviour>();
+                tb.Initialize(inst);
             }
     }
 
