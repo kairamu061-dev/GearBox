@@ -94,7 +94,7 @@ public class ShopSceneController : MonoBehaviour
 
     void UpdateHUD()
     {
-        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} ⚙";
+        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} Sc";
     }
 
     class ShopItem { public TowerData tower; public bool sold; }

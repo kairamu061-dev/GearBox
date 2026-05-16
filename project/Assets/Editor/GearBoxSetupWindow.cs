@@ -210,7 +210,7 @@ public class GearBoxSetupWindow : EditorWindow
         hudRT.pivot = new Vector2(1, 1);
         hudRT.anchoredPosition = new Vector2(-10, -10);
         var areaLabel = CreateLabel(hud.transform, "AreaLabel", "エリア 1", new Vector2(-80, 0));
-        var scrapText = CreateLabel(hud.transform, "ScrapText", "100 ⚙",   new Vector2(60, 0));
+        var scrapText = CreateLabel(hud.transform, "ScrapText", "100 Sc",   new Vector2(60, 0));
 
         // メニューボタン（右上）
         var menuBtnGo = CreateButton(canvas.transform, "MenuButton", "≡", new Vector2(-40, -40));
@@ -347,7 +347,7 @@ public class GearBoxSetupWindow : EditorWindow
         sortieBtn.GetComponent<RectTransform>().sizeDelta = new Vector2(220, 70);
 
         // HUD（右上）
-        var scrapLabel = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+        var scrapLabel = CreateLabel(canvas.transform, "ScrapText", "100 Sc", new Vector2(750, 490));
 
         // GridCellUI プレハブ取得
         var cellPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/GridCellUI.prefab");
@@ -447,7 +447,7 @@ public class GearBoxSetupWindow : EditorWindow
         hpSlider.minValue = 0; hpSlider.maxValue = 100; hpSlider.value = 100;
 
         // スクラップテキスト
-        var scrapTxt = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+        var scrapTxt = CreateLabel(canvas.transform, "ScrapText", "100 Sc", new Vector2(750, 490));
 
         // クリア・ゲームオーバーテキスト
         var clearGo    = CreateLabel(canvas.transform, "ClearText",    "BATTLE CLEAR!", Vector2.zero);
@@ -497,7 +497,7 @@ public class GearBoxSetupWindow : EditorWindow
         SetStretch(bg.GetComponent<RectTransform>());
 
         // HUD
-        var scrapText = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+        var scrapText = CreateLabel(canvas.transform, "ScrapText", "100 Sc", new Vector2(750, 490));
 
         // タブボタン
         var btnBuy  = CreateButton(canvas.transform, "BtnTabBuy",  "購入", new Vector2(-100, 430));
@@ -547,7 +547,7 @@ public class GearBoxSetupWindow : EditorWindow
         SetStretch(bg.GetComponent<RectTransform>());
 
         // HUD
-        var scrapText = CreateLabel(canvas.transform, "ScrapText", "100 ⚙", new Vector2(750, 490));
+        var scrapText = CreateLabel(canvas.transform, "ScrapText", "100 Sc", new Vector2(750, 490));
 
         // タブボタン
         var btnUpgrade = CreateButton(canvas.transform, "BtnTabUpgrade", "強化", new Vector2(-200, 430));
@@ -564,16 +564,16 @@ public class GearBoxSetupWindow : EditorWindow
         var repairPanel = CreatePanel(canvas.transform, "RepairPanel", new Vector2(0, -30), new Vector2(500, 400));
         repairPanel.SetActive(false);
         CreateLabel(repairPanel.transform, "Title", "HP 修理", new Vector2(0, 150));
-        var btnR30   = CreateButton(repairPanel.transform, "BtnRepair30",   "30% 回復  30⚙",    new Vector2(0, 60));
-        var btnR70   = CreateButton(repairPanel.transform, "BtnRepair70",   "70% 回復  60⚙",    new Vector2(0, 0));
-        var btnRFull = CreateButton(repairPanel.transform, "BtnRepairFull", "全回復    100⚙",   new Vector2(0, -60));
+        var btnR30   = CreateButton(repairPanel.transform, "BtnRepair30",   "30% 回復  30Sc",    new Vector2(0, 60));
+        var btnR70   = CreateButton(repairPanel.transform, "BtnRepair70",   "70% 回復  60Sc",    new Vector2(0, 0));
+        var btnRFull = CreateButton(repairPanel.transform, "BtnRepairFull", "全回復    100Sc",   new Vector2(0, -60));
 
         // 拡張パネル
         var expandPanel = CreatePanel(canvas.transform, "ExpandPanel", new Vector2(0, -30), new Vector2(500, 400));
         expandPanel.SetActive(false);
         var gridSizeText = CreateLabel(expandPanel.transform, "GridSizeText", "現在: 3×3", new Vector2(0, 120));
-        var btnCol = CreateButton(expandPanel.transform, "BtnExpandCol", "列を追加  80⚙", new Vector2(0, 30));
-        var btnRow = CreateButton(expandPanel.transform, "BtnExpandRow", "行を追加  80⚙", new Vector2(0, -50));
+        var btnCol = CreateButton(expandPanel.transform, "BtnExpandCol", "列を追加  80Sc", new Vector2(0, 30));
+        var btnRow = CreateButton(expandPanel.transform, "BtnExpandRow", "行を追加  80Sc", new Vector2(0, -50));
 
         // 閉じるボタン
         var btnClose = CreateButton(canvas.transform, "BtnClose", "出発", new Vector2(0, -480));
@@ -613,8 +613,8 @@ public class GearBoxSetupWindow : EditorWindow
 
         var panel = CreatePanel(canvas.transform, "ResultPanel", Vector2.zero, new Vector2(600, 400));
         CreateLabel(panel.transform, "Title", "RESULT", new Vector2(0, 150));
-        var baseScrapText   = CreateLabel(panel.transform, "BaseScrapText",    "基本報酬: -- ⚙",      new Vector2(0, 70));
-        var pendingScrapText = CreateLabel(panel.transform, "PendingScrapText", "回収スクラップ: -- ⚙", new Vector2(0, 10));
+        var baseScrapText   = CreateLabel(panel.transform, "BaseScrapText",    "基本報酬: -- Sc",      new Vector2(0, 70));
+        var pendingScrapText = CreateLabel(panel.transform, "PendingScrapText", "回収スクラップ: -- Sc", new Vector2(0, 10));
         var btnReceive = CreateButton(panel.transform, "BtnReceive", "受け取る", new Vector2(0, -80));
 
         var so = new SerializedObject(ctrl);

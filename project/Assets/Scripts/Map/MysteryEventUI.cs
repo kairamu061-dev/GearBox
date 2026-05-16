@@ -90,7 +90,7 @@ public static class MysteryEventTable
         return new()
         {
             title = "スクラップの山を発見",
-            description = $"廃材の山を漁ったら {amount} ⚙ 手に入った。",
+            description = $"廃材の山を漁ったら {amount} Sc 手に入った。",
             effect = () => RunManager.Instance.AddScrap(amount),
         };
     }
@@ -109,7 +109,7 @@ public static class MysteryEventTable
         return new()
         {
             title = "廃材の罠",
-            description = $"床が抜けた！スクラップを {loss} ⚙ 失った。",
+            description = $"床が抜けた！スクラップを {loss} Sc 失った。",
             effect = () => RunManager.Instance.SpendScrap(loss),
         };
     }

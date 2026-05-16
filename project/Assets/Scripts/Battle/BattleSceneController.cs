@@ -57,7 +57,7 @@ public class BattleSceneController : MonoBehaviour
 
     void UpdateScrap(int amount)
     {
-        if (scrapText) scrapText.text = $"{amount} ⚙";
+        if (scrapText) scrapText.text = $"{amount} Sc";
     }
 
     public void OnGoalReached()

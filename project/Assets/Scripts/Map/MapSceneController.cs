@@ -64,7 +64,7 @@ public class MapSceneController : MonoBehaviour
 
     void UpdateHUD()
     {
-        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} ⚙";
+        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} Sc";
         if (areaLabel) areaLabel.text = "エリア 1"; // TODO: エリア番号管理
     }
 

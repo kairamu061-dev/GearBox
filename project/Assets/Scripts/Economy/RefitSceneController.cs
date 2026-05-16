@@ -133,7 +133,7 @@ public class RefitSceneController : MonoBehaviour
 
     void UpdateHUD()
     {
-        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} ⚙";
+        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} Sc";
     }
 }
 

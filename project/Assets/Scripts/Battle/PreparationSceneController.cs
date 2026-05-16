@@ -126,7 +126,7 @@ public class PreparationSceneController : MonoBehaviour
 
     void UpdateHUD()
     {
-        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} ⚙";
+        if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} Sc";
     }
 
     void OnSortie() => SceneTransitionManager.Instance.TransitionTo("BattleScene");

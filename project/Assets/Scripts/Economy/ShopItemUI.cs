@@ -12,7 +12,7 @@ public class ShopItemUI : MonoBehaviour
     public void Setup(string itemName, int price, bool sold, System.Action onBuy)
     {
         if (nameText)  nameText.text  = itemName;
-        if (priceText) priceText.text = $"{price} ⚙";
+        if (priceText) priceText.text = $"{price} Sc";
         buyButton?.onClick.RemoveAllListeners();
 
         if (sold)

@@ -13,8 +13,8 @@ public class ResultSceneController : MonoBehaviour
         SceneTransitionManager.Instance?.FadeIn(0.4f);
 
         int baseScrap = 50; // TODO: ノード・難易度に応じて変動
-        if (baseScrapText)  baseScrapText.text  = $"基本報酬: {baseScrap} ⚙";
-        if (pendingScrapText) pendingScrapText.text = $"回収スクラップ: {RunManager.Instance.PendingScrap} ⚙";
+        if (baseScrapText)  baseScrapText.text  = $"基本報酬: {baseScrap} Sc";
+        if (pendingScrapText) pendingScrapText.text = $"回収スクラップ: {RunManager.Instance.PendingScrap} Sc";
 
         // 基本報酬は即時反映
         RunManager.Instance.AddScrap(baseScrap);
