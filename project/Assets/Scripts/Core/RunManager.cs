@@ -17,6 +17,7 @@ public class RunManager : MonoBehaviour
     public List<RelicData> RelicInventory { get; private set; } = new();
     public MapGraph CurrentMapGraph { get; private set; }
     public int CurrentNodeId { get; private set; } = -1;
+    public int CurrentArea { get; private set; } = 1;
 
     // バトル中の仮保持スクラップ
     public int PendingScrap { get; private set; }
@@ -24,7 +25,7 @@ public class RunManager : MonoBehaviour
     // --- イベント ---
     public event Action<int, int> OnHpChanged;
     public event Action<int> OnScrapChanged;
-    public event Action OnGridChanged;
+    public Action OnGridChanged;
 
     const int GridMax = 5;
 
@@ -148,6 +149,7 @@ public class RunManager : MonoBehaviour
     // --- マップ進行 ---
     public void StartNewArea(MapGraph graph)
     {
+        if (CurrentMapGraph != null) CurrentArea++;
         CurrentMapGraph = graph;
         CurrentNodeId = 0;
     }

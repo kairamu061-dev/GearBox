@@ -67,7 +67,12 @@ public class TitleSceneController : MonoBehaviour
     {
         var save = SaveManager.Instance.LoadRun();
         if (save == null) { OnStart(); return; }
-        // TODO: RunManager に save データを復元
+        if (!SaveManager.Instance.RestoreRun(save))
+        {
+            Debug.LogError("セーブデータの復元に失敗しました。新規ランを開始します。");
+            OnStart();
+            return;
+        }
         SceneTransitionManager.Instance.TransitionTo(save.resumeSceneName ?? "MapScene");
     }
 

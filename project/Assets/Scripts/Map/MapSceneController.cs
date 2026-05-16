@@ -65,7 +65,7 @@ public class MapSceneController : MonoBehaviour
     void UpdateHUD()
     {
         if (scrapText) scrapText.text = $"{RunManager.Instance.Scrap} Sc";
-        if (areaLabel) areaLabel.text = "エリア 1"; // TODO: エリア番号管理
+        if (areaLabel) areaLabel.text = $"エリア {RunManager.Instance.CurrentArea}";
     }
 
     IEnumerator IntroAnimation()
@@ -140,13 +140,7 @@ public class MapSceneController : MonoBehaviour
 
     void OnSuspend()
     {
-        SaveManager.Instance.SaveRun(new RunSaveData
-        {
-            currentHp = RunManager.Instance.CurrentHp,
-            maxHp = RunManager.Instance.MaxHp,
-            scrap = RunManager.Instance.Scrap,
-            resumeSceneName = "MapScene",
-        });
+        SaveManager.Instance.SaveRun("MapScene");
         SceneTransitionManager.Instance.TransitionTo("TitleScene");
     }
 }
