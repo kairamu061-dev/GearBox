@@ -561,44 +561,79 @@ public static class GearBoxPrefabBuilder
     // ────────────────────────────────────────────
     public static void BuildScriptableObjects()
     {
-        // 蒸気砲（初期タワー）
-        BuildTowerData("TowerData_SteamCannon", new TowerDataParams
-        {
-            towerId = "steam_cannon", displayName = "蒸気砲",
-            attackType = AttackType.Aimed, damageType = DamageType.Single,
-            damage = 30, cooldown = 2.0f, range = 8.0f, basePrice = 40,
-        });
+        BuildTowerScriptableObjects();
+        BuildEnemyScriptableObjects();
+        BuildRelicScriptableObjects();
+    }
 
-        // 電磁砲塔
-        BuildTowerData("TowerData_ElectroTurret", new TowerDataParams
+    static void BuildTowerScriptableObjects()
+    {
+        var towers = new TowerDataParams[]
         {
-            towerId = "electro_turret", displayName = "電磁砲塔",
-            attackType = AttackType.AutoAim, damageType = DamageType.Single,
-            damage = 20, cooldown = 1.0f, range = 9.0f, basePrice = 55,
-        });
+            new() { towerId="steam_cannon",   displayName="蒸気砲",     attackType=AttackType.Aimed,   damageType=DamageType.Single, damage=30,   cooldown=2.0f, range=8.0f,  basePrice=40 },
+            new() { towerId="shotgun",        displayName="散弾銃",     attackType=AttackType.Aimed,   damageType=DamageType.Area,   damage=12,   cooldown=1.5f, range=5.0f,  basePrice=35 },
+            new() { towerId="machine_gun",    displayName="機関銃",     attackType=AttackType.Aimed,   damageType=DamageType.Single, damage=8,    cooldown=0.3f, range=7.0f,  basePrice=30 },
+            new() { towerId="mortar",         displayName="迫撃砲",     attackType=AttackType.Aimed,   damageType=DamageType.Area,   damage=40,   cooldown=3.0f, range=10.0f, basePrice=50 },
+            new() { towerId="flame_emitter",  displayName="蒸気炎放器", attackType=AttackType.Area,    damageType=DamageType.Area,   damage=15,   cooldown=0.5f, range=3.0f,  basePrice=35 },
+            new() { towerId="electro_turret", displayName="電磁砲塔",   attackType=AttackType.AutoAim, damageType=DamageType.Single, damage=20,   cooldown=1.0f, range=9.0f,  basePrice=55 },
+            new() { towerId="steam_armor",    displayName="蒸気装甲板", attackType=AttackType.Barrier, damageType=DamageType.Single, damage=0,    cooldown=6.0f, range=0f,    basePrice=40 },
+            new() { towerId="intercept_gun",  displayName="迎撃砲塔",   attackType=AttackType.Intercept,damageType=DamageType.Single,damage=0,   cooldown=0.5f, range=6.0f,  basePrice=45 },
+            new() { towerId="repair_unit",    displayName="修理機構",   attackType=AttackType.Heal,    damageType=DamageType.Single, damage=10,   cooldown=5.0f, range=0f,    basePrice=50 },
+            new() { towerId="booster",        displayName="過給器",     attackType=AttackType.Buff,    damageType=DamageType.Single, damage=0,    cooldown=0f,   range=0f,    basePrice=50 },
+            new() { towerId="scrap_magnet",   displayName="磁気回収機", attackType=AttackType.Buff,    damageType=DamageType.Single, damage=0,    cooldown=0f,   range=0f,    basePrice=45 },
+            new() { towerId="lubricator",     displayName="潤滑装置",   attackType=AttackType.Buff,    damageType=DamageType.Single, damage=0,    cooldown=0f,   range=0f,    basePrice=60 },
+            new() { towerId="armor_plate",    displayName="装甲強化板", attackType=AttackType.Buff,    damageType=DamageType.Single, damage=0,    cooldown=0f,   range=0f,    basePrice=35 },
+            new() { towerId="beam_cannon",    displayName="ビーム砲",   attackType=AttackType.Beam,    damageType=DamageType.Single, damage=25,   cooldown=1.5f, range=12.0f, basePrice=60 },
+        };
+        foreach (var t in towers)
+            BuildTowerData($"TowerData_{System.Text.RegularExpressions.Regex.Replace(t.towerId, @"_(\w)", m => m.Groups[1].Value.ToUpper())}", t);
+    }
 
-        // 蒸気炎放器
-        BuildTowerData("TowerData_FlameEmitter", new TowerDataParams
-        {
-            towerId = "flame_emitter", displayName = "蒸気炎放器",
-            attackType = AttackType.Area, damageType = DamageType.Area,
-            damage = 15, cooldown = 0.5f, range = 3.0f, basePrice = 35,
-        });
-
-        // 敵データ
+    static void BuildEnemyScriptableObjects()
+    {
         BuildEnemyData("EnemyData_Chaser", new EnemyDataParams
         {
             enemyName = "スクラップウォーカー", maxHp = 40, moveSpeed = 3f,
             attackDamage = 10, attackCooldown = 1f, attackRange = 0.6f,
             aiType = AIType.Chaser, scrapDropMin = 5, scrapDropMax = 10,
         });
-
         BuildEnemyData("EnemyData_Rusher", new EnemyDataParams
         {
             enemyName = "装甲列車", maxHp = 150, moveSpeed = 6f,
             attackDamage = 30, attackCooldown = 2f, attackRange = 0.6f,
             aiType = AIType.Rusher, scrapDropMin = 30, scrapDropMax = 50,
         });
+        BuildEnemyData("EnemyData_Turret", new EnemyDataParams
+        {
+            enemyName = "蒸気砲台", maxHp = 80, moveSpeed = 0f,
+            attackDamage = 25, attackCooldown = 2f, attackRange = 8f,
+            aiType = AIType.Turret, scrapDropMin = 15, scrapDropMax = 25,
+        });
+    }
+
+    static void BuildRelicScriptableObjects()
+    {
+        if (!System.IO.Directory.Exists($"{SOPath}/Relics"))
+            System.IO.Directory.CreateDirectory($"{SOPath}/Relics");
+
+        var relics = new (string id, string name, RelicEffectType type, float val, string desc)[]
+        {
+            ("relic_hp_up",      "廃兵の心臓",     RelicEffectType.MaxHpUp,              30,   "最大HP +30"),
+            ("relic_scrap",      "廃材の塊",        RelicEffectType.ScrapBonus,            50,   "取得時スクラップ +50"),
+            ("relic_speed",      "蒸気過給機",      RelicEffectType.MoveSpeedUp,           0.2f, "移動速度 +20%"),
+            ("relic_cooldown",   "潤滑油",          RelicEffectType.AllCooldownReduction,  0.15f,"全タワーCT -15%"),
+            ("relic_collect",    "磁気コイル",      RelicEffectType.ScrapCollectRadius,    1.5f, "スクラップ回収半径 +1.5"),
+        };
+
+        foreach (var (id, name, type, val, desc) in relics)
+        {
+            string path = $"{SOPath}/Relics/Relic_{id}.asset";
+            if (System.IO.File.Exists(path)) continue;
+            var r = ScriptableObject.CreateInstance<RelicData>();
+            r.relicId = id; r.displayName = name;
+            r.effectType = type; r.effectValue = val; r.description = desc;
+            AssetDatabase.CreateAsset(r, path);
+        }
     }
 
     struct TowerDataParams
