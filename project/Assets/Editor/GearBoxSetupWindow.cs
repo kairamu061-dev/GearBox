@@ -51,6 +51,24 @@ public class GearBoxSetupWindow : EditorWindow
             EditorApplication.delayCall += FixTMPFonts;
 
         EditorGUILayout.Space(8);
+        GUILayout.Label("ゲーム起動", EditorStyles.boldLabel);
+
+        var startScene = AssetDatabase.LoadAssetAtPath<SceneAsset>($"{ScenesPath}/LogoScene.unity");
+        bool isStartSet = EditorSceneManager.playModeStartScene == startScene;
+
+        using (new EditorGUI.DisabledScope(startScene == null))
+        {
+            if (GUILayout.Button(isStartSet ? "▶ LogoSceneから再生中（クリックで解除）"
+                                            : "▶ LogoSceneから再生する", GUILayout.Height(32)))
+            {
+                EditorSceneManager.playModeStartScene = isStartSet ? null : startScene;
+                Repaint();
+            }
+        }
+        if (startScene == null)
+            EditorGUILayout.HelpBox("LogoScene.unity が見つかりません。先にセットアップを実行してください。", MessageType.Warning);
+
+        EditorGUILayout.Space(8);
         GUILayout.Label("個別セットアップ", EditorStyles.boldLabel);
         foreach (var (name, setup) in Scenes)
         {
