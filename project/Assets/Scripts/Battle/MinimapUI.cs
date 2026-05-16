@@ -8,16 +8,16 @@ public class MinimapUI : MonoBehaviour
     [SerializeField] Image playerDot;
     [SerializeField] Image goalDot;
     [SerializeField] Image goalArrow;
-    [SerializeField] float fieldWidth  = 64f;
-    [SerializeField] float fieldHeight = 64f;
+
+    // ミニマップに映す半径（ワールド単位）
+    [SerializeField] float viewRadius = 15f;
+    // ゴール方向矢印をミニマップ外周に置くオフセット
+    [SerializeField] float arrowRadius = 70f;
 
     readonly List<(Transform src, Image dot)> enemyDots = new();
 
     Transform playerTransform;
     Transform goalTransform;
-
-    // ミニマップの外周に表示する方向矢印の半径
-    [SerializeField] float arrowRadius = 70f;
 
     public void RegisterEnemy(Transform enemy)
     {
@@ -30,7 +30,6 @@ public class MinimapUI : MonoBehaviour
 
     void LateUpdate()
     {
-        // プレイヤー・ゴールを未取得なら毎フレーム探す（スポーン後に見つかる）
         if (playerTransform == null)
         {
             var p = GameObject.FindWithTag("Player");
@@ -42,45 +41,55 @@ public class MinimapUI : MonoBehaviour
             if (g) goalTransform = g.transform;
         }
 
-        if (playerTransform && playerDot)
-            playerDot.rectTransform.anchoredPosition = WorldToMinimap(playerTransform.position);
+        if (playerTransform == null) return;
 
+        // 自機は常にミニマップ中央
+        if (playerDot)
+            playerDot.rectTransform.anchoredPosition = Vector2.zero;
+
+        // ゴールドット（視野内なら表示、外なら非表示）
         if (goalTransform && goalDot)
-            goalDot.rectTransform.anchoredPosition = WorldToMinimap(goalTransform.position);
+        {
+            var rel = goalTransform.position - playerTransform.position;
+            bool inView = rel.magnitude <= viewRadius;
+            goalDot.gameObject.SetActive(inView);
+            if (inView)
+                goalDot.rectTransform.anchoredPosition = WorldToLocal(goalTransform.position);
+        }
 
-        // 敵ドット更新・無効敵を除去
+        // 敵ドット
         for (int i = enemyDots.Count - 1; i >= 0; i--)
         {
             var (src, dot) = enemyDots[i];
             if (src == null) { Destroy(dot.gameObject); enemyDots.RemoveAt(i); continue; }
-            dot.rectTransform.anchoredPosition = WorldToMinimap(src.position);
+            var rel = src.position - playerTransform.position;
+            bool inView = rel.magnitude <= viewRadius;
+            dot.gameObject.SetActive(inView);
+            if (inView)
+                dot.rectTransform.anchoredPosition = WorldToLocal(src.position);
         }
 
-        // ゴール方向矢印：ミニマップ外周に配置して向きを示す
-        if (playerTransform && goalTransform && goalArrow)
+        // ゴール方向矢印（常時表示・ミニマップ外周に配置）
+        if (goalTransform && goalArrow)
         {
             var dir = (goalTransform.position - playerTransform.position).normalized;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-
-            // 矢印をミニマップ中心から arrowRadius の位置に配置
             goalArrow.rectTransform.anchoredPosition =
                 new Vector2(Mathf.Sin(-angle * Mathf.Deg2Rad),
                             Mathf.Cos(-angle * Mathf.Deg2Rad)) * arrowRadius;
             goalArrow.rectTransform.localRotation = Quaternion.Euler(0, 0, angle);
             goalArrow.gameObject.SetActive(true);
         }
-        else if (goalArrow)
-        {
-            goalArrow.gameObject.SetActive(false);
-        }
     }
 
-    Vector2 WorldToMinimap(Vector3 world)
+    // ワールド座標 → ミニマップ上のローカル座標（プレイヤー中心）
+    Vector2 WorldToLocal(Vector3 world)
     {
         var mapSize = minimapRoot.rect.size;
-        float nx = (world.x + fieldWidth  * 0.5f) / fieldWidth;
-        float ny = (world.y + fieldHeight * 0.5f) / fieldHeight;
-        return new Vector2(nx * mapSize.x - mapSize.x * 0.5f,
-                           ny * mapSize.y - mapSize.y * 0.5f);
+        float relX = world.x - playerTransform.position.x;
+        float relY = world.y - playerTransform.position.y;
+        return new Vector2(
+            relX / viewRadius * mapSize.x * 0.5f,
+            relY / viewRadius * mapSize.y * 0.5f);
     }
 }
