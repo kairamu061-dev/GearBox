@@ -359,6 +359,20 @@ public class GearBoxSetupWindow : EditorWindow
         // HUD（右上）
         var scrapLabel = CreateLabel(canvas.transform, "ScrapText", "100 Sc", new Vector2(750, 490));
 
+        // パラメータプレビューパネル
+        var previewPanel = CreatePanel(canvas.transform, "ParamPreview", new Vector2(550, 100), new Vector2(260, 180));
+        previewPanel.SetActive(false);
+        var previewName  = CreateLabel(previewPanel.transform, "NameText",  "タワー名", new Vector2(0, 60));
+        var previewStats = CreateLabel(previewPanel.transform, "StatsText", "",         new Vector2(0, -20));
+        previewStats.GetComponent<RectTransform>().sizeDelta = new Vector2(240, 100);
+        previewStats.alignment = TextAlignmentOptions.TopLeft;
+        var paramPreview = new GameObject("TowerParamPreview").AddComponent<TowerParamPreview>();
+        var ppSO = new SerializedObject(paramPreview);
+        ppSO.FindProperty("panel").objectReferenceValue     = previewPanel;
+        ppSO.FindProperty("nameText").objectReferenceValue  = previewName.GetComponent<TMP_Text>();
+        ppSO.FindProperty("statsText").objectReferenceValue = previewStats.GetComponent<TMP_Text>();
+        ppSO.ApplyModifiedPropertiesWithoutUndo();
+
         // GridCellUI プレハブ取得
         var cellPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/GridCellUI.prefab");
         var cellPrefab = cellPrefabGO?.GetComponent<GridCellUI>();
@@ -548,7 +562,7 @@ public class GearBoxSetupWindow : EditorWindow
         }
 
         // 全タワーデータをショップに登録
-        var towerGuids = AssetDatabase.FindAssets("t:TowerData", new[]{"Assets/ScriptableObjects/Towers"});
+        var towerGuids = AssetDatabase.FindAssets("t:TowerData", new[]{"Assets/Resources/Towers", "Assets/ScriptableObjects/Towers"});
         var allTowersSO = so.FindProperty("allTowers");
         allTowersSO.arraySize = towerGuids.Length;
         for (int i = 0; i < towerGuids.Length; i++)

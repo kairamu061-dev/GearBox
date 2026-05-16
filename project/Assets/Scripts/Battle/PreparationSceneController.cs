@@ -114,15 +114,11 @@ public class PreparationSceneController : MonoBehaviour
         gridUI.HighlightCell(pos, gridUI.IsCellEmpty(pos));
     }
 
-    void OnCardHoverEnter(TowerInstance tower)
-    {
-        // TODO: パラメータプレビュー表示
-    }
+    void OnCardHoverEnter(TowerInstance tower) =>
+        TowerParamPreview.Instance?.Show(tower);
 
-    void OnCardHoverExit(TowerInstance tower)
-    {
-        // TODO: パラメータプレビュー非表示
-    }
+    void OnCardHoverExit(TowerInstance tower) =>
+        TowerParamPreview.Instance?.Hide();
 
     void UpdateHUD()
     {

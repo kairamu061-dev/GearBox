@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedfa61b8c732784c930ea9be174af19, type: 3}
+  m_Name: Relic_relic_cooldown
+  m_EditorClassIdentifier: Assembly-CSharp::RelicData
+  relicId: relic_cooldown
+  displayName: "\u6F64\u6ED1\u6CB9"
+  description: "\u5168\u30BF\u30EF\u30FCCT -15%"
+  icon: {fileID: 0}
+  effectType: 3
+  effectValue: 0.15

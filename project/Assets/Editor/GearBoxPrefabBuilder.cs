@@ -613,8 +613,10 @@ public static class GearBoxPrefabBuilder
 
     static void BuildRelicScriptableObjects()
     {
-        if (!System.IO.Directory.Exists($"{SOPath}/Relics"))
-            System.IO.Directory.CreateDirectory($"{SOPath}/Relics");
+        // Resources 経由で MysteryEventUI が読み込めるよう Resources/Relics に配置
+        const string relicPath = "Assets/Resources/Relics";
+        if (!System.IO.Directory.Exists(relicPath))
+            System.IO.Directory.CreateDirectory(relicPath);
 
         var relics = new (string id, string name, RelicEffectType type, float val, string desc)[]
         {
@@ -627,7 +629,7 @@ public static class GearBoxPrefabBuilder
 
         foreach (var (id, name, type, val, desc) in relics)
         {
-            string path = $"{SOPath}/Relics/Relic_{id}.asset";
+            string path = $"{relicPath}/Relic_{id}.asset";
             if (System.IO.File.Exists(path)) continue;
             var r = ScriptableObject.CreateInstance<RelicData>();
             r.relicId = id; r.displayName = name;
@@ -647,7 +649,10 @@ public static class GearBoxPrefabBuilder
 
     static void BuildTowerData(string assetName, TowerDataParams p)
     {
-        string path = $"{SOPath}/Towers/{assetName}.asset";
+        // Resources/Towers に配置して Resources.Load でも取得可能にする
+        const string resourcesPath = "Assets/Resources/Towers";
+        if (!Directory.Exists(resourcesPath)) Directory.CreateDirectory(resourcesPath);
+        string path = $"{resourcesPath}/{assetName}.asset";
         if (File.Exists(path)) return;
         var data = ScriptableObject.CreateInstance<TowerData>();
         data.towerId = p.towerId; data.displayName = p.displayName;

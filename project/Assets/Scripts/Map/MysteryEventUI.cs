@@ -77,12 +77,27 @@ public static class MysteryEventTable
         }
     };
 
-    static MysteryEvent RelicFound() => new()
+    static MysteryEvent RelicFound()
     {
-        title = "謎の部品を発見",
-        description = "用途不明の機械部品。持っていくと何か役に立つかもしれない。",
-        effect = () => { /* TODO: RelicData ドロップ */ },
-    };
+        var relics = Resources.LoadAll<RelicData>("Relics");
+        var owned  = RunManager.Instance.RelicInventory;
+        // 未所持のレリックを優先
+        var candidates = relics.Length > 0
+            ? System.Array.FindAll(relics, r => !owned.Exists(o => o.relicId == r.relicId))
+            : null;
+        var pick = (candidates != null && candidates.Length > 0)
+            ? candidates[Random.Range(0, candidates.Length)]
+            : (relics.Length > 0 ? relics[Random.Range(0, relics.Length)] : null);
+
+        return new()
+        {
+            title = "謎の部品を発見",
+            description = pick != null
+                ? $"「{pick.displayName}」を手に入れた。{pick.description}"
+                : "用途不明の部品だったが、使えそうになかった。",
+            effect = () => { if (pick) RunManager.Instance.AddRelic(pick); },
+        };
+    }
 
     static MysteryEvent ScrapFound()
     {
@@ -95,12 +110,22 @@ public static class MysteryEventTable
         };
     }
 
-    static MysteryEvent Blueprint() => new()
+    static MysteryEvent Blueprint()
     {
-        title = "設計図を発見",
-        description = "ボロボロの設計図が落ちていた。解読すれば合成レシピが分かるかもしれない。",
-        effect = () => { /* TODO: SynthesisRecipe 解放 */ },
-    };
+        var all     = Resources.LoadAll<SynthesisRecipe>("Recipes");
+        var known   = RunManager.Instance.KnownRecipes;
+        var unknown = System.Array.FindAll(all, r => !known.Contains(r));
+        var pick    = unknown.Length > 0 ? unknown[Random.Range(0, unknown.Length)] : null;
+
+        return new()
+        {
+            title = "設計図を発見",
+            description = pick != null
+                ? $"「{pick.materialA.displayName} + {pick.materialB.displayName}」の合成レシピを解読した。"
+                : "設計図は読めたが、すでに知っている内容だった。",
+            effect = () => { if (pick) RunManager.Instance.UnlockRecipe(pick); },
+        };
+    }
 
     static MysteryEvent Trap()
     {

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52f1b5ed40abc3942a0aeb47cb6f2175, type: 3}
+  m_Name: EnemyData_Turret
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: "\u84B8\u6C17\u7832\u53F0"
+  prefab: {fileID: 0}
+  maxHp: 80
+  moveSpeed: 0
+  attackDamage: 25
+  attackCooldown: 2
+  attackRange: 8
+  aiType: 1
+  scrapDropMin: 15
+  scrapDropMax: 25
+  projectileSpeed: 8
+  projectilePrefab: {fileID: 0}
