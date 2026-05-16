@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -729,8 +730,32 @@ public class GearBoxSetupWindow : EditorWindow
             if (changed) AssetDatabase.SaveAssetIfDirty(prefab);
         }
 
+        // LiberationSans SDF に NotoSansJP SDF をフォールバックとして設定
+        var notoSans = AssetDatabase.FindAssets("NotoSansJP")
+            .Select(AssetDatabase.GUIDToAssetPath)
+            .Select(p => AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(p))
+            .FirstOrDefault(f => f != null);
+
+        if (notoSans != null)
+        {
+            var lsSO = new SerializedObject(liberationSans);
+            var fallbacks = lsSO.FindProperty("m_FallbackFontAssetTable");
+            bool alreadySet = false;
+            for (int i = 0; i < fallbacks.arraySize; i++)
+                if (fallbacks.GetArrayElementAtIndex(i).objectReferenceValue == notoSans)
+                { alreadySet = true; break; }
+
+            if (!alreadySet)
+            {
+                fallbacks.arraySize++;
+                fallbacks.GetArrayElementAtIndex(fallbacks.arraySize - 1).objectReferenceValue = notoSans;
+                lsSO.ApplyModifiedProperties();
+                EditorUtility.SetDirty(liberationSans);
+            }
+        }
+
         AssetDatabase.SaveAssets();
-        EditorUtility.DisplayDialog("完了", $"{count} 件の TMP コンポーネントを LiberationSans SDF に変更しました。", "OK");
+        EditorUtility.DisplayDialog("完了", $"{count} 件の TMP コンポーネントを LiberationSans SDF に変更しました。\nNotoSansJP フォールバックも設定しました。", "OK");
     }
 
     static void UpdateBuildSettings()
