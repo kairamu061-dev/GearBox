@@ -249,6 +249,8 @@ public static class GearBoxPrefabBuilder
         BuildTowerCardUIPrefab();
         BuildNodeButtonUIPrefab();
         BuildShopItemUIPrefab();
+        BuildSynthesisMaterialCardPrefab();
+        BuildResultDropItemUIPrefab();
     }
 
     static void BuildGridCellUIPrefab()
@@ -277,6 +279,89 @@ public static class GearBoxPrefabBuilder
         var so = new SerializedObject(cell);
         so.FindProperty("backgroundImage").objectReferenceValue = bg;
         so.FindProperty("towerIcon").objectReferenceValue = icon;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        SavePrefab(root, path);
+    }
+
+    static void BuildSynthesisMaterialCardPrefab()
+    {
+        const string path = PrefabPath + "/UI/SynthesisMaterialCard.prefab";
+        var root = new GameObject("SynthesisMaterialCard");
+        root.AddComponent<RectTransform>().sizeDelta = new Vector2(500, 52);
+        root.AddComponent<Image>().color = new Color(0.18f, 0.14f, 0.09f);
+        root.AddComponent<LayoutElement>().preferredHeight = 52;
+        var card = root.AddComponent<SynthesisMaterialCard>();
+
+        var labelGo = new GameObject("Label");
+        labelGo.transform.SetParent(root.transform, false);
+        var labelRT = labelGo.AddComponent<RectTransform>();
+        labelRT.anchoredPosition = new Vector2(-40, 0);
+        labelRT.sizeDelta = new Vector2(380, 48);
+        var label = labelGo.AddComponent<TextMeshProUGUI>();
+        label.fontSize = 16; label.alignment = TextAlignmentOptions.MidlineLeft;
+        label.color = new Color(0.91f, 0.84f, 0.64f);
+
+        var hlGo = new GameObject("Highlight");
+        hlGo.transform.SetParent(root.transform, false);
+        var hlRT = hlGo.AddComponent<RectTransform>();
+        hlRT.anchorMin = Vector2.zero; hlRT.anchorMax = Vector2.one;
+        hlRT.offsetMin = hlRT.offsetMax = Vector2.zero;
+        var hl = hlGo.AddComponent<Image>();
+        hl.color = new Color(1f, 0.8f, 0.2f, 0.3f);
+        hlGo.SetActive(false);
+
+        root.AddComponent<Button>();
+
+        var so = new SerializedObject(card);
+        so.FindProperty("label").objectReferenceValue     = label;
+        so.FindProperty("highlight").objectReferenceValue = hl;
+        so.FindProperty("button").objectReferenceValue    = root.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        SavePrefab(root, path);
+    }
+
+    static void BuildResultDropItemUIPrefab()
+    {
+        const string path = PrefabPath + "/UI/ResultDropItemUI.prefab";
+        var root = new GameObject("ResultDropItemUI");
+        root.AddComponent<RectTransform>().sizeDelta = new Vector2(500, 52);
+        root.AddComponent<Image>().color = new Color(0.18f, 0.14f, 0.09f);
+        root.AddComponent<LayoutElement>().preferredHeight = 52;
+        var dropUI = root.AddComponent<ResultDropItemUI>();
+
+        var labelGo = new GameObject("ItemLabel");
+        labelGo.transform.SetParent(root.transform, false);
+        var labelRT = labelGo.AddComponent<RectTransform>();
+        labelRT.anchoredPosition = new Vector2(-30, 0);
+        labelRT.sizeDelta = new Vector2(380, 48);
+        var label = labelGo.AddComponent<TextMeshProUGUI>();
+        label.fontSize = 16; label.alignment = TextAlignmentOptions.MidlineLeft;
+        label.color = new Color(0.91f, 0.84f, 0.64f);
+
+        var toggleGo = new GameObject("Toggle");
+        toggleGo.transform.SetParent(root.transform, false);
+        var toggleRT = toggleGo.AddComponent<RectTransform>();
+        toggleRT.anchoredPosition = new Vector2(220, 0);
+        toggleRT.sizeDelta = new Vector2(32, 32);
+        var toggle = toggleGo.AddComponent<Toggle>();
+        var bgGo = new GameObject("Background");
+        bgGo.transform.SetParent(toggleGo.transform, false);
+        var bg = bgGo.AddComponent<Image>();
+        bg.color = new Color(0.3f, 0.3f, 0.3f);
+        bgGo.GetComponent<RectTransform>().sizeDelta = new Vector2(32, 32);
+        var checkGo = new GameObject("Checkmark");
+        checkGo.transform.SetParent(bgGo.transform, false);
+        var check = checkGo.AddComponent<Image>();
+        check.color = new Color(0.78f, 0.48f, 0.26f);
+        checkGo.GetComponent<RectTransform>().sizeDelta = new Vector2(24, 24);
+        toggle.targetGraphic = bg;
+        toggle.graphic = check;
+
+        var so = new SerializedObject(dropUI);
+        so.FindProperty("itemLabel").objectReferenceValue = label;
+        so.FindProperty("toggle").objectReferenceValue    = toggle;
         so.ApplyModifiedPropertiesWithoutUndo();
 
         SavePrefab(root, path);

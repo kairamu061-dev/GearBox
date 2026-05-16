@@ -623,16 +623,24 @@ public class GearBoxSetupWindow : EditorWindow
         var bg = CreateUIImage(canvas.transform, "Background", new Color(0.07f, 0.05f, 0.03f));
         SetStretch(bg.GetComponent<RectTransform>());
 
-        var panel = CreatePanel(canvas.transform, "ResultPanel", Vector2.zero, new Vector2(600, 400));
-        CreateLabel(panel.transform, "Title", "RESULT", new Vector2(0, 150));
-        var baseScrapText   = CreateLabel(panel.transform, "BaseScrapText",    "基本報酬: -- Sc",      new Vector2(0, 70));
-        var pendingScrapText = CreateLabel(panel.transform, "PendingScrapText", "回収スクラップ: -- Sc", new Vector2(0, 10));
-        var btnReceive = CreateButton(panel.transform, "BtnReceive", "受け取る", new Vector2(0, -80));
+        var panel = CreatePanel(canvas.transform, "ResultPanel", Vector2.zero, new Vector2(600, 600));
+        CreateLabel(panel.transform, "Title", "RESULT", new Vector2(0, 260));
+        var baseScrapText = CreateLabel(panel.transform, "BaseScrapText", "基本報酬: -- Sc", new Vector2(0, 200));
+
+        // ドロップリスト
+        var dropContent = CreateScrollContent(panel.transform, "DropContent");
+        dropContent.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
+
+        var btnReceive = CreateButton(panel.transform, "BtnReceive", "受け取る", new Vector2(0, -240));
+
+        var dropPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/ResultDropItemUI.prefab");
+        var dropPrefab   = dropPrefabGO?.GetComponent<ResultDropItemUI>();
 
         var so = new SerializedObject(ctrl);
-        so.FindProperty("baseScrapText").objectReferenceValue    = baseScrapText.GetComponent<TMP_Text>();
-        so.FindProperty("pendingScrapText").objectReferenceValue = pendingScrapText.GetComponent<TMP_Text>();
-        so.FindProperty("btnReceive").objectReferenceValue       = btnReceive.GetComponent<Button>();
+        so.FindProperty("baseScrapText").objectReferenceValue  = baseScrapText.GetComponent<TMP_Text>();
+        so.FindProperty("dropListRoot").objectReferenceValue   = dropContent;
+        if (dropPrefab) so.FindProperty("dropItemPrefab").objectReferenceValue = dropPrefab;
+        so.FindProperty("btnReceive").objectReferenceValue     = btnReceive.GetComponent<Button>();
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 
