@@ -18,6 +18,9 @@ public class FieldGenerator : MonoBehaviour
     [SerializeField] GameObject fortressPrefab;
     [SerializeField] int fortressCount = 2;
 
+    [Header("ボス")]
+    [SerializeField] GameObject bossPrefab;
+
     [Header("ゴール")]
     [SerializeField] GameObject goalPrefab;
 
@@ -37,17 +40,30 @@ public class FieldGenerator : MonoBehaviour
         startPos = Vector2.zero;                             // 戦車スポーン位置
         goalPos  = new Vector2(0, fieldHeight * 0.5f - 3f); // フィールド上方
 
-        PlaceGoal();
+        bool isBoss = RunManager.Instance.CurrentMapGraph?
+            .GetNode(RunManager.Instance.CurrentNodeId)?.type == NodeType.Boss;
+
+        if (isBoss)
+            PlaceBoss();
+        else
+            PlaceGoal();
+
         PlaceWalls(solidWallPrefab, solidWallCount, hp: -1);
         PlaceWalls(destructibleWallPrefab, destructibleWallCount, hp: 60);
         PlaceEnemies();
-        PlaceFortresses();
+        if (!isBoss) PlaceFortresses();
     }
 
     void PlaceGoal()
     {
         if (goalPrefab == null) return;
         Instantiate(goalPrefab, goalPos, Quaternion.identity);
+    }
+
+    void PlaceBoss()
+    {
+        if (bossPrefab == null) return;
+        Instantiate(bossPrefab, goalPos, Quaternion.identity);
     }
 
     void PlaceWalls(GameObject prefab, int count, float hp)

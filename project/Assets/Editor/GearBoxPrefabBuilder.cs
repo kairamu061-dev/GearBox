@@ -64,6 +64,7 @@ public static class GearBoxPrefabBuilder
         BuildEnemyPrefab("EnemyTurret",     Color.yellow, AIType.Turret);
         BuildEnemyPrefab("EnemyRusher",     Color.magenta,AIType.Rusher);
         BuildFortressPrefab();
+        BuildBossPrefab();
         BuildGoalTriggerPrefab();
         BuildSolidWallPrefab();
         BuildDestructibleWallPrefab();
@@ -183,6 +184,38 @@ public static class GearBoxPrefabBuilder
             $"{PrefabPath}/Enemy/EnemyProjectile.prefab");
 
         var so = new SerializedObject(root.GetComponent<FortressController>());
+        if (scrapPrefabGO != null)
+            so.FindProperty("scrapPrefab").objectReferenceValue =
+                scrapPrefabGO.GetComponent<ScrapObject>();
+        if (projPrefabGO != null)
+            so.FindProperty("projectilePrefab").objectReferenceValue = projPrefabGO;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        SavePrefab(root, path);
+    }
+
+    static void BuildBossPrefab()
+    {
+        const string path = PrefabPath + "/Enemy/Boss.prefab";
+        var root = new GameObject("Boss");
+        root.tag = "Enemy";
+
+        var rb = root.AddComponent<Rigidbody2D>();
+        rb.gravityScale = 0f; rb.freezeRotation = true;
+        root.AddComponent<CircleCollider2D>().radius = 1.5f;
+        var boss = root.AddComponent<BossController>();
+
+        var sr = root.AddComponent<SpriteRenderer>();
+        sr.sprite = GetDefaultSprite();
+        sr.color  = new Color(0.6f, 0.1f, 0.1f);
+        root.transform.localScale = Vector3.one * 3f;
+
+        var scrapPrefabGO = AssetDatabase.LoadAssetAtPath<GameObject>(
+            $"{PrefabPath}/Battle/ScrapObject.prefab");
+        var projPrefabGO  = AssetDatabase.LoadAssetAtPath<GameObject>(
+            $"{PrefabPath}/Enemy/EnemyProjectile.prefab");
+
+        var so = new SerializedObject(boss);
         if (scrapPrefabGO != null)
             so.FindProperty("scrapPrefab").objectReferenceValue =
                 scrapPrefabGO.GetComponent<ScrapObject>();

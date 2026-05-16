@@ -143,7 +143,7 @@ public class RunManager : MonoBehaviour
     public void AddRelic(RelicData relic)
     {
         RelicInventory.Add(relic);
-        // TODO: パッシブ効果の適用
+        RelicEffectApplier.Apply(relic, this);
     }
 
     // --- マップ進行 ---

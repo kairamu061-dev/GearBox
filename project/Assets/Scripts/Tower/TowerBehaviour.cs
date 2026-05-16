@@ -9,6 +9,8 @@ public class TowerBehaviour : MonoBehaviour
     float cooldownTimer;
     bool ctActive;
 
+    float cooldownMultiplier = 1f;
+
     public void Initialize(TowerInstance instance)
     {
         Instance = instance;
@@ -18,6 +20,8 @@ public class TowerBehaviour : MonoBehaviour
         attackBehaviour = AttackBehaviourFactory.Create(Data.attackType);
         attackBehaviour?.SetOwner(this);
     }
+
+    public void ApplyCooldownMultiplier(float mult) => cooldownMultiplier = mult;
 
     void Update()
     {
@@ -33,7 +37,7 @@ public class TowerBehaviour : MonoBehaviour
                 if (attackBehaviour is AutoAimAttack aa && !aa.HasTarget)
                     ctActive = false;
                 else
-                    cooldownTimer = Data.cooldown;
+                    cooldownTimer = Data.cooldown * cooldownMultiplier;
             }
         }
         else
@@ -44,7 +48,7 @@ public class TowerBehaviour : MonoBehaviour
                 if (autoAim.TryInstantFire())
                 {
                     ctActive = true;
-                    cooldownTimer = Data.cooldown;
+                    cooldownTimer = Data.cooldown * cooldownMultiplier;
                 }
             }
             else

@@ -2,7 +2,11 @@ using UnityEngine;
 
 public enum RelicEffectType
 {
-    // 今後追加
+    MaxHpUp,              // 最大HP増加
+    ScrapBonus,           // スクラップ即時獲得
+    MoveSpeedUp,          // 移動速度アップ（割合）
+    AllCooldownReduction, // 全タワーCT短縮（割合）
+    ScrapCollectRadius,   // スクラップ回収半径アップ
 }
 
 [CreateAssetMenu(fileName = "RelicData", menuName = "GearBox/RelicData")]
