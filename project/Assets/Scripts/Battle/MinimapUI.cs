@@ -16,11 +16,8 @@ public class MinimapUI : MonoBehaviour
     Transform playerTransform;
     Transform goalTransform;
 
-    public void Initialize(Transform player, Transform goal)
-    {
-        playerTransform = player;
-        goalTransform   = goal;
-    }
+    // ミニマップの外周に表示する方向矢印の半径
+    [SerializeField] float arrowRadius = 70f;
 
     public void RegisterEnemy(Transform enemy)
     {
@@ -33,6 +30,18 @@ public class MinimapUI : MonoBehaviour
 
     void LateUpdate()
     {
+        // プレイヤー・ゴールを未取得なら毎フレーム探す（スポーン後に見つかる）
+        if (playerTransform == null)
+        {
+            var p = GameObject.FindWithTag("Player");
+            if (p) playerTransform = p.transform;
+        }
+        if (goalTransform == null)
+        {
+            var g = FindFirstObjectByType<GoalTrigger>();
+            if (g) goalTransform = g.transform;
+        }
+
         if (playerTransform && playerDot)
             playerDot.rectTransform.anchoredPosition = WorldToMinimap(playerTransform.position);
 
@@ -47,12 +56,22 @@ public class MinimapUI : MonoBehaviour
             dot.rectTransform.anchoredPosition = WorldToMinimap(src.position);
         }
 
-        // ゴール方向矢印
+        // ゴール方向矢印：ミニマップ外周に配置して向きを示す
         if (playerTransform && goalTransform && goalArrow)
         {
-            var dir = goalTransform.position - playerTransform.position;
+            var dir = (goalTransform.position - playerTransform.position).normalized;
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-            goalArrow.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
+
+            // 矢印をミニマップ中心から arrowRadius の位置に配置
+            goalArrow.rectTransform.anchoredPosition =
+                new Vector2(Mathf.Sin(-angle * Mathf.Deg2Rad),
+                            Mathf.Cos(-angle * Mathf.Deg2Rad)) * arrowRadius;
+            goalArrow.rectTransform.localRotation = Quaternion.Euler(0, 0, angle);
+            goalArrow.gameObject.SetActive(true);
+        }
+        else if (goalArrow)
+        {
+            goalArrow.gameObject.SetActive(false);
         }
     }
 
