@@ -564,12 +564,19 @@ public static class GearBoxPrefabBuilder
         BuildTowerScriptableObjects();
         BuildEnemyScriptableObjects();
         BuildRelicScriptableObjects();
+        BuildSynthesisRecipes();
     }
 
     static void BuildTowerScriptableObjects()
     {
         var towers = new TowerDataParams[]
         {
+            // 合成結果タワー
+            new() { towerId="steam_gatling",    displayName="蒸気ガトリング",  attackType=AttackType.Aimed,   damageType=DamageType.Single, damage=15,  cooldown=0.2f, range=7.0f,  basePrice=100 },
+            new() { towerId="flame_shotgun",    displayName="爆炎散弾砲",     attackType=AttackType.Aimed,   damageType=DamageType.Area,   damage=20,  cooldown=1.5f, range=6.0f,  basePrice=100 },
+            new() { towerId="guided_cannon",    displayName="誘導連射砲",     attackType=AttackType.AutoAim, damageType=DamageType.Single, damage=15,  cooldown=0.4f, range=9.0f,  basePrice=110 },
+            new() { towerId="heavy_cannon",     displayName="重砲",           attackType=AttackType.Aimed,   damageType=DamageType.Area,   damage=80,  cooldown=4.0f, range=10.0f, basePrice=120 },
+            new() { towerId="electric_shotgun", displayName="電撃散弾砲",     attackType=AttackType.Aimed,   damageType=DamageType.Area,   damage=18,  cooldown=1.5f, range=6.0f,  basePrice=110 },
             new() { towerId="steam_cannon",   displayName="蒸気砲",     attackType=AttackType.Aimed,   damageType=DamageType.Single, damage=30,   cooldown=2.0f, range=8.0f,  basePrice=40 },
             new() { towerId="shotgun",        displayName="散弾銃",     attackType=AttackType.Aimed,   damageType=DamageType.Area,   damage=12,   cooldown=1.5f, range=5.0f,  basePrice=35 },
             new() { towerId="machine_gun",    displayName="機関銃",     attackType=AttackType.Aimed,   damageType=DamageType.Single, damage=8,    cooldown=0.3f, range=7.0f,  basePrice=30 },
@@ -660,6 +667,47 @@ public static class GearBoxPrefabBuilder
         data.damage = p.damage; data.cooldown = p.cooldown; data.range = p.range;
         data.basePrice = p.basePrice;
         AssetDatabase.CreateAsset(data, path);
+    }
+
+    static void BuildSynthesisRecipes()
+    {
+        const string recipePath = "Assets/Resources/Recipes";
+        if (!Directory.Exists(recipePath)) Directory.CreateDirectory(recipePath);
+
+        TowerData Load(string id)
+        {
+            var guids = AssetDatabase.FindAssets($"t:TowerData", new[] { "Assets/Resources/Towers" });
+            foreach (var g in guids)
+            {
+                var td = AssetDatabase.LoadAssetAtPath<TowerData>(AssetDatabase.GUIDToAssetPath(g));
+                if (td != null && td.towerId == id) return td;
+            }
+            return null;
+        }
+
+        var recipes = new (string name, string matA, string matB, string result)[]
+        {
+            ("Recipe_SteamGatling",    "steam_cannon",   "machine_gun",    "steam_gatling"),
+            ("Recipe_FlameShotgun",    "shotgun",        "flame_emitter",  "flame_shotgun"),
+            ("Recipe_GuidedCannon",    "electro_turret", "machine_gun",    "guided_cannon"),
+            ("Recipe_HeavyCannon",     "steam_cannon",   "mortar",         "heavy_cannon"),
+            ("Recipe_ElectricShotgun", "shotgun",        "electro_turret", "electric_shotgun"),
+        };
+
+        foreach (var (name, matA, matB, result) in recipes)
+        {
+            string path = $"{recipePath}/{name}.asset";
+            if (File.Exists(path)) continue;
+            var tdA = Load(matA); var tdB = Load(matB); var tdR = Load(result);
+            if (tdA == null || tdB == null || tdR == null)
+            {
+                Debug.LogWarning($"[GearBox] Recipe {name}: タワーデータが見つかりません");
+                continue;
+            }
+            var recipe = ScriptableObject.CreateInstance<SynthesisRecipe>();
+            recipe.materialA = tdA; recipe.materialB = tdB; recipe.result = tdR;
+            AssetDatabase.CreateAsset(recipe, path);
+        }
     }
 
     struct EnemyDataParams
