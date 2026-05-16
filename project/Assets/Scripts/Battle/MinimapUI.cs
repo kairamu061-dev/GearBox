@@ -69,16 +69,20 @@ public class MinimapUI : MonoBehaviour
                 dot.rectTransform.anchoredPosition = WorldToLocal(src.position);
         }
 
-        // ゴール方向矢印（常時表示・ミニマップ外周に配置）
+        // ゴール方向矢印（ゴールが視野外のときのみ表示）
         if (goalTransform && goalArrow)
         {
-            var dir = (goalTransform.position - playerTransform.position).normalized;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-            goalArrow.rectTransform.anchoredPosition =
-                new Vector2(Mathf.Sin(-angle * Mathf.Deg2Rad),
-                            Mathf.Cos(-angle * Mathf.Deg2Rad)) * arrowRadius;
-            goalArrow.rectTransform.localRotation = Quaternion.Euler(0, 0, angle);
-            goalArrow.gameObject.SetActive(true);
+            var toGoal = goalTransform.position - playerTransform.position;
+            bool goalOutOfView = toGoal.magnitude > viewRadius;
+            goalArrow.gameObject.SetActive(goalOutOfView);
+            if (goalOutOfView)
+            {
+                float angle = Mathf.Atan2(toGoal.y, toGoal.x) * Mathf.Rad2Deg - 90f;
+                goalArrow.rectTransform.anchoredPosition =
+                    new Vector2(Mathf.Sin(-angle * Mathf.Deg2Rad),
+                                Mathf.Cos(-angle * Mathf.Deg2Rad)) * arrowRadius;
+                goalArrow.rectTransform.localRotation = Quaternion.Euler(0, 0, angle);
+            }
         }
     }
 
