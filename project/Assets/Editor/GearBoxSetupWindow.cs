@@ -420,9 +420,7 @@ public class GearBoxSetupWindow : EditorWindow
         var solidWall       = GearBoxPrefabBuilder.LoadPrefabGO("Battle/SolidWall.prefab");
         var destWall        = GearBoxPrefabBuilder.LoadPrefabGO("Battle/DestructibleWall.prefab");
         var goal            = GearBoxPrefabBuilder.LoadPrefabGO("Battle/GoalTrigger.prefab");
-        var enemyChaser     = GearBoxPrefabBuilder.LoadPrefabGO("Enemy/EnemyChaser.prefab");
-        var enemyRusher     = GearBoxPrefabBuilder.LoadPrefabGO("Enemy/EnemyRusher.prefab");
-        var scrapObj        = GearBoxPrefabBuilder.LoadPrefabGO("Battle/ScrapObject.prefab");
+        var fortress        = GearBoxPrefabBuilder.LoadPrefabGO("Enemy/Fortress.prefab");
         var enemyDataChaser = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Chaser.asset");
         var enemyDataRusher = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Rusher.asset");
 
@@ -432,6 +430,7 @@ public class GearBoxSetupWindow : EditorWindow
         fgSO.FindProperty("solidWallPrefab").objectReferenceValue        = solidWall;
         fgSO.FindProperty("destructibleWallPrefab").objectReferenceValue = destWall;
         fgSO.FindProperty("goalPrefab").objectReferenceValue             = goal;
+        fgSO.FindProperty("fortressPrefab").objectReferenceValue         = fortress;
         var enemyList = fgSO.FindProperty("enemyDataList");
         enemyList.arraySize = 2;
         if (enemyDataChaser) enemyList.GetArrayElementAtIndex(0).objectReferenceValue = enemyDataChaser;

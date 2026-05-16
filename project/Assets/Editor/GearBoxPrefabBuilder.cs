@@ -59,10 +59,11 @@ public static class GearBoxPrefabBuilder
     {
         BuildTankPrefab();
         BuildProjectilePrefab("EnemyProjectile");
-        BuildScrapObjectPrefab();                   // 敵より先に生成
+        BuildScrapObjectPrefab();
         BuildEnemyPrefab("EnemyChaser",     Color.red,    AIType.Chaser);
         BuildEnemyPrefab("EnemyTurret",     Color.yellow, AIType.Turret);
         BuildEnemyPrefab("EnemyRusher",     Color.magenta,AIType.Rusher);
+        BuildFortressPrefab();
         BuildGoalTriggerPrefab();
         BuildSolidWallPrefab();
         BuildDestructibleWallPrefab();
@@ -157,6 +158,37 @@ public static class GearBoxPrefabBuilder
         sr.sprite = GetDefaultSprite();
         sr.color  = new Color(0.66f, 0.73f, 0.13f);
         root.transform.localScale = Vector3.one * 0.4f;
+
+        SavePrefab(root, path);
+    }
+
+    static void BuildFortressPrefab()
+    {
+        const string path = PrefabPath + "/Enemy/Fortress.prefab";
+        var root = new GameObject("Fortress");
+        root.tag = "Enemy";
+
+        var col = root.AddComponent<BoxCollider2D>();
+        col.size = Vector2.one * 2f;
+        root.AddComponent<FortressController>();
+
+        var sr = root.AddComponent<SpriteRenderer>();
+        sr.sprite = GetDefaultSprite();
+        sr.color  = new Color(0.4f, 0.3f, 0.6f);
+        root.transform.localScale = Vector3.one * 2f;
+
+        var scrapPrefabGO = AssetDatabase.LoadAssetAtPath<GameObject>(
+            $"{PrefabPath}/Battle/ScrapObject.prefab");
+        var projPrefabGO = AssetDatabase.LoadAssetAtPath<GameObject>(
+            $"{PrefabPath}/Enemy/EnemyProjectile.prefab");
+
+        var so = new SerializedObject(root.GetComponent<FortressController>());
+        if (scrapPrefabGO != null)
+            so.FindProperty("scrapPrefab").objectReferenceValue =
+                scrapPrefabGO.GetComponent<ScrapObject>();
+        if (projPrefabGO != null)
+            so.FindProperty("projectilePrefab").objectReferenceValue = projPrefabGO;
+        so.ApplyModifiedPropertiesWithoutUndo();
 
         SavePrefab(root, path);
     }

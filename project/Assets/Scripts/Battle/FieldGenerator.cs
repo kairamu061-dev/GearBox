@@ -14,6 +14,10 @@ public class FieldGenerator : MonoBehaviour
     [Header("敵プレハブ")]
     [SerializeField] EnemyData[] enemyDataList;
 
+    [Header("砦")]
+    [SerializeField] GameObject fortressPrefab;
+    [SerializeField] int fortressCount = 2;
+
     [Header("ゴール")]
     [SerializeField] GameObject goalPrefab;
 
@@ -37,6 +41,7 @@ public class FieldGenerator : MonoBehaviour
         PlaceWalls(solidWallPrefab, solidWallCount, hp: -1);
         PlaceWalls(destructibleWallPrefab, destructibleWallCount, hp: 60);
         PlaceEnemies();
+        PlaceFortresses();
     }
 
     void PlaceGoal()
@@ -75,6 +80,21 @@ public class FieldGenerator : MonoBehaviour
             if (data?.prefab == null) continue;
             var go = Instantiate(data.prefab, pos, Quaternion.identity);
             go.GetComponent<EnemyController>()?.Initialize(data);
+            placed++;
+        }
+    }
+
+    void PlaceFortresses()
+    {
+        if (fortressPrefab == null) return;
+        int placed = 0, attempts = 0;
+        while (placed < fortressCount && attempts < fortressCount * 10)
+        {
+            attempts++;
+            var pos = RandomFieldPos();
+            if (TooClose(pos, startPos, MarginFromStart * 1.5f)) continue;
+            if (TooClose(pos, goalPos,  MarginFromGoal * 1.5f))  continue;
+            Instantiate(fortressPrefab, pos, Quaternion.identity);
             placed++;
         }
     }
