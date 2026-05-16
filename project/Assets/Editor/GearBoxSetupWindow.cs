@@ -46,6 +46,10 @@ public class GearBoxSetupWindow : EditorWindow
             EditorApplication.delayCall += SetupAll;
 
         EditorGUILayout.Space(8);
+        if (GUILayout.Button("③ TMP フォントを一括修正（警告が出る場合）", GUILayout.Height(28)))
+            EditorApplication.delayCall += FixTMPFonts;
+
+        EditorGUILayout.Space(8);
         GUILayout.Label("個別セットアップ", EditorStyles.boldLabel);
         foreach (var (name, setup) in Scenes)
         {
@@ -651,6 +655,71 @@ public class GearBoxSetupWindow : EditorWindow
     // ────────────────────────────────────────────
     // ビルド設定更新
     // ────────────────────────────────────────────
+    // ────────────────────────────────────────────
+    // TMP フォント一括修正
+    // ────────────────────────────────────────────
+    static void FixTMPFonts()
+    {
+        // LiberationSans SDF（特殊文字を持つデフォルト）を主フォントに統一する
+        var liberationSans = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(
+            "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset");
+        if (liberationSans == null)
+        {
+            EditorUtility.DisplayDialog("エラー", "LiberationSans SDF が見つかりません。\nTMP Essentials をインポート済みか確認してください。", "OK");
+            return;
+        }
+
+        int count = 0;
+
+        // すべてのシーンを開いて TMP を修正
+        foreach (var (sceneName, _) in Scenes)
+        {
+            var scenePath = $"{ScenesPath}/{sceneName}.unity";
+            if (!File.Exists(scenePath)) continue;
+
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+            bool changed = false;
+
+            foreach (var tmp in Object.FindObjectsByType<TMP_Text>(FindObjectsSortMode.None))
+            {
+                if (tmp.font != null && tmp.font != liberationSans)
+                {
+                    tmp.font = liberationSans;
+                    EditorUtility.SetDirty(tmp);
+                    changed = true;
+                    count++;
+                }
+            }
+
+            if (changed) EditorSceneManager.SaveScene(scene);
+        }
+
+        // プレハブも修正
+        var prefabGuids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Prefabs" });
+        foreach (var guid in prefabGuids)
+        {
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+            if (prefab == null) continue;
+
+            bool changed = false;
+            foreach (var tmp in prefab.GetComponentsInChildren<TMP_Text>(true))
+            {
+                if (tmp.font != null && tmp.font != liberationSans)
+                {
+                    tmp.font = liberationSans;
+                    EditorUtility.SetDirty(tmp);
+                    changed = true;
+                    count++;
+                }
+            }
+            if (changed) AssetDatabase.SaveAssetIfDirty(prefab);
+        }
+
+        AssetDatabase.SaveAssets();
+        EditorUtility.DisplayDialog("完了", $"{count} 件の TMP コンポーネントを LiberationSans SDF に変更しました。", "OK");
+    }
+
     static void UpdateBuildSettings()
     {
         var scenes = new List<EditorBuildSettingsScene>();
