@@ -386,7 +386,7 @@ public class GearBoxSetupWindow : EditorWindow
         var steamCannon = GearBoxPrefabBuilder.LoadSO<TowerData>("Towers/TowerData_SteamCannon.asset");
         if (steamCannon != null)
         {
-            var titleCtrl = Object.FindObjectOfType<TitleSceneController>();
+            var titleCtrl = Object.FindFirstObjectByType<TitleSceneController>();
             if (titleCtrl != null)
             {
                 var tso = new SerializedObject(titleCtrl);

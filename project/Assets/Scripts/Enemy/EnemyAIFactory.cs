@@ -27,7 +27,7 @@ public class ChaserAI : IEnemyAI
     public void UpdateAI(Transform tank)
     {
         var dir = ((Vector2)tank.position - rb.position).normalized;
-        rb.velocity = dir * speed;
+        rb.linearVelocity = dir * speed;
     }
 }
 
@@ -77,7 +77,7 @@ public class RusherAI : IEnemyAI
     {
         speed = data.moveSpeed;
         dir = Random.insideUnitCircle.normalized;
-        rb.velocity = dir * speed;
+        rb.linearVelocity = dir * speed;
     }
 
     public void UpdateAI(Transform _)
