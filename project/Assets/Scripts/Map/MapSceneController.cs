@@ -72,9 +72,9 @@ public class MapSceneController : MonoBehaviour
     {
         interactable = false;
 
-        // マップ最下部から最上部へスクロール
+        // ボス側（上）から開始し、スタートノード位置（0）で終了
         var startY = -mapScrollContainer.rect.height;
-        var endY = mapScrollContainer.rect.height;
+        var endY   = 0f;
         float elapsed = 0f;
         while (elapsed < introScrollDuration)
         {
@@ -83,10 +83,7 @@ public class MapSceneController : MonoBehaviour
             mapScrollContainer.anchoredPosition = new Vector2(0f, Mathf.Lerp(startY, endY, t));
             yield return null;
         }
-
-        // スタートノードにフォーカス
-        yield return new WaitForSeconds(0.3f);
-        mapScrollContainer.anchoredPosition = Vector2.zero;
+        mapScrollContainer.anchoredPosition = new Vector2(0f, endY);
 
         interactable = true;
         SceneTransitionManager.Instance.FadeIn(0.4f);

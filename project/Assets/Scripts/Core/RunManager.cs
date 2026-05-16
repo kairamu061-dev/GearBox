@@ -156,6 +156,12 @@ public class RunManager : MonoBehaviour
     {
         var node = CurrentMapGraph?.GetNode(nodeId);
         if (node == null) return;
+
+        // 選ばなかった Reachable ノードを Unvisited に戻す
+        foreach (var n in CurrentMapGraph.nodes)
+            if (n.state == NodeState.Reachable)
+                n.state = NodeState.Unvisited;
+
         node.state = NodeState.Visited;
         CurrentNodeId = nodeId;
         CurrentMapGraph.SetReachableFrom(nodeId);
