@@ -28,3 +28,6 @@ Desktop.ini
 
 # Claude Code ログ（必要なら管理対象に戻す）
 .claude/logs/
+
+# 作業用一時フォルダ
+Inbox/
