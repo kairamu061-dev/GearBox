@@ -81,6 +81,13 @@ public class GearBoxSetupWindow : EditorWindow
     // ────────────────────────────────────────────
     static void SetupLogoScene()
     {
+        // カメラ（Screen Space Overlay Canvas のみでも必要）
+        var camGo = new GameObject("Main Camera");
+        var cam = camGo.AddComponent<Camera>();
+        cam.backgroundColor = Color.black;
+        cam.tag = "MainCamera";
+        cam.cullingMask = 0; // 何も描画しない（UI のみ）
+
         // マネージャ群（DontDestroyOnLoad）
         CreateManager<RunManager>("RunManager");
         CreateManager<SceneTransitionManager>("SceneTransitionManager");
@@ -115,6 +122,7 @@ public class GearBoxSetupWindow : EditorWindow
     // ────────────────────────────────────────────
     static void SetupTitleScene()
     {
+        CreateUICamera();
         CreateEventSystem();
         var canvas = CreateCanvas("TitleCanvas");
         var ctrl = new GameObject("TitleSceneController").AddComponent<TitleSceneController>();
@@ -181,6 +189,7 @@ public class GearBoxSetupWindow : EditorWindow
     // ────────────────────────────────────────────
     static void SetupMapScene()
     {
+        CreateUICamera();
         CreateEventSystem();
         var canvas = CreateCanvas("MapCanvas");
         var ctrl = new GameObject("MapSceneController").AddComponent<MapSceneController>();
@@ -489,6 +498,7 @@ public class GearBoxSetupWindow : EditorWindow
 
     static void SetupShopScene()
     {
+        CreateUICamera();
         CreateEventSystem();
         var canvas = CreateCanvas("ShopCanvas");
         var ctrl = new GameObject("ShopSceneController").AddComponent<ShopSceneController>();
@@ -539,6 +549,7 @@ public class GearBoxSetupWindow : EditorWindow
 
     static void SetupRefitScene()
     {
+        CreateUICamera();
         CreateEventSystem();
         var canvas = CreateCanvas("RefitCanvas");
         var ctrl = new GameObject("RefitSceneController").AddComponent<RefitSceneController>();
@@ -604,6 +615,7 @@ public class GearBoxSetupWindow : EditorWindow
 
     static void SetupResultScene()
     {
+        CreateUICamera();
         CreateEventSystem();
         var canvas = CreateCanvas("ResultCanvas");
         var ctrl = new GameObject("ResultSceneController").AddComponent<ResultSceneController>();
@@ -626,6 +638,7 @@ public class GearBoxSetupWindow : EditorWindow
 
     static void SetupGameOverScene()
     {
+        CreateUICamera();
         CreateEventSystem();
         var canvas = CreateCanvas("GameOverCanvas");
         var ctrl = new GameObject("GameOverSceneController").AddComponent<GameOverSceneController>();
@@ -741,6 +754,15 @@ public class GearBoxSetupWindow : EditorWindow
         var go = new GameObject(name);
         go.AddComponent<T>();
         return go;
+    }
+
+    static void CreateUICamera()
+    {
+        var camGo = new GameObject("Main Camera");
+        var cam = camGo.AddComponent<Camera>();
+        cam.backgroundColor = Color.black;
+        cam.tag = "MainCamera";
+        cam.cullingMask = 0;
     }
 
     static Canvas CreateCanvas(string name)
