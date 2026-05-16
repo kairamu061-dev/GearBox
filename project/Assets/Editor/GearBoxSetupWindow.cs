@@ -424,9 +424,8 @@ public class GearBoxSetupWindow : EditorWindow
         var boss            = GearBoxPrefabBuilder.LoadPrefabGO("Enemy/Boss.prefab");
         var enemyDataChaser = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Chaser.asset");
         var enemyDataRusher = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Rusher.asset");
+        var enemyDataTurret = GearBoxPrefabBuilder.LoadSO<EnemyData>("Enemies/EnemyData_Turret.asset");
 
-        // EnemyController に ScrapObject 参照を注入するため、prefab 側に設定済みの想定
-        // FieldGenerator 参照
         var fgSO = new SerializedObject(fieldGen);
         fgSO.FindProperty("solidWallPrefab").objectReferenceValue        = solidWall;
         fgSO.FindProperty("destructibleWallPrefab").objectReferenceValue = destWall;
@@ -434,9 +433,10 @@ public class GearBoxSetupWindow : EditorWindow
         fgSO.FindProperty("fortressPrefab").objectReferenceValue         = fortress;
         fgSO.FindProperty("bossPrefab").objectReferenceValue             = boss;
         var enemyList = fgSO.FindProperty("enemyDataList");
-        enemyList.arraySize = 2;
+        enemyList.arraySize = 3;
         if (enemyDataChaser) enemyList.GetArrayElementAtIndex(0).objectReferenceValue = enemyDataChaser;
         if (enemyDataRusher) enemyList.GetArrayElementAtIndex(1).objectReferenceValue = enemyDataRusher;
+        if (enemyDataTurret) enemyList.GetArrayElementAtIndex(2).objectReferenceValue = enemyDataTurret;
         fgSO.ApplyModifiedPropertiesWithoutUndo();
 
         CreateEventSystem();
@@ -545,6 +545,17 @@ public class GearBoxSetupWindow : EditorWindow
         {
             so.FindProperty("itemPrefab").objectReferenceValue     = itemPrefab;
             so.FindProperty("sellCardPrefab").objectReferenceValue = itemPrefab;
+        }
+
+        // 全タワーデータをショップに登録
+        var towerGuids = AssetDatabase.FindAssets("t:TowerData", new[]{"Assets/ScriptableObjects/Towers"});
+        var allTowersSO = so.FindProperty("allTowers");
+        allTowersSO.arraySize = towerGuids.Length;
+        for (int i = 0; i < towerGuids.Length; i++)
+        {
+            var td = AssetDatabase.LoadAssetAtPath<TowerData>(
+                AssetDatabase.GUIDToAssetPath(towerGuids[i]));
+            allTowersSO.GetArrayElementAtIndex(i).objectReferenceValue = td;
         }
         so.ApplyModifiedPropertiesWithoutUndo();
     }
