@@ -107,6 +107,16 @@ public class FieldGenerator : MonoBehaviour
         go.GetComponent<EnemyController>()?.Initialize(data);
     }
 
+    static Sprite CreateSquareSprite()
+    {
+        var tex = new Texture2D(4, 4);
+        var pixels = new Color[16];
+        for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.white;
+        tex.SetPixels(pixels);
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, 4, 4), new Vector2(0.5f, 0.5f), 4f);
+    }
+
     static GameObject CreateDefaultEnemyGO(string name, Vector2 pos)
     {
         var go = new GameObject(name);
@@ -117,7 +127,7 @@ public class FieldGenerator : MonoBehaviour
         go.AddComponent<CircleCollider2D>().radius = 0.4f;
         go.AddComponent<EnemyController>();
         var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd");
+        sr.sprite = CreateSquareSprite();
         sr.color = Color.red;
         return go;
     }
