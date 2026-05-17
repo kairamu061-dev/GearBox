@@ -35,11 +35,15 @@ public class TankController : MonoBehaviour, IDamageable
     void SpawnTowers()
     {
         var rm = RunManager.Instance;
+        int spawned = 0;
+        Debug.Log($"[Tank] GridSize={rm.GridSize}, towerMount={towerMount}");
         for (int x = 0; x < rm.GridSize.x; x++)
             for (int y = 0; y < rm.GridSize.y; y++)
             {
                 var inst = rm.GridLayout[x, y];
                 if (inst?.data == null) continue;
+
+                Debug.Log($"[Tank] スポーン: {inst.data.displayName} at ({x},{y})");
 
                 GameObject go = inst.data.prefab != null
                     ? Instantiate(inst.data.prefab, towerMount)
@@ -50,7 +54,9 @@ public class TankController : MonoBehaviour, IDamageable
                 var tb = go.GetComponent<TowerBehaviour>()
                       ?? go.AddComponent<TowerBehaviour>();
                 tb.Initialize(inst);
+                spawned++;
             }
+        Debug.Log($"[Tank] タワースポーン完了: {spawned}体");
     }
 
     public void TakeDamage(float amount)
