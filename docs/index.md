@@ -46,3 +46,4 @@
 - [game-over](./game-over/overview.md)
 - [run-history](./run-history/overview.md)
   - [beam](./tower/beam/overview.md)
+- [debug](./debug/overview.md)
