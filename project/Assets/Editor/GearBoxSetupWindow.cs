@@ -261,19 +261,21 @@ public class GearBoxSetupWindow : EditorWindow
         menuBtnRT.anchoredPosition = new Vector2(-10, -70);
         menuBtnRT.sizeDelta = new Vector2(60, 60);
 
-        // メニューオーバーレイ
-        var menuOverlay = CreatePanel(canvas.transform, "MenuOverlay", Vector2.zero, new Vector2(300, 280));
+        // メニューオーバーレイ（ブロッカー＋閉じるボタン付き）
+        var menuOverlay = CreateOverlayPanel(canvas.transform, "MenuOverlay", new Vector2(300, 360));
         menuOverlay.SetActive(false);
-        var btnMenuSettings = CreateButton(menuOverlay.transform, "BtnSettings", "設定",        new Vector2(0, 80));
-        var btnGiveUp       = CreateButton(menuOverlay.transform, "BtnGiveUp",   "あきらめる",   new Vector2(0, 0));
-        var btnSuspend      = CreateButton(menuOverlay.transform, "BtnSuspend",  "中断",         new Vector2(0, -80));
+        var menuInner = menuOverlay.transform.GetChild(1).gameObject;
+        var btnMenuSettings = CreateButton(menuInner.transform, "BtnSettings", "設定",        new Vector2(0, 110));
+        var btnGiveUp       = CreateButton(menuInner.transform, "BtnGiveUp",   "あきらめる",   new Vector2(0, 30));
+        var btnSuspend      = CreateButton(menuInner.transform, "BtnSuspend",  "中断",         new Vector2(0, -50));
 
-        // あきらめる確認
-        var giveUpConfirm = CreatePanel(canvas.transform, "GiveUpConfirm", Vector2.zero, new Vector2(400, 180));
+        // あきらめる確認（ブロッカー付き）
+        var giveUpConfirm = CreateOverlayPanel(canvas.transform, "GiveUpConfirm", new Vector2(400, 220));
         giveUpConfirm.SetActive(false);
-        CreateLabel(giveUpConfirm.transform, "Message", "ランを終了しますか？", new Vector2(0, 40));
-        var btnGiveUpYes = CreateButton(giveUpConfirm.transform, "BtnYes", "はい",  new Vector2(-70, -30));
-        var btnGiveUpNo  = CreateButton(giveUpConfirm.transform, "BtnNo",  "いいえ", new Vector2(70, -30));
+        var confirmInner = giveUpConfirm.transform.GetChild(1).gameObject;
+        CreateLabel(confirmInner.transform, "Message", "ランを終了しますか？", new Vector2(0, 50));
+        var btnGiveUpYes = CreateButton(confirmInner.transform, "BtnYes", "はい",  new Vector2(-70, -20));
+        var btnGiveUpNo  = CreateButton(confirmInner.transform, "BtnNo",  "いいえ", new Vector2(70, -20));
 
         // 設定パネル
         var settingsPanel = CreateOverlayPanel(canvas.transform, "SettingsPanel", new Vector2(600, 500));
