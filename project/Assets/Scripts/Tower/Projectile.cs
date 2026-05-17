@@ -21,6 +21,31 @@ public class Projectile : MonoBehaviour
         rb.freezeRotation = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
         GetComponent<CircleCollider2D>().isTrigger = true;
+        AddVisual();
+    }
+
+    void AddVisual()
+    {
+        var sr = gameObject.AddComponent<SpriteRenderer>();
+        sr.sprite = CreateCircleSprite(16);
+        sr.color  = new Color(1f, 0.9f, 0.2f); // 黄色
+        transform.localScale = Vector3.one * 0.3f;
+    }
+
+    static Sprite CreateCircleSprite(int resolution)
+    {
+        var tex = new Texture2D(resolution, resolution, TextureFormat.RGBA32, false);
+        float r = resolution * 0.5f;
+        for (int y = 0; y < resolution; y++)
+            for (int x = 0; x < resolution; x++)
+            {
+                float dx = x - r + 0.5f, dy = y - r + 0.5f;
+                tex.SetPixel(x, y, dx * dx + dy * dy <= r * r
+                    ? Color.white : Color.clear);
+            }
+        tex.Apply();
+        return Sprite.Create(tex, new Rect(0, 0, resolution, resolution),
+                             new Vector2(0.5f, 0.5f), resolution);
     }
 
     public void Initialize(Vector2 target, float dmg, DamageType dtype, float areaR = 0f, float spd = 10f)
