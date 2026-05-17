@@ -1,5 +1,7 @@
 # MapScene 仕様
 
+![マップ画面イメージ](../Images/map_scene_mockup.png)
+
 ## 機能一覧
 
 | # | 機能名 | 説明 |

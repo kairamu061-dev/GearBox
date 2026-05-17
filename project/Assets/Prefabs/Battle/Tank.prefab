@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankController
   moveSpeed: 5
   collectRadius: 2
-  towerMount: {fileID: 0}
+  towerMount: {fileID: 5706787794755375728}
 --- !u!114 &8524411320436516213
 MonoBehaviour:
   m_ObjectHideFlags: 0

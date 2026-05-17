@@ -1,5 +1,7 @@
 # 準備フェーズ 仕様
 
+![準備画面イメージ](../../Images/preparation_scene_mockup.png)
+
 ## 機能一覧
 
 | # | 機能名 | 説明 |
