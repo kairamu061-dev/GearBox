@@ -19,8 +19,7 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
-        // Dynamic にして物理エンジンによる衝突検知を有効にする
-        rb.isKinematic = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         GetComponent<CircleCollider2D>().isTrigger = true;
     }
 

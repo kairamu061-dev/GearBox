@@ -13,7 +13,7 @@ public class EnemyProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
-        rb.isKinematic = true;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         GetComponent<CircleCollider2D>().isTrigger = true;
         GetComponent<CircleCollider2D>().radius = 0.15f;
     }
