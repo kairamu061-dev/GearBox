@@ -19,7 +19,8 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
-        rb.isKinematic = true;
+        // Dynamic にして物理エンジンによる衝突検知を有効にする
+        rb.isKinematic = false;
         GetComponent<CircleCollider2D>().isTrigger = true;
     }
 
@@ -34,6 +35,7 @@ public class Projectile : MonoBehaviour
 
         var dir = (target - (Vector2)transform.position).normalized;
         rb.linearVelocity = dir * speed;
+        StartCoroutine(AutoDestroy(5f));
     }
 
     public void SetTargetPoint(Vector2 point)
@@ -46,7 +48,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         if (!hasTarget) return;
-        if (Vector2.Distance(rb.position, targetPoint) < 0.2f)
+        if (Vector2.Distance(rb.position, targetPoint) < 0.3f)
             HitAtPoint();
     }
 
@@ -54,27 +56,18 @@ public class Projectile : MonoBehaviour
     {
         if (other.TryGetComponent<EnemyController>(out var enemy))
         {
-            if (damageType == DamageType.Single)
-            {
-                enemy.TakeDamage(damage);
-                Destroy(gameObject);
-            }
+            enemy.TakeDamage(damage);
+            if (damageType == DamageType.Single) Destroy(gameObject);
         }
         else if (other.TryGetComponent<FortressController>(out var fortress))
         {
-            if (damageType == DamageType.Single)
-            {
-                fortress.TakeDamage(damage);
-                Destroy(gameObject);
-            }
+            fortress.TakeDamage(damage);
+            if (damageType == DamageType.Single) Destroy(gameObject);
         }
         else if (other.TryGetComponent<BossController>(out var boss))
         {
-            if (damageType == DamageType.Single)
-            {
-                boss.TakeDamage(damage);
-                Destroy(gameObject);
-            }
+            boss.TakeDamage(damage);
+            if (damageType == DamageType.Single) Destroy(gameObject);
         }
         else if (other.TryGetComponent<DestructibleWall>(out var wall))
         {
@@ -94,11 +87,17 @@ public class Projectile : MonoBehaviour
             var hits = Physics2D.OverlapCircleAll(targetPoint, areaRadius);
             foreach (var h in hits)
             {
-                if (h.TryGetComponent<EnemyController>(out var e)) e.TakeDamage(damage);
+                if (h.TryGetComponent<EnemyController>(out var e))        e.TakeDamage(damage);
                 else if (h.TryGetComponent<FortressController>(out var f)) f.TakeDamage(damage);
-                else if (h.TryGetComponent<BossController>(out var b)) b.TakeDamage(damage);
+                else if (h.TryGetComponent<BossController>(out var b))     b.TakeDamage(damage);
             }
         }
         Destroy(gameObject);
+    }
+
+    IEnumerator AutoDestroy(float t)
+    {
+        yield return new WaitForSeconds(t);
+        if (this != null) Destroy(gameObject);
     }
 }

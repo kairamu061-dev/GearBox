@@ -93,6 +93,11 @@ public static class GearBoxPrefabBuilder
         var mount = new GameObject("TowerMount");
         mount.transform.SetParent(root.transform, false);
 
+        // TankController に towerMount を設定
+        var so = new SerializedObject(root.GetComponent<TankController>());
+        so.FindProperty("towerMount").objectReferenceValue = mount.transform;
+        so.ApplyModifiedPropertiesWithoutUndo();
+
         SavePrefab(root, path);
     }
 
