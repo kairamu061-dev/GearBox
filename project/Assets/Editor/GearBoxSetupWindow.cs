@@ -183,23 +183,17 @@ public class GearBoxSetupWindow : EditorWindow
         var btnYes = CreateButton(confirmDlg.transform, "BtnYes", "はい",  new Vector2(-70, -30));
         var btnNo  = CreateButton(confirmDlg.transform, "BtnNo",  "いいえ", new Vector2(70, -30));
 
-        // 設定パネル（ブロッカー＋パネル＋閉じるボタン）
+        // 設定パネル
         var settingsPanel = CreateOverlayPanel(canvas.transform, "SettingsPanel", new Vector2(600, 500));
         settingsPanel.SetActive(false);
-        var settingsInner = settingsPanel.transform.GetChild(1).gameObject; // inner panel
+        var settingsInner = settingsPanel.transform.GetChild(1).gameObject;
         CreateLabel(settingsInner.transform, "Label", "設定（今後追加）", new Vector2(0, 80));
-        var settingsClose = CreateButton(settingsInner.transform, "BtnClose", "閉じる", new Vector2(0, -180));
-        settingsClose.GetComponent<Button>().onClick.AddListener(
-            () => settingsPanel.SetActive(false));
 
         // 過去のランパネル
         var pastRunsPanel = CreateOverlayPanel(canvas.transform, "PastRunsPanel", new Vector2(700, 600));
         pastRunsPanel.SetActive(false);
         var pastRunsInner = pastRunsPanel.transform.GetChild(1).gameObject;
         CreateLabel(pastRunsInner.transform, "Label", "過去のラン（今後追加）", new Vector2(0, 200));
-        var pastRunsClose = CreateButton(pastRunsInner.transform, "BtnClose", "閉じる", new Vector2(0, -250));
-        pastRunsClose.GetComponent<Button>().onClick.AddListener(
-            () => pastRunsPanel.SetActive(false));
 
         // 初期タワー設定
         var steamCannon = GearBoxPrefabBuilder.LoadSO<TowerData>("Towers/TowerData_SteamCannon.asset");
@@ -286,8 +280,6 @@ public class GearBoxSetupWindow : EditorWindow
         settingsPanel.SetActive(false);
         var settingsInnerMap = settingsPanel.transform.GetChild(1).gameObject;
         CreateLabel(settingsInnerMap.transform, "Label", "設定（今後追加）", new Vector2(0, 80));
-        var mapSettingsClose = CreateButton(settingsInnerMap.transform, "BtnClose", "閉じる", new Vector2(0, -180));
-        mapSettingsClose.GetComponent<Button>().onClick.AddListener(() => settingsPanel.SetActive(false));
 
         // ハテナイベント UI
         var mysteryOverlay = CreatePanel(canvas.transform, "MysteryOverlay", Vector2.zero, new Vector2(600, 500));
@@ -860,16 +852,33 @@ public class GearBoxSetupWindow : EditorWindow
     {
         var root = new GameObject(name);
         root.transform.SetParent(parent, false);
+        // ルートを全画面に引き伸ばす
+        var rootRT = root.AddComponent<RectTransform>();
+        rootRT.anchorMin = Vector2.zero; rootRT.anchorMax = Vector2.one;
+        rootRT.offsetMin = rootRT.offsetMax = Vector2.zero;
+        var overlay = root.AddComponent<OverlayPanel>();
 
-        // 透明なブロッカー（全画面、Raycast を遮断）
+        // 半透明ブロッカー（全画面・Raycast遮断・クリックで閉じる）
         var blocker = new GameObject("Blocker");
         blocker.transform.SetParent(root.transform, false);
         var blockerImg = blocker.AddComponent<Image>();
         blockerImg.color = new Color(0, 0, 0, 0.5f);
         SetStretch(blocker.GetComponent<RectTransform>());
+        var blockerBtn = blocker.AddComponent<Button>();
+        blockerBtn.transition = Selectable.Transition.None;
 
         // 実際のパネル
         var inner = CreatePanel(root.transform, "InnerPanel", Vector2.zero, size);
+
+        // 閉じるボタンをパネル下部に追加
+        var closeBtn = CreateButton(inner.transform, "BtnClose", "閉じる",
+            new Vector2(0, -size.y * 0.5f + 40));
+
+        // OverlayPanel に参照をバインド（SerializedObject経由で永続化）
+        var so = new SerializedObject(overlay);
+        so.FindProperty("closeButton").objectReferenceValue   = closeBtn.GetComponent<Button>();
+        so.FindProperty("blockerButton").objectReferenceValue = blockerBtn;
+        so.ApplyModifiedPropertiesWithoutUndo();
 
         return root;
     }

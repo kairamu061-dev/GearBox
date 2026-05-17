@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5373e458696a54a8b87633de58abef, type: 3}
+  m_Name: Recipe_GuidedCannon
+  m_EditorClassIdentifier: Assembly-CSharp::SynthesisRecipe
+  materialA: {fileID: 11400000, guid: 17072a2d4cb3a814a8788ed2ed689f04, type: 2}
+  materialB: {fileID: 11400000, guid: 77aaccbe5c6b9af4ca0be18f52fabd57, type: 2}
+  result: {fileID: 11400000, guid: e089fffe68778134f8929b9f428cae89, type: 2}
