@@ -36,14 +36,14 @@ public class TankController : MonoBehaviour, IDamageable
     {
         var rm = RunManager.Instance;
         int spawned = 0;
-        Debug.Log($"[Tank] GridSize={rm.GridSize}, towerMount={towerMount}");
+        Log.Info($"GridSize={rm.GridSize}, towerMount={towerMount}", LogTag.Battle, LogTag.Player);
         for (int x = 0; x < rm.GridSize.x; x++)
             for (int y = 0; y < rm.GridSize.y; y++)
             {
                 var inst = rm.GridLayout[x, y];
                 if (inst?.data == null) continue;
 
-                Debug.Log($"[Tank] スポーン: {inst.data.displayName} at ({x},{y})");
+                Log.Info($"タワースポーン: {inst.data.displayName} at ({x},{y})", LogTag.Battle, LogTag.Tower);
 
                 GameObject go = inst.data.prefab != null
                     ? Instantiate(inst.data.prefab, towerMount)
@@ -56,7 +56,7 @@ public class TankController : MonoBehaviour, IDamageable
                 tb.Initialize(inst);
                 spawned++;
             }
-        Debug.Log($"[Tank] タワースポーン完了: {spawned}体");
+        Log.Info($"タワースポーン完了: {spawned}体", LogTag.Battle, LogTag.Tower);
     }
 
     public void TakeDamage(float amount)

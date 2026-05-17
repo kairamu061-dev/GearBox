@@ -19,7 +19,7 @@ public class TowerBehaviour : MonoBehaviour
         ctActive = false;
         attackBehaviour = AttackBehaviourFactory.Create(Data.attackType);
         attackBehaviour?.SetOwner(this);
-        Debug.Log($"[Tower] Initialize: {Data.displayName}, cooldown={Data.cooldown}, attackType={Data.attackType}, behaviour={attackBehaviour}");
+        Log.Info($"Initialize: {Data.displayName}, cooldown={Data.cooldown}, type={Data.attackType}, behaviour={attackBehaviour}", LogTag.Tower);
     }
 
     public void ApplyCooldownMultiplier(float mult) => cooldownMultiplier = mult;
@@ -33,7 +33,7 @@ public class TowerBehaviour : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
             if (cooldownTimer <= 0f)
             {
-                Debug.Log($"[Tower] {Data?.displayName} 攻撃実行");
+                Log.Info($"{Data?.displayName} 攻撃実行", LogTag.Tower, LogTag.Battle);
                 attackBehaviour.Execute();
                 // AutoAimAttack が敵なしの場合はctActiveをfalseに戻す
                 if (attackBehaviour is AutoAimAttack aa && !aa.HasTarget)
