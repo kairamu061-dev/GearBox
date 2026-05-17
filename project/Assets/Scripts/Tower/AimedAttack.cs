@@ -20,8 +20,7 @@ public class AimedAttack : IAttackBehaviour
 
         var go = new GameObject("Projectile");
         go.transform.position = origin;
-        var proj = go.AddComponent<Projectile>();
-        go.AddComponent<CircleCollider2D>().isTrigger = true;
+        var proj = go.AddComponent<Projectile>(); // RequireComponent で Rigidbody2D・CircleCollider2D が自動追加
         proj.Initialize(targetPoint, owner.Data.damage, owner.Data.damageType, owner.Data.range * 0.5f);
     }
 }

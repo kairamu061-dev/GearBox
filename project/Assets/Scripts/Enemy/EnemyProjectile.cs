@@ -1,21 +1,29 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class EnemyProjectile : MonoBehaviour
 {
     float damage;
-    float speed = 8f;
-    Vector2 direction;
+    Rigidbody2D rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+        rb.isKinematic = true;
+        GetComponent<CircleCollider2D>().isTrigger = true;
+        GetComponent<CircleCollider2D>().radius = 0.15f;
+    }
 
     public void Initialize(Vector2 dir, float dmg, float spd = 8f)
     {
-        direction = dir;
         damage = dmg;
-        speed = spd;
+        rb.linearVelocity = dir * spd;
         StartCoroutine(AutoDestroy(5f));
     }
-
-    void Update() => transform.Translate(direction * speed * Time.deltaTime, Space.World);
 
     void OnTriggerEnter2D(Collider2D other)
     {

@@ -44,7 +44,6 @@ public class AutoAimAttack : IAttackBehaviour
         var go = new GameObject("AutoAimProjectile");
         go.transform.position = owner.transform.position;
         var proj = go.AddComponent<Projectile>();
-        go.AddComponent<CircleCollider2D>().isTrigger = true;
         proj.Initialize(target.transform.position, owner.Data.damage, owner.Data.damageType);
     }
 }

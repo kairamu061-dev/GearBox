@@ -1,5 +1,8 @@
+using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Projectile : MonoBehaviour
 {
     float damage;
@@ -9,6 +12,17 @@ public class Projectile : MonoBehaviour
     DamageType damageType;
     float areaRadius;
 
+    Rigidbody2D rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+        rb.isKinematic = true;
+        GetComponent<CircleCollider2D>().isTrigger = true;
+    }
+
     public void Initialize(Vector2 target, float dmg, DamageType dtype, float areaR = 0f, float spd = 10f)
     {
         targetPoint = target;
@@ -17,18 +31,22 @@ public class Projectile : MonoBehaviour
         areaRadius = areaR;
         speed = spd;
         hasTarget = true;
+
+        var dir = (target - (Vector2)transform.position).normalized;
+        rb.linearVelocity = dir * speed;
     }
 
-    // 追尾型用：ターゲット位置を後から更新できる
-    public void SetTargetPoint(Vector2 point) => targetPoint = point;
+    public void SetTargetPoint(Vector2 point)
+    {
+        targetPoint = point;
+        var dir = (point - rb.position).normalized;
+        rb.linearVelocity = dir * speed;
+    }
 
     void Update()
     {
         if (!hasTarget) return;
-        var dir = (targetPoint - (Vector2)transform.position).normalized;
-        transform.Translate(dir * speed * Time.deltaTime, Space.World);
-
-        if (Vector2.Distance(transform.position, targetPoint) < 0.1f)
+        if (Vector2.Distance(rb.position, targetPoint) < 0.2f)
             HitAtPoint();
     }
 
@@ -42,6 +60,27 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        else if (other.TryGetComponent<FortressController>(out var fortress))
+        {
+            if (damageType == DamageType.Single)
+            {
+                fortress.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
+        else if (other.TryGetComponent<BossController>(out var boss))
+        {
+            if (damageType == DamageType.Single)
+            {
+                boss.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
+        else if (other.TryGetComponent<DestructibleWall>(out var wall))
+        {
+            wall.TakeDamage(damage);
+            Destroy(gameObject);
+        }
         else if (other.CompareTag("Obstacle"))
         {
             Destroy(gameObject);
@@ -54,8 +93,11 @@ public class Projectile : MonoBehaviour
         {
             var hits = Physics2D.OverlapCircleAll(targetPoint, areaRadius);
             foreach (var h in hits)
-                if (h.TryGetComponent<EnemyController>(out var e))
-                    e.TakeDamage(damage);
+            {
+                if (h.TryGetComponent<EnemyController>(out var e)) e.TakeDamage(damage);
+                else if (h.TryGetComponent<FortressController>(out var f)) f.TakeDamage(damage);
+                else if (h.TryGetComponent<BossController>(out var b)) b.TakeDamage(damage);
+            }
         }
         Destroy(gameObject);
     }
