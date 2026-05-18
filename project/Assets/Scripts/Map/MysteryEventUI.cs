@@ -14,6 +14,8 @@ public class MysteryEventUI : MonoBehaviour
 
     System.Action onClosed;
 
+    void Start() => btnClose?.onClick.AddListener(Close);
+
     public void Show(System.Action onClose)
     {
         onClosed = onClose;
