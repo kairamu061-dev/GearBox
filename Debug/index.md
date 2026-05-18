@@ -21,3 +21,4 @@
 | [BUG-004](./tickets/BUG-004.md) | バトル中にタワーが攻撃しない | battle, tower, physics | Fixed |
 | [BUG-005](./tickets/BUG-005.md) | バトル中に敵が動かない | battle, enemy | Fixed |
 | [BUG-006](./tickets/BUG-006.md) | マップメニューに閉じるボタンがなく・背後の入力が効いている | map, ui, dialog | Fixed |
+| [BUG-007](./tickets/BUG-007.md) | ハテナイベントダイアログの閉じるボタンが効かない | map, ui, mystery | Fixed |
