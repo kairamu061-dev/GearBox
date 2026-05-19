@@ -33,14 +33,19 @@ public class ShopSceneController : MonoBehaviour
         RefreshBuyList();
         RefreshSellList();
         UpdateHUD();
-        RunManager.Instance.OnScrapChanged += _ => UpdateHUD();
+        onScrapChanged = _ => UpdateHUD();
+        RunManager.Instance.OnScrapChanged += onScrapChanged;
 
         btnClose?.onClick.AddListener(() => SceneTransitionManager.Instance.TransitionTo("MapScene"));
         btnTabBuy?.onClick.AddListener(()  => sellPanel?.SetActive(false));
         btnTabSell?.onClick.AddListener(() => sellPanel?.SetActive(true));
     }
 
-    void OnDestroy() => RunManager.Instance.OnScrapChanged -= _ => UpdateHUD();
+    System.Action<int> onScrapChanged;
+    void OnDestroy()
+    {
+        if (RunManager.Instance) RunManager.Instance.OnScrapChanged -= onScrapChanged;
+    }
 
     void GenerateStock()
     {

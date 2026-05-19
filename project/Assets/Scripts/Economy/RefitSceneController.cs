@@ -31,12 +31,17 @@ public class RefitSceneController : MonoBehaviour
     [SerializeField] TMP_Text scrapText;
     [SerializeField] Button btnClose;
 
+    System.Action<int>      onScrapChanged;
+    System.Action<int, int> onHpChanged;
+
     void Start()
     {
         SceneTransitionManager.Instance?.FadeIn(0.4f);
         UpdateHUD();
-        RunManager.Instance.OnScrapChanged += _ => { UpdateHUD(); RefreshExpand(); };
-        RunManager.Instance.OnHpChanged    += (_, __) => RefreshRepair();
+        onScrapChanged = _ => { UpdateHUD(); RefreshExpand(); };
+        onHpChanged    = (_, __) => RefreshRepair();
+        RunManager.Instance.OnScrapChanged += onScrapChanged;
+        RunManager.Instance.OnHpChanged    += onHpChanged;
 
         btnTabUpgrade?.onClick.AddListener(() => ShowPanel(upgradePanel));
         btnTabRepair?.onClick.AddListener(()  => ShowPanel(repairPanel));
@@ -53,8 +58,9 @@ public class RefitSceneController : MonoBehaviour
 
     void OnDestroy()
     {
-        RunManager.Instance.OnScrapChanged -= _ => { UpdateHUD(); RefreshExpand(); };
-        RunManager.Instance.OnHpChanged    -= (_, __) => RefreshRepair();
+        if (RunManager.Instance == null) return;
+        RunManager.Instance.OnScrapChanged -= onScrapChanged;
+        RunManager.Instance.OnHpChanged    -= onHpChanged;
     }
 
     void ShowPanel(GameObject target)

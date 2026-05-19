@@ -37,10 +37,15 @@ public class PreparationSceneController : MonoBehaviour
 
         if (ghostImage) ghostImage.gameObject.SetActive(false);
         btnSortie?.onClick.AddListener(OnSortie);
-        RunManager.Instance.OnScrapChanged += _ => UpdateHUD();
+        onScrapChanged = _ => UpdateHUD();
+        RunManager.Instance.OnScrapChanged += onScrapChanged;
     }
 
-    void OnDestroy() => RunManager.Instance.OnScrapChanged -= _ => UpdateHUD();
+    System.Action<int> onScrapChanged;
+    void OnDestroy()
+    {
+        if (RunManager.Instance) RunManager.Instance.OnScrapChanged -= onScrapChanged;
+    }
 
     void Update()
     {
