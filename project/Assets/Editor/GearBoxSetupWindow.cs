@@ -766,7 +766,7 @@ public class GearBoxSetupWindow : EditorWindow
         var t = go.AddComponent<TextMeshProUGUI>();
         t.text = text;
         t.alignment = TextAlignmentOptions.Center;
-        t.fontSize = 36;
+        t.fontSize = 42;
     }
 
     // ────────────────────────────────────────────
@@ -975,11 +975,11 @@ public class GearBoxSetupWindow : EditorWindow
         var t = go.AddComponent<TextMeshProUGUI>();
         t.text = text;
         t.alignment = TextAlignmentOptions.Center;
-        t.fontSize = 24;
+        t.fontSize = 30;
         t.color = new Color(0.91f, 0.835f, 0.64f);
         var rt = go.GetComponent<RectTransform>();
         rt.anchoredPosition = anchoredPos;
-        rt.sizeDelta = new Vector2(300, 40);
+        rt.sizeDelta = new Vector2(300, 48);
         return t;
     }
 
@@ -999,7 +999,7 @@ public class GearBoxSetupWindow : EditorWindow
         var t = textGo.AddComponent<TextMeshProUGUI>();
         t.text = label;
         t.alignment = TextAlignmentOptions.Center;
-        t.fontSize = 20;
+        t.fontSize = 26;
         t.color = new Color(0.91f, 0.835f, 0.64f);
         var trt = textGo.GetComponent<RectTransform>();
         trt.anchorMin = Vector2.zero; trt.anchorMax = Vector2.one;

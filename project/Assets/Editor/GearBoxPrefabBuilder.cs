@@ -308,7 +308,7 @@ public static class GearBoxPrefabBuilder
         nameRT.anchoredPosition = new Vector2(0, 70);
         nameRT.sizeDelta = new Vector2(160, 40);
         var nameText = nameGo.AddComponent<TextMeshProUGUI>();
-        nameText.fontSize = 16; nameText.alignment = TextAlignmentOptions.Center;
+        nameText.fontSize = 22; nameText.alignment = TextAlignmentOptions.Center;
         nameText.color = new Color(0.91f, 0.84f, 0.64f);
 
         var statsGo = new GameObject("StatsText");
@@ -317,7 +317,7 @@ public static class GearBoxPrefabBuilder
         statsRT.anchoredPosition = new Vector2(0, -10);
         statsRT.sizeDelta = new Vector2(160, 100);
         var statsText = statsGo.AddComponent<TextMeshProUGUI>();
-        statsText.fontSize = 13; statsText.alignment = TextAlignmentOptions.Center;
+        statsText.fontSize = 18; statsText.alignment = TextAlignmentOptions.Center;
         statsText.color = new Color(0.75f, 0.75f, 0.75f);
 
         var hlGo = new GameObject("SelectHighlight");
@@ -385,7 +385,7 @@ public static class GearBoxPrefabBuilder
         labelRT.anchoredPosition = new Vector2(-40, 0);
         labelRT.sizeDelta = new Vector2(380, 48);
         var label = labelGo.AddComponent<TextMeshProUGUI>();
-        label.fontSize = 16; label.alignment = TextAlignmentOptions.MidlineLeft;
+        label.fontSize = 22; label.alignment = TextAlignmentOptions.MidlineLeft;
         label.color = new Color(0.91f, 0.84f, 0.64f);
 
         var hlGo = new GameObject("Highlight");
@@ -423,7 +423,7 @@ public static class GearBoxPrefabBuilder
         labelRT.anchoredPosition = new Vector2(-30, 0);
         labelRT.sizeDelta = new Vector2(380, 48);
         var label = labelGo.AddComponent<TextMeshProUGUI>();
-        label.fontSize = 16; label.alignment = TextAlignmentOptions.MidlineLeft;
+        label.fontSize = 22; label.alignment = TextAlignmentOptions.MidlineLeft;
         label.color = new Color(0.91f, 0.84f, 0.64f);
 
         var toggleGo = new GameObject("Toggle");
@@ -479,7 +479,7 @@ public static class GearBoxPrefabBuilder
         nameRT.anchoredPosition = new Vector2(15f, 0);
         nameRT.sizeDelta = new Vector2(110, 50);
         var nameText = nameGo.AddComponent<TextMeshProUGUI>();
-        nameText.fontSize = 16;
+        nameText.fontSize = 22;
         nameText.alignment = TextAlignmentOptions.MidlineLeft;
         nameText.color = new Color(0.91f, 0.84f, 0.64f);
 
@@ -540,7 +540,7 @@ public static class GearBoxPrefabBuilder
         labelRT.anchoredPosition = new Vector2(0, -44);
         labelRT.sizeDelta = new Vector2(80, 20);
         var label = labelGo.AddComponent<TextMeshProUGUI>();
-        label.fontSize = 10;
+        label.fontSize = 16;
         label.alignment = TextAlignmentOptions.Center;
         label.color = new Color(0.91f, 0.84f, 0.64f);
 
@@ -570,7 +570,7 @@ public static class GearBoxPrefabBuilder
         nameRT.anchoredPosition = new Vector2(-180, 0);
         nameRT.sizeDelta = new Vector2(280, 50);
         var nameText = nameGo.AddComponent<TextMeshProUGUI>();
-        nameText.fontSize = 18; nameText.alignment = TextAlignmentOptions.MidlineLeft;
+        nameText.fontSize = 24; nameText.alignment = TextAlignmentOptions.MidlineLeft;
         nameText.color = new Color(0.91f, 0.84f, 0.64f);
 
         var priceGo = new GameObject("PriceText");
@@ -579,7 +579,7 @@ public static class GearBoxPrefabBuilder
         priceRT.anchoredPosition = new Vector2(80, 0);
         priceRT.sizeDelta = new Vector2(140, 50);
         var priceText = priceGo.AddComponent<TextMeshProUGUI>();
-        priceText.fontSize = 18; priceText.alignment = TextAlignmentOptions.Center;
+        priceText.fontSize = 24; priceText.alignment = TextAlignmentOptions.Center;
         priceText.color = new Color(0.66f, 0.73f, 0.13f);
 
         var btnGo = new GameObject("BuyButton");
@@ -595,7 +595,7 @@ public static class GearBoxPrefabBuilder
         btnLabelRT.anchorMin = Vector2.zero; btnLabelRT.anchorMax = Vector2.one;
         btnLabelRT.offsetMin = btnLabelRT.offsetMax = Vector2.zero;
         var btnLabel = btnLabelGo.AddComponent<TextMeshProUGUI>();
-        btnLabel.text = "購入"; btnLabel.fontSize = 16;
+        btnLabel.text = "購入"; btnLabel.fontSize = 22;
         btnLabel.alignment = TextAlignmentOptions.Center;
         btnLabel.color = new Color(0.91f, 0.84f, 0.64f);
 

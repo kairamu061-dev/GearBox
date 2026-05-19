@@ -153,7 +153,7 @@ public class DebugMenuController : MonoBehaviour
     // ────────────────────────────────────────────
     // UI ヘルパー
     // ────────────────────────────────────────────
-    TMP_Text AddLabel(Transform parent, string text, Vector2 pos, float fontSize = 16)
+    TMP_Text AddLabel(Transform parent, string text, Vector2 pos, float fontSize = 20)
     {
         var go = new GameObject("Label");
         go.transform.SetParent(parent, false);
@@ -195,7 +195,7 @@ public class DebugMenuController : MonoBehaviour
         textGo.transform.SetParent(go.transform, false);
         var t = textGo.AddComponent<TextMeshProUGUI>();
         t.text      = label;
-        t.fontSize  = 15;
+        t.fontSize  = 20;
         t.color     = new Color(0.9f, 0.9f, 0.9f);
         t.alignment = TextAlignmentOptions.Center;
         var trt = textGo.GetComponent<RectTransform>();
