@@ -118,3 +118,14 @@ public class ResultSceneController : MonoBehaviour
         SceneTransitionManager.Instance.TransitionTo("MapScene");
     }
 }
+
+public enum DropType { Scrap, Tower, Relic }
+
+public class ResultDropItem
+{
+    public DropType type;
+    public int scrapAmount;
+    public TowerInstance tower;
+    public RelicData relic;
+    public bool selected;
+}
