@@ -684,24 +684,45 @@ public class GearBoxSetupWindow : EditorWindow
         var bg = CreateUIImage(canvas.transform, "Background", new Color(0.07f, 0.05f, 0.03f));
         SetStretch(bg.GetComponent<RectTransform>());
 
-        var panel = CreatePanel(canvas.transform, "ResultPanel", Vector2.zero, new Vector2(600, 600));
-        CreateLabel(panel.transform, "Title", "RESULT", new Vector2(0, 260));
-        var baseScrapText = CreateLabel(panel.transform, "BaseScrapText", "基本報酬: -- Sc", new Vector2(0, 200));
+        var panel = CreatePanel(canvas.transform, "ResultPanel", Vector2.zero, new Vector2(700, 700));
+        CreateLabel(panel.transform, "Title", "RESULT", new Vector2(0, 310));
+        var baseScrapText = CreateLabel(panel.transform, "BaseScrapText", "基本報酬: -- Sc", new Vector2(0, 260));
+
+        // タワー3択
+        var towerChoiceLabel = CreateLabel(panel.transform, "TowerChoiceLabel",
+            "タワーを1つ選んで取得（スキップ可）", new Vector2(0, 210));
+        towerChoiceLabel.GetComponent<RectTransform>().sizeDelta = new Vector2(640, 30);
+        var towerChoiceRoot = new GameObject("TowerChoiceRoot");
+        towerChoiceRoot.transform.SetParent(panel.transform, false);
+        var tcRT = towerChoiceRoot.AddComponent<RectTransform>();
+        tcRT.anchoredPosition = new Vector2(0, 100);
+        tcRT.sizeDelta = new Vector2(620, 200);
+        var hLayout = towerChoiceRoot.AddComponent<HorizontalLayoutGroup>();
+        hLayout.spacing = 12;
+        hLayout.childAlignment = TextAnchor.MiddleCenter;
+        hLayout.childForceExpandWidth = false;
+        hLayout.childForceExpandHeight = false;
 
         // ドロップリスト
         var dropContent = CreateScrollContent(panel.transform, "DropContent");
-        dropContent.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
+        dropContent.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 120);
+        dropContent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -70);
 
-        var btnReceive = CreateButton(panel.transform, "BtnReceive", "受け取る", new Vector2(0, -240));
+        var btnReceive = CreateButton(panel.transform, "BtnReceive", "受け取る", new Vector2(0, -290));
 
-        var dropPrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/ResultDropItemUI.prefab");
-        var dropPrefab   = dropPrefabGO?.GetComponent<ResultDropItemUI>();
+        var dropPrefabGO   = GearBoxPrefabBuilder.LoadPrefabGO("UI/ResultDropItemUI.prefab");
+        var dropPrefab     = dropPrefabGO?.GetComponent<ResultDropItemUI>();
+        var choicePrefabGO = GearBoxPrefabBuilder.LoadPrefabGO("UI/ResultTowerChoiceUI.prefab");
+        var choicePrefab   = choicePrefabGO?.GetComponent<ResultTowerChoiceUI>();
 
         var so = new SerializedObject(ctrl);
-        so.FindProperty("baseScrapText").objectReferenceValue  = baseScrapText.GetComponent<TMP_Text>();
-        so.FindProperty("dropListRoot").objectReferenceValue   = dropContent;
-        if (dropPrefab) so.FindProperty("dropItemPrefab").objectReferenceValue = dropPrefab;
-        so.FindProperty("btnReceive").objectReferenceValue     = btnReceive.GetComponent<Button>();
+        so.FindProperty("baseScrapText").objectReferenceValue    = baseScrapText.GetComponent<TMP_Text>();
+        so.FindProperty("towerChoiceRoot").objectReferenceValue  = towerChoiceRoot.transform;
+        so.FindProperty("towerChoiceLabel").objectReferenceValue = towerChoiceLabel.GetComponent<TMP_Text>();
+        if (choicePrefab) so.FindProperty("towerChoicePrefab").objectReferenceValue = choicePrefab;
+        so.FindProperty("dropListRoot").objectReferenceValue     = dropContent;
+        if (dropPrefab)   so.FindProperty("dropItemPrefab").objectReferenceValue   = dropPrefab;
+        so.FindProperty("btnReceive").objectReferenceValue       = btnReceive.GetComponent<Button>();
         so.ApplyModifiedPropertiesWithoutUndo();
     }
 

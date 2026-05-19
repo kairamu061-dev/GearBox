@@ -289,6 +289,54 @@ public static class GearBoxPrefabBuilder
         BuildShopItemUIPrefab();
         BuildSynthesisMaterialCardPrefab();
         BuildResultDropItemUIPrefab();
+        BuildResultTowerChoiceUIPrefab();
+    }
+
+    static void BuildResultTowerChoiceUIPrefab()
+    {
+        const string path = PrefabPath + "/UI/ResultTowerChoiceUI.prefab";
+        var root = new GameObject("ResultTowerChoiceUI");
+        root.AddComponent<RectTransform>().sizeDelta = new Vector2(180, 200);
+        root.AddComponent<Image>().color = new Color(0.18f, 0.14f, 0.09f);
+        root.AddComponent<LayoutElement>().preferredWidth = 180;
+        var card = root.AddComponent<ResultTowerChoiceUI>();
+        root.AddComponent<Button>();
+
+        var nameGo = new GameObject("NameText");
+        nameGo.transform.SetParent(root.transform, false);
+        var nameRT = nameGo.AddComponent<RectTransform>();
+        nameRT.anchoredPosition = new Vector2(0, 70);
+        nameRT.sizeDelta = new Vector2(160, 40);
+        var nameText = nameGo.AddComponent<TextMeshProUGUI>();
+        nameText.fontSize = 16; nameText.alignment = TextAlignmentOptions.Center;
+        nameText.color = new Color(0.91f, 0.84f, 0.64f);
+
+        var statsGo = new GameObject("StatsText");
+        statsGo.transform.SetParent(root.transform, false);
+        var statsRT = statsGo.AddComponent<RectTransform>();
+        statsRT.anchoredPosition = new Vector2(0, -10);
+        statsRT.sizeDelta = new Vector2(160, 100);
+        var statsText = statsGo.AddComponent<TextMeshProUGUI>();
+        statsText.fontSize = 13; statsText.alignment = TextAlignmentOptions.Center;
+        statsText.color = new Color(0.75f, 0.75f, 0.75f);
+
+        var hlGo = new GameObject("SelectHighlight");
+        hlGo.transform.SetParent(root.transform, false);
+        var hlRT = hlGo.AddComponent<RectTransform>();
+        hlRT.anchorMin = Vector2.zero; hlRT.anchorMax = Vector2.one;
+        hlRT.offsetMin = hlRT.offsetMax = Vector2.zero;
+        var hl = hlGo.AddComponent<Image>();
+        hl.color = new Color(1f, 0.8f, 0.2f, 0.35f);
+        hlGo.SetActive(false);
+
+        var so = new SerializedObject(card);
+        so.FindProperty("nameText").objectReferenceValue        = nameText;
+        so.FindProperty("statsText").objectReferenceValue       = statsText;
+        so.FindProperty("selectionHighlight").objectReferenceValue = hl;
+        so.FindProperty("button").objectReferenceValue          = root.GetComponent<Button>();
+        so.ApplyModifiedPropertiesWithoutUndo();
+
+        SavePrefab(root, path);
     }
 
     static void BuildGridCellUIPrefab()
